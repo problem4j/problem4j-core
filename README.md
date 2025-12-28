@@ -7,8 +7,10 @@
 This library provides a minimal, framework-agnostic Java model of the [RFC 7807][rfc7807] "Problem Details" object, with
 an immutable `Problem` class and a fluent `ProblemBuilder` for convenient construction.
 
+> Note that [RFC 7807][rfc7807] was later extended in [RFC 9457][rfc9457], however core concepts remain the same. 
+
 It is intended to be used as a **foundation** for other libraries or applications that add framework-specific behavior
-(e.g. Jackson, Spring).
+(e.g. Jackson, Spring - see [Problem4J Links](#problem4j-links) chapter).
 
 ## Table of Contents
 
@@ -23,7 +25,7 @@ It is intended to be used as a **foundation** for other libraries or application
 - ✅ Immutable `Problem` data model.
 - ✅ Dedicated unchecked `ProblemException` to be used in error handling.
 - ✅ Builder pattern for fluent construction.
-- ✅ Annotation `@ProblemMapping` and `ProblemMapper` to allow declarative approach in converting exception instances
+- ✅ `@ProblemMapping` annotation and `ProblemMapper` to allow declarative approach in converting exception instances
   into `Problem` objects.
 - ✅ Builder pattern for fluent construction.
 - ✅ Serializable and easy to log or format.
@@ -152,3 +154,5 @@ version. By default, the version is derived from git commit hash.
 [problem4j-spring]: https://github.com/problem4j/problem4j-spring
 
 [rfc7807]: https://datatracker.ietf.org/doc/html/rfc7807
+
+[rfc9457]: https://datatracker.ietf.org/doc/html/rfc9457

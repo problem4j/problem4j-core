@@ -3,13 +3,14 @@
 ## Project Details
 
 - **Repository:** `problem4j-core`.
-- **Purpose:** Minimal, framework-agnostic Java library implementing RFC 7807 "Problem Details" object. Provides
-  immutable `Problem` model, builder, and exception for error handling. Intended as a foundation for other
+- **Purpose:** Minimal, framework-agnostic Java library implementing RFC 7807 (aka. RFC 9457) "Problem Details" object.
+  Provides immutable `Problem` model, builder, and exception for error handling. Intended as a foundation for other
   libraries/applications.
 - **Languages:** Java (main), Kotlin (build scripts).
 - **Frameworks/Tools:** Gradle (Kotlin DSL), JUnit Jupiter, AssertJ, Spotless, GitHub Actions CI.
-- **Modules:** Single module.
-- **Java Version:** Java 8+ (toolchain set to 8, CI builds/tests on JDK 17).
+- **Modules:**
+  - `problem4j-core` - core module of Problem4J set of libraries.
+- **Java Version:** Java 8+ (toolchain set to 8, CI builds/tests on JDK 17 due to Gradle 9+ runtime requirements).
 - **Repo Size:** Small (core source, tests, build scripts, CI/CD workflows).
 
 ## Build, Test, Lint, and Validation Steps
@@ -26,6 +27,7 @@
     - Run `./gradlew spotlessCheck` to validate code style.
     - Run `./gradlew spotlessApply` to auto-format code.
     - Lint config in `build.gradle.kts`.
+    - For limiting failures and noise, prefer running `./gradlew spotlessApply build` instead of just `./gradlew build`.
 - **Clean:**
     - Use `./gradlew clean` to remove build artifacts.
 - **Validation:**
@@ -39,14 +41,18 @@
 
 - **Root Files:** `build.gradle.kts`, `settings.gradle.kts`, `README.md`, `RELEASING.md`, `gradlew`, `gradlew.bat`,
   `gradle/libs.versions.toml`, `.github/workflows/`.
-- **Source Code:** `src/main/java/io/github/problem4j/core/`.
-- **Tests:** `src/test/java/io/github/problem4j/core/`.
+- **Source Code:** `src/main/java` in each module.
+- **Tests:** `src/test/java` in each module.
 - **Build Scripts:** All modules have `build.gradle.kts`.
 - **Build Utils:** Custom Gradle scripts in `buildSrc`.
+- **Module Directories:**
+  - `problem4j-core`: Problem4J core, framework-agnostic module.
 
 ## Coding Guidelines
 
 - Do not add self-explaining comments. Use comments only for clarity/context.
+- Do not use wildcard imports.
+- Always rely on `spotlessApply` task from Gradle for code formatting.
 - Follow existing code patterns and naming conventions.
 - Use Gradle tasks for build, test, and lint. Do not attempt manual compilation or test running.
 
@@ -62,8 +68,8 @@
 
 - Trust these instructions for build, test, lint, and validation steps. Only search the codebase if information here is
   incomplete or incorrect.
-- Prioritize changes in `src/main/java/io/github/problem4j/core/` for core logic, and
-  `src/test/java/io/github/problem4j/core/` for tests.
+- Prioritize changes in `src/main/java/` (of each module) for core logic, and `src/test/java/` (of each module) for
+  tests.
 - Always validate changes with a full build and test run before considering the task complete.
 
 ## Troubleshooting & Workarounds
