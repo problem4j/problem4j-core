@@ -27,18 +27,18 @@ import org.junit.jupiter.api.Test;
  * tests help ensure that the coverage reports correctly reflect different execution paths, edge
  * cases, and instrumentation scenarios.
  */
-class AbstractProblemContextTest {
+class ProblemContextImplTest {
 
   @Test
   void givenEmptyContext_whenCreated_thenContextIsEmpty() {
-    ProblemContext context = new AbstractProblemContext() {};
+    ProblemContext context = new ProblemContextImpl();
 
     assertThat(context.toMap()).isEmpty();
   }
 
   @Test
   void givenEmptyContext_whenPuttingValue_thenValueIsStored() {
-    ProblemContext context = new AbstractProblemContext() {};
+    ProblemContext context = new ProblemContextImpl();
 
     context.put("key1", "value1");
 
@@ -47,7 +47,7 @@ class AbstractProblemContextTest {
 
   @Test
   void givenContextWithValue_whenCheckingContainsKey_thenReturnsTrue() {
-    ProblemContext context = new AbstractProblemContext() {};
+    ProblemContext context = new ProblemContextImpl();
     context.put("key1", "value1");
 
     assertThat(context.containsKey("key1")).isTrue();
@@ -55,14 +55,14 @@ class AbstractProblemContextTest {
 
   @Test
   void givenContextWithoutKey_whenCheckingContainsKey_thenReturnsFalse() {
-    ProblemContext context = new AbstractProblemContext() {};
+    ProblemContext context = new ProblemContextImpl();
 
     assertThat(context.containsKey("nonexistent")).isFalse();
   }
 
   @Test
   void givenContextWithValue_whenGettingNonexistentKey_thenReturnsNull() {
-    ProblemContext context = new AbstractProblemContext() {};
+    ProblemContext context = new ProblemContextImpl();
     context.put("key1", "value1");
 
     assertThat(context.get("nonexistent")).isNull();
@@ -70,7 +70,7 @@ class AbstractProblemContextTest {
 
   @Test
   void givenEmptyContext_whenPuttingNullValue_thenKeyIsNotAdded() {
-    ProblemContext context = new AbstractProblemContext() {};
+    ProblemContext context = new ProblemContextImpl();
 
     context.put("key1", null);
 
@@ -80,7 +80,7 @@ class AbstractProblemContextTest {
 
   @Test
   void givenContextWithValue_whenPuttingNullValue_thenKeyIsRemoved() {
-    ProblemContext context = new AbstractProblemContext() {};
+    ProblemContext context = new ProblemContextImpl();
     context.put("key1", "value1");
 
     context.put("key1", null);
@@ -91,7 +91,7 @@ class AbstractProblemContextTest {
 
   @Test
   void givenEmptyContext_whenPuttingMultipleValues_thenAllValuesAreStored() {
-    ProblemContext context = new AbstractProblemContext() {};
+    ProblemContext context = new ProblemContextImpl();
 
     context.put("key1", "value1").put("key2", "value2").put("key3", "value3");
 
@@ -102,7 +102,7 @@ class AbstractProblemContextTest {
 
   @Test
   void givenEmptyContext_whenPuttingValue_thenReturnsSelfForChaining() {
-    ProblemContext context = new AbstractProblemContext() {};
+    ProblemContext context = new ProblemContextImpl();
 
     ProblemContext result = context.put("key1", "value1");
 
@@ -111,7 +111,7 @@ class AbstractProblemContextTest {
 
   @Test
   void givenContextWithValue_whenCalling_toMap_thenReturnsImmutableMap() {
-    ProblemContext context = new AbstractProblemContext() {};
+    ProblemContext context = new ProblemContextImpl();
     context.put("key1", "value1");
 
     Map<String, String> map = context.toMap();
@@ -122,7 +122,7 @@ class AbstractProblemContextTest {
 
   @Test
   void givenContextWithValue_whenModifyingReturnedMap_thenContextIsNotAffected() {
-    ProblemContext context = new AbstractProblemContext() {};
+    ProblemContext context = new ProblemContextImpl();
     context.put("key1", "value1");
 
     Map<String, String> map = context.toMap();
@@ -131,7 +131,7 @@ class AbstractProblemContextTest {
 
   @Test
   void givenContextWithValues_whenUpdatingExistingValue_thenValueIsReplaced() {
-    ProblemContext context = new AbstractProblemContext() {};
+    ProblemContext context = new ProblemContextImpl();
     context.put("key1", "value1");
 
     context.put("key1", "newValue");
@@ -145,7 +145,7 @@ class AbstractProblemContextTest {
     sourceMap.put("key1", "value1");
     sourceMap.put("key2", "value2");
 
-    ProblemContext context = new AbstractProblemContext(sourceMap) {};
+    ProblemContext context = new ProblemContextImpl(sourceMap);
 
     assertThat(context.get("key1")).isEqualTo("value1");
     assertThat(context.get("key2")).isEqualTo("value2");
@@ -156,7 +156,7 @@ class AbstractProblemContextTest {
     Map<String, String> sourceMap = new HashMap<>();
     sourceMap.put("key1", "value1");
 
-    ProblemContext context = new AbstractProblemContext(sourceMap) {};
+    ProblemContext context = new ProblemContextImpl(sourceMap);
     sourceMap.put("key2", "value2");
 
     assertThat(context.containsKey("key2")).isFalse();
@@ -164,11 +164,11 @@ class AbstractProblemContextTest {
 
   @Test
   void givenContextWithValues_whenCreatingContextFromContext_thenValuesAreCopied() {
-    ProblemContext source = new AbstractProblemContext() {};
+    ProblemContext source = new ProblemContextImpl();
     source.put("key1", "value1");
     source.put("key2", "value2");
 
-    ProblemContext context = new AbstractProblemContext(source) {};
+    ProblemContext context = new ProblemContextImpl(source);
 
     assertThat(context.get("key1")).isEqualTo("value1");
     assertThat(context.get("key2")).isEqualTo("value2");
@@ -177,10 +177,10 @@ class AbstractProblemContextTest {
   @Test
   void
       givenContextWithValues_whenCreatingContextFromContext_thenChangesToSourceDontAffectContext() {
-    ProblemContext source = new AbstractProblemContext() {};
+    ProblemContext source = new ProblemContextImpl();
     source.put("key1", "value1");
 
-    ProblemContext context = new AbstractProblemContext(source) {};
+    ProblemContext context = new ProblemContextImpl(source);
     source.put("key2", "value2");
 
     assertThat(context.containsKey("key2")).isFalse();
@@ -189,10 +189,10 @@ class AbstractProblemContextTest {
   @Test
   void
       givenContextWithValues_whenCreatingContextFromContext_thenChangesToNewContextDontAffectSource() {
-    ProblemContext source = new AbstractProblemContext() {};
+    ProblemContext source = new ProblemContextImpl();
     source.put("key1", "value1");
 
-    ProblemContext context = new AbstractProblemContext(source) {};
+    ProblemContext context = new ProblemContextImpl(source);
     context.put("key2", "value2");
 
     assertThat(source.containsKey("key2")).isFalse();
@@ -200,17 +200,17 @@ class AbstractProblemContextTest {
 
   @Test
   void givenEmptyMap_whenCreatingContext_thenContextIsEmpty() {
-    ProblemContext context = new AbstractProblemContext(Collections.emptyMap()) {};
+    ProblemContext context = new ProblemContextImpl(Collections.emptyMap());
 
     assertThat(context.toMap()).isEmpty();
   }
 
   @Test
   void givenTwoContextsWithSameValues_whenComparingEquality_thenTheyAreEqual() {
-    ProblemContext context1 = new AbstractProblemContext() {};
+    ProblemContext context1 = new ProblemContextImpl();
     context1.put("key1", "value1");
 
-    ProblemContext context2 = new AbstractProblemContext() {};
+    ProblemContext context2 = new ProblemContextImpl();
     context2.put("key1", "value1");
 
     assertThat(context1).isEqualTo(context2);
@@ -218,10 +218,10 @@ class AbstractProblemContextTest {
 
   @Test
   void givenTwoContextsWithDifferentValues_whenComparingEquality_thenTheyAreNotEqual() {
-    ProblemContext context1 = new AbstractProblemContext() {};
+    ProblemContext context1 = new ProblemContextImpl();
     context1.put("key1", "value1");
 
-    ProblemContext context2 = new AbstractProblemContext() {};
+    ProblemContext context2 = new ProblemContextImpl();
     context2.put("key1", "value2");
 
     assertThat(context1).isNotEqualTo(context2);
@@ -229,7 +229,7 @@ class AbstractProblemContextTest {
 
   @Test
   void givenContextAndItself_whenComparingEquality_thenTheyAreEqual() {
-    ProblemContext context = new AbstractProblemContext() {};
+    ProblemContext context = new ProblemContextImpl();
     context.put("key1", "value1");
 
     assertThat(context).isEqualTo(context);
@@ -237,14 +237,14 @@ class AbstractProblemContextTest {
 
   @Test
   void givenContextAndNull_whenComparingEquality_thenTheyAreNotEqual() {
-    ProblemContext context = new AbstractProblemContext() {};
+    ProblemContext context = new ProblemContextImpl();
 
     assertThat(context).isNotEqualTo(null);
   }
 
   @Test
   void givenContextAndNonContextObject_whenComparingEquality_thenTheyAreNotEqual() {
-    ProblemContext context = new AbstractProblemContext() {};
+    ProblemContext context = new ProblemContextImpl();
     context.put("key1", "value1");
 
     assertThat(context).isNotEqualTo("not a context");
@@ -252,10 +252,10 @@ class AbstractProblemContextTest {
 
   @Test
   void givenTwoContextsWithSameValues_whenComparingHashCode_thenHashCodesAreEqual() {
-    ProblemContext context1 = new AbstractProblemContext() {};
+    ProblemContext context1 = new ProblemContextImpl();
     context1.put("key1", "value1");
 
-    ProblemContext context2 = new AbstractProblemContext() {};
+    ProblemContext context2 = new ProblemContextImpl();
     context2.put("key1", "value1");
 
     assertThat(context1.hashCode()).isEqualTo(context2.hashCode());
@@ -263,7 +263,7 @@ class AbstractProblemContextTest {
 
   @Test
   void givenContextWithValues_whenCallingToString_thenReturnsMapRepresentation() {
-    ProblemContext context = new AbstractProblemContext() {};
+    ProblemContext context = new ProblemContextImpl();
     context.put("key1", "value1");
 
     String result = context.toString();
@@ -274,7 +274,7 @@ class AbstractProblemContextTest {
 
   @Test
   void givenEmptyContext_whenCallingToString_thenReturnsEmptyMapRepresentation() {
-    ProblemContext context = new AbstractProblemContext() {};
+    ProblemContext context = new ProblemContextImpl();
 
     String result = context.toString();
 
@@ -283,7 +283,7 @@ class AbstractProblemContextTest {
 
   @Test
   void givenContextWithMultipleValues_whenCallingToString_thenReturnsAllValues() {
-    ProblemContext context = new AbstractProblemContext() {};
+    ProblemContext context = new ProblemContextImpl();
     context.put("key1", "value1");
     context.put("key2", "value2");
 
@@ -297,7 +297,7 @@ class AbstractProblemContextTest {
 
   @Test
   void givenContextWithEmptyStringValue_whenPuttingValue_thenValueIsStored() {
-    ProblemContext context = new AbstractProblemContext() {};
+    ProblemContext context = new ProblemContextImpl();
 
     context.put("key1", "");
 
@@ -306,7 +306,7 @@ class AbstractProblemContextTest {
 
   @Test
   void givenContextWithWhitespaceValue_whenPuttingValue_thenValueIsStored() {
-    ProblemContext context = new AbstractProblemContext() {};
+    ProblemContext context = new ProblemContextImpl();
 
     context.put("key1", "   ");
 

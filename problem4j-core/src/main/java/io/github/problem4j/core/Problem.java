@@ -20,7 +20,7 @@ import java.util.Set;
 
 /**
  * Represents a problem detail according to the <a href="https://tools.ietf.org/html/rfc7807">RFC
- * 7807</a> specification.
+ * 7807</a> (aka. <a href="https://tools.ietf.org/html/rfc9457">RFC 9457</a>) specification.
  *
  * <p>Instances of {@link Problem} are intended to be immutable. They provide standard fields such
  * as:

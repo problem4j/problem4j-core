@@ -14,11 +14,21 @@
  */
 package io.github.problem4j.core;
 
+import java.util.Map;
+
 final class ProblemContextImpl extends AbstractProblemContext {
 
   private static final long serialVersionUID = 1L;
 
   ProblemContextImpl() {
     super();
+  }
+
+  ProblemContextImpl(ProblemContext context) {
+    super(context);
+  }
+
+  ProblemContextImpl(Map<String, String> context) {
+    super(context);
   }
 }

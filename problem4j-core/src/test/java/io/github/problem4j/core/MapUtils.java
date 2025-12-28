@@ -16,15 +16,15 @@ package io.github.problem4j.core;
 
 import java.util.HashMap;
 
-public final class MapUtils {
+final class MapUtils {
 
   /**
-   * Creates a map from the given arguments in similar style to Java 9's Map.of().
+   * Creates a map from the given arguments in similar style to Java 9's {@code Map.of()}.
    *
    * @param args an even number of arguments representing key-value pairs
    * @return a HashMap containing the provided key-value pairs
    */
-  public static HashMap<String, Object> mapOf(Object... args) {
+  static HashMap<String, Object> mapOf(Object... args) {
     if (args.length % 2 != 0) {
       throw new IllegalArgumentException("args length must be even");
     }

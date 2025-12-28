@@ -27,7 +27,7 @@ import java.util.stream.Collectors;
 
 /**
  * Represents a problem detail according to the <a href="https://tools.ietf.org/html/rfc7807">RFC
- * 7807</a> specification.
+ * 7807</a> (aka. <a href="https://tools.ietf.org/html/rfc9457">RFC 9457</a>) specification.
  *
  * <p>Instances of {@link Problem} are intended to be immutable. They provide standard fields such
  * as:
@@ -294,11 +294,11 @@ public abstract class AbstractProblem implements Problem, Serializable {
     public String toString() {
       String valueLine;
       if (getValue() instanceof Number || getValue() instanceof Boolean) {
-        valueLine = "\"value\": " + getValue();
+        valueLine = "\"value\" : " + getValue();
       } else {
-        valueLine = "\"value\": " + "\"" + quote(getValue().toString()) + "\"";
+        valueLine = "\"value\" : " + "\"" + quote(getValue().toString()) + "\"";
       }
-      return "{ \"key\": \"" + quote(getKey()) + "\", " + valueLine + " }";
+      return "{ \"key\" : \"" + quote(getKey()) + "\", " + valueLine + " }";
     }
   }
 }

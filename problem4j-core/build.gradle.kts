@@ -15,5 +15,5 @@ dependencies {
 
 internalPublishing {
     displayName = "Problem4J Core"
-    description = "Core library implementing Problem model according to RFC7807"
+    description = "Core library implementing Problem model according to RFC7807 (aka RFC9457)."
 }
