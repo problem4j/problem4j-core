@@ -61,7 +61,7 @@ import java.lang.annotation.Target;
  *
  * <h3>Example usage</h3>
  *
- * <pre><code> {@literal @}ProblemMapping(
+ * <pre>{@code @ProblemMapping(
  *     type = "https://example.org/errors/validation",
  *     title = "Validation Failed",
  *     status = 400,
@@ -77,7 +77,7 @@ import java.lang.annotation.Target;
  *         this.userId = userId;
  *         this.fieldName = fieldName;
  *     }
- * }</code></pre>
+ * }}</pre>
  *
  * <p>This annotation provides a simple and consistent way to map exceptions to RFC 7807 Problems,
  * with support for dynamic data inclusion, null/empty-safe interpolation, and subclass inheritance.
