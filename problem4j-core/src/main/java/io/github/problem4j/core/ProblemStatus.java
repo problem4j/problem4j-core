@@ -102,7 +102,7 @@ public enum ProblemStatus {
   /**
    * 100 Continue.
    *
-   * @link <a href="https://datatracker.ietf.org/doc/html/rfc9110#section-15.2.1">RFC 9110
+   * @see <a href="https://datatracker.ietf.org/doc/html/rfc9110#section-15.2.1">RFC 9110
    *     §15.2.1</a>
    */
   CONTINUE(ProblemStatus.CONTINUE_STATUS, ProblemStatus.CONTINUE_TITLE),
@@ -110,7 +110,7 @@ public enum ProblemStatus {
   /**
    * 101 Switching Protocols.
    *
-   * @link <a href="https://datatracker.ietf.org/doc/html/rfc9110#section-15.2.2">RFC 9110
+   * @see <a href="https://datatracker.ietf.org/doc/html/rfc9110#section-15.2.2">RFC 9110
    *     §15.2.2</a>
    */
   SWITCHING_PROTOCOLS(
@@ -119,14 +119,14 @@ public enum ProblemStatus {
   /**
    * 102 Processing (WebDAV).
    *
-   * @link <a href="https://datatracker.ietf.org/doc/html/rfc2518#section-10.1">RFC 2518 §10.1</a>
+   * @see <a href="https://datatracker.ietf.org/doc/html/rfc2518#section-10.1">RFC 2518 §10.1</a>
    */
   PROCESSING(ProblemStatus.PROCESSING_STATUS, ProblemStatus.PROCESSING_TITLE),
 
   /**
    * 103 Checkpoint.
    *
-   * @link <a href="https://datatracker.ietf.org/doc/html/rfc8297#section-2">RFC 8297 §2</a>
+   * @see <a href="https://datatracker.ietf.org/doc/html/rfc8297#section-2">RFC 8297 §2</a>
    * @deprecated Renamed to {@link #EARLY_HINTS} by RFC 8297.
    */
   @Deprecated
@@ -135,14 +135,14 @@ public enum ProblemStatus {
   /**
    * 103 Early Hints.
    *
-   * @link <a href="https://datatracker.ietf.org/doc/html/rfc8297#section-2">RFC 8297 §2</a>
+   * @see <a href="https://datatracker.ietf.org/doc/html/rfc8297#section-2">RFC 8297 §2</a>
    */
   EARLY_HINTS(ProblemStatus.EARLY_HINTS_STATUS, ProblemStatus.EARLY_HINTS_TITLE),
 
   /**
    * 200 OK.
    *
-   * @link <a href="https://datatracker.ietf.org/doc/html/rfc9110#section-15.3.1">RFC 9110
+   * @see <a href="https://datatracker.ietf.org/doc/html/rfc9110#section-15.3.1">RFC 9110
    *     §15.3.1</a>
    */
   OK(ProblemStatus.OK_STATUS, ProblemStatus.OK_TITLE),
@@ -150,7 +150,7 @@ public enum ProblemStatus {
   /**
    * 201 Created.
    *
-   * @link <a href="https://datatracker.ietf.org/doc/html/rfc9110#section-15.3.2">RFC 9110
+   * @see <a href="https://datatracker.ietf.org/doc/html/rfc9110#section-15.3.2">RFC 9110
    *     §15.3.2</a>
    */
   CREATED(ProblemStatus.CREATED_STATUS, ProblemStatus.CREATED_TITLE),
@@ -158,7 +158,7 @@ public enum ProblemStatus {
   /**
    * 202 Accepted.
    *
-   * @link <a href="https://datatracker.ietf.org/doc/html/rfc9110#section-15.3.3">RFC 9110
+   * @see <a href="https://datatracker.ietf.org/doc/html/rfc9110#section-15.3.3">RFC 9110
    *     §15.3.3</a>
    */
   ACCEPTED(ProblemStatus.ACCEPTED_STATUS, ProblemStatus.ACCEPTED_TITLE),
@@ -166,7 +166,7 @@ public enum ProblemStatus {
   /**
    * 203 Non-Authoritative Information.
    *
-   * @link <a href="https://datatracker.ietf.org/doc/html/rfc9110#section-15.3.4">RFC 9110
+   * @see <a href="https://datatracker.ietf.org/doc/html/rfc9110#section-15.3.4">RFC 9110
    *     §15.3.4</a>
    */
   NON_AUTHORITATIVE_INFORMATION(
@@ -176,7 +176,7 @@ public enum ProblemStatus {
   /**
    * 204 No Content.
    *
-   * @link <a href="https://datatracker.ietf.org/doc/html/rfc9110#section-15.3.5">RFC 9110
+   * @see <a href="https://datatracker.ietf.org/doc/html/rfc9110#section-15.3.5">RFC 9110
    *     §15.3.5</a>
    */
   NO_CONTENT(ProblemStatus.NO_CONTENT_STATUS, ProblemStatus.NO_CONTENT_TITLE),
@@ -184,7 +184,7 @@ public enum ProblemStatus {
   /**
    * 205 Reset Content.
    *
-   * @link <a href="https://datatracker.ietf.org/doc/html/rfc9110#section-15.3.6">RFC 9110
+   * @see <a href="https://datatracker.ietf.org/doc/html/rfc9110#section-15.3.6">RFC 9110
    *     §15.3.6</a>
    */
   RESET_CONTENT(ProblemStatus.RESET_CONTENT_STATUS, ProblemStatus.RESET_CONTENT_TITLE),
@@ -192,7 +192,7 @@ public enum ProblemStatus {
   /**
    * 206 Partial Content.
    *
-   * @link <a href="https://datatracker.ietf.org/doc/html/rfc9110#section-15.3.7">RFC 9110
+   * @see <a href="https://datatracker.ietf.org/doc/html/rfc9110#section-15.3.7">RFC 9110
    *     §15.3.7</a>
    */
   PARTIAL_CONTENT(ProblemStatus.PARTIAL_CONTENT_STATUS, ProblemStatus.PARTIAL_CONTENT_TITLE),
@@ -200,21 +200,21 @@ public enum ProblemStatus {
   /**
    * 207 Multi-Status (WebDAV).
    *
-   * @link <a href="https://datatracker.ietf.org/doc/html/rfc4918#section-11.1">RFC 4918 §11.1</a>
+   * @see <a href="https://datatracker.ietf.org/doc/html/rfc4918#section-11.1">RFC 4918 §11.1</a>
    */
   MULTI_STATUS(ProblemStatus.MULTI_STATUS_STATUS, ProblemStatus.MULTI_STATUS_TITLE),
 
   /**
    * 208 Already Reported (WebDAV).
    *
-   * @link <a href="https://datatracker.ietf.org/doc/html/rfc5842#section-7.1">RFC 5842 §7.1</a>
+   * @see <a href="https://datatracker.ietf.org/doc/html/rfc5842#section-7.1">RFC 5842 §7.1</a>
    */
   ALREADY_REPORTED(ProblemStatus.ALREADY_REPORTED_STATUS, ProblemStatus.ALREADY_REPORTED_TITLE),
 
   /**
    * 226 IM Used.
    *
-   * @link <a href="https://datatracker.ietf.org/doc/html/rfc3229#section-10.4.1">RFC 3229
+   * @see <a href="https://datatracker.ietf.org/doc/html/rfc3229#section-10.4.1">RFC 3229
    *     §10.4.1</a>
    */
   IM_USED(ProblemStatus.IM_USED_STATUS, ProblemStatus.IM_USED_TITLE),
@@ -222,7 +222,7 @@ public enum ProblemStatus {
   /**
    * 300 Multiple Choices.
    *
-   * @link <a href="https://datatracker.ietf.org/doc/html/rfc9110#section-15.4.1">RFC 9110
+   * @see <a href="https://datatracker.ietf.org/doc/html/rfc9110#section-15.4.1">RFC 9110
    *     §15.4.1</a>
    */
   MULTIPLE_CHOICES(ProblemStatus.MULTIPLE_CHOICES_STATUS, ProblemStatus.MULTIPLE_CHOICES_TITLE),
@@ -230,7 +230,7 @@ public enum ProblemStatus {
   /**
    * 301 Moved Permanently.
    *
-   * @link <a href="https://datatracker.ietf.org/doc/html/rfc9110#section-15.4.2">RFC 9110
+   * @see <a href="https://datatracker.ietf.org/doc/html/rfc9110#section-15.4.2">RFC 9110
    *     §15.4.2</a>
    */
   MOVED_PERMANENTLY(ProblemStatus.MOVED_PERMANENTLY_STATUS, ProblemStatus.MOVED_PERMANENTLY_TITLE),
@@ -238,7 +238,7 @@ public enum ProblemStatus {
   /**
    * 302 Found.
    *
-   * @link <a href="https://datatracker.ietf.org/doc/html/rfc9110#section-15.4.3">RFC 9110
+   * @see <a href="https://datatracker.ietf.org/doc/html/rfc9110#section-15.4.3">RFC 9110
    *     §15.4.3</a>
    */
   FOUND(ProblemStatus.FOUND_STATUS, ProblemStatus.FOUND_TITLE),
@@ -246,7 +246,7 @@ public enum ProblemStatus {
   /**
    * 303 See Other.
    *
-   * @link <a href="https://datatracker.ietf.org/doc/html/rfc9110#section-15.4.4">RFC 9110
+   * @see <a href="https://datatracker.ietf.org/doc/html/rfc9110#section-15.4.4">RFC 9110
    *     §15.4.4</a>
    */
   SEE_OTHER(ProblemStatus.SEE_OTHER_STATUS, ProblemStatus.SEE_OTHER_TITLE),
@@ -254,13 +254,13 @@ public enum ProblemStatus {
   /**
    * 304 Not Modified.
    *
-   * @link <a href="https://datatracker.ietf.org/doc/html/rfc9110#section-15.4.5">RFC 9110
+   * @see <a href="https://datatracker.ietf.org/doc/html/rfc9110#section-15.4.5">RFC 9110
    *     §15.4.5</a>
    */
   NOT_MODIFIED(ProblemStatus.NOT_MODIFIED_STATUS, ProblemStatus.NOT_MODIFIED_TITLE),
 
   /**
-   * @link <a href="https://datatracker.ietf.org/doc/html/rfc7231#section-6.4.5">RFC 7231 §6.4.5</a>
+   * @see <a href="https://datatracker.ietf.org/doc/html/rfc7231#section-6.4.5">RFC 7231 §6.4.5</a>
    * @deprecated Obsoleted by RFC 7231. "Use Proxy" is no longer recommended.
    */
   @Deprecated
@@ -269,7 +269,7 @@ public enum ProblemStatus {
   /**
    * 307 Temporary Redirect.
    *
-   * @link <a href="https://datatracker.ietf.org/doc/html/rfc9110#section-15.4.8">RFC 9110
+   * @see <a href="https://datatracker.ietf.org/doc/html/rfc9110#section-15.4.8">RFC 9110
    *     §15.4.8</a>
    */
   TEMPORARY_REDIRECT(
@@ -278,7 +278,7 @@ public enum ProblemStatus {
   /**
    * 308 Permanent Redirect.
    *
-   * @link <a href="https://datatracker.ietf.org/doc/html/rfc7538#section-3">RFC 7538 §3</a>
+   * @see <a href="https://datatracker.ietf.org/doc/html/rfc7538#section-3">RFC 7538 §3</a>
    */
   PERMANENT_REDIRECT(
       ProblemStatus.PERMANENT_REDIRECT_STATUS, ProblemStatus.PERMANENT_REDIRECT_TITLE),
@@ -286,7 +286,7 @@ public enum ProblemStatus {
   /**
    * 400 Bad Request.
    *
-   * @link <a href="https://datatracker.ietf.org/doc/html/rfc9110#section-15.5.1">RFC 9110
+   * @see <a href="https://datatracker.ietf.org/doc/html/rfc9110#section-15.5.1">RFC 9110
    *     §15.5.1</a>
    */
   BAD_REQUEST(ProblemStatus.BAD_REQUEST_STATUS, ProblemStatus.BAD_REQUEST_TITLE),
@@ -294,7 +294,7 @@ public enum ProblemStatus {
   /**
    * 401 Unauthorized.
    *
-   * @link <a href="https://datatracker.ietf.org/doc/html/rfc9110#section-15.5.2">RFC 9110
+   * @see <a href="https://datatracker.ietf.org/doc/html/rfc9110#section-15.5.2">RFC 9110
    *     §15.5.2</a>
    */
   UNAUTHORIZED(ProblemStatus.UNAUTHORIZED_STATUS, ProblemStatus.UNAUTHORIZED_TITLE),
@@ -302,7 +302,7 @@ public enum ProblemStatus {
   /**
    * 402 Payment Required.
    *
-   * @link <a href="https://datatracker.ietf.org/doc/html/rfc9110#section-15.5.3">RFC 9110
+   * @see <a href="https://datatracker.ietf.org/doc/html/rfc9110#section-15.5.3">RFC 9110
    *     §15.5.3</a>
    */
   PAYMENT_REQUIRED(ProblemStatus.PAYMENT_REQUIRED_STATUS, ProblemStatus.PAYMENT_REQUIRED_TITLE),
@@ -310,7 +310,7 @@ public enum ProblemStatus {
   /**
    * 403 Forbidden.
    *
-   * @link <a href="https://datatracker.ietf.org/doc/html/rfc9110#section-15.5.4">RFC 9110
+   * @see <a href="https://datatracker.ietf.org/doc/html/rfc9110#section-15.5.4">RFC 9110
    *     §15.5.4</a>
    */
   FORBIDDEN(ProblemStatus.FORBIDDEN_STATUS, ProblemStatus.FORBIDDEN_TITLE),
@@ -318,7 +318,7 @@ public enum ProblemStatus {
   /**
    * 404 Not Found.
    *
-   * @link <a href="https://datatracker.ietf.org/doc/html/rfc9110#section-15.5.5">RFC 9110
+   * @see <a href="https://datatracker.ietf.org/doc/html/rfc9110#section-15.5.5">RFC 9110
    *     §15.5.5</a>
    */
   NOT_FOUND(ProblemStatus.NOT_FOUND_STATUS, ProblemStatus.NOT_FOUND_TITLE),
@@ -326,7 +326,7 @@ public enum ProblemStatus {
   /**
    * 405 Method Not Allowed.
    *
-   * @link <a href="https://datatracker.ietf.org/doc/html/rfc9110#section-15.5.6">RFC 9110
+   * @see <a href="https://datatracker.ietf.org/doc/html/rfc9110#section-15.5.6">RFC 9110
    *     §15.5.6</a>
    */
   METHOD_NOT_ALLOWED(
@@ -335,7 +335,7 @@ public enum ProblemStatus {
   /**
    * 406 Not Acceptable.
    *
-   * @link <a href="https://datatracker.ietf.org/doc/html/rfc9110#section-15.5.7">RFC 9110
+   * @see <a href="https://datatracker.ietf.org/doc/html/rfc9110#section-15.5.7">RFC 9110
    *     §15.5.7</a>
    */
   NOT_ACCEPTABLE(ProblemStatus.NOT_ACCEPTABLE_STATUS, ProblemStatus.NOT_ACCEPTABLE_TITLE),
@@ -343,7 +343,7 @@ public enum ProblemStatus {
   /**
    * 407 Proxy Authentication Required.
    *
-   * @link <a href="https://datatracker.ietf.org/doc/html/rfc9110#section-15.5.8">RFC 9110
+   * @see <a href="https://datatracker.ietf.org/doc/html/rfc9110#section-15.5.8">RFC 9110
    *     §15.5.8</a>
    */
   PROXY_AUTHENTICATION_REQUIRED(
@@ -353,7 +353,7 @@ public enum ProblemStatus {
   /**
    * 408 Request Timeout.
    *
-   * @link <a href="https://datatracker.ietf.org/doc/html/rfc9110#section-15.5.9">RFC 9110
+   * @see <a href="https://datatracker.ietf.org/doc/html/rfc9110#section-15.5.9">RFC 9110
    *     §15.5.9</a>
    */
   REQUEST_TIMEOUT(ProblemStatus.REQUEST_TIMEOUT_STATUS, ProblemStatus.REQUEST_TIMEOUT_TITLE),
@@ -361,7 +361,7 @@ public enum ProblemStatus {
   /**
    * 409 Conflict.
    *
-   * @link <a href="https://datatracker.ietf.org/doc/html/rfc9110#section-15.5.10">RFC 9110
+   * @see <a href="https://datatracker.ietf.org/doc/html/rfc9110#section-15.5.10">RFC 9110
    *     §15.5.10</a>
    */
   CONFLICT(ProblemStatus.CONFLICT_STATUS, ProblemStatus.CONFLICT_TITLE),
@@ -369,7 +369,7 @@ public enum ProblemStatus {
   /**
    * 410 Gone.
    *
-   * @link <a href="https://datatracker.ietf.org/doc/html/rfc9110#section-15.5.11">RFC 9110
+   * @see <a href="https://datatracker.ietf.org/doc/html/rfc9110#section-15.5.11">RFC 9110
    *     §15.5.11</a>
    */
   GONE(ProblemStatus.GONE_STATUS, ProblemStatus.GONE_TITLE),
@@ -377,7 +377,7 @@ public enum ProblemStatus {
   /**
    * 411 Length Required.
    *
-   * @link <a href="https://datatracker.ietf.org/doc/html/rfc9110#section-15.5.12">RFC 9110
+   * @see <a href="https://datatracker.ietf.org/doc/html/rfc9110#section-15.5.12">RFC 9110
    *     §15.5.12</a>
    */
   LENGTH_REQUIRED(ProblemStatus.LENGTH_REQUIRED_STATUS, ProblemStatus.LENGTH_REQUIRED_TITLE),
@@ -385,7 +385,7 @@ public enum ProblemStatus {
   /**
    * 412 Precondition Failed.
    *
-   * @link <a href="https://datatracker.ietf.org/doc/html/rfc9110#section-15.5.13">RFC 9110
+   * @see <a href="https://datatracker.ietf.org/doc/html/rfc9110#section-15.5.13">RFC 9110
    *     §15.5.13</a>
    */
   PRECONDITION_FAILED(
@@ -394,7 +394,7 @@ public enum ProblemStatus {
   /**
    * 413 Request Entity Too Large.
    *
-   * @link <a href="https://datatracker.ietf.org/doc/html/rfc2616#section-10.4.14">RFC 2616
+   * @see <a href="https://datatracker.ietf.org/doc/html/rfc2616#section-10.4.14">RFC 2616
    *     §10.4.14</a>
    * @deprecated Renamed to {@link #PAYLOAD_TOO_LARGE} in RFC 7231, then to {@link
    *     #CONTENT_TOO_LARGE} in RFC 9110.
@@ -406,7 +406,7 @@ public enum ProblemStatus {
   /**
    * 413 Payload Too Large.
    *
-   * @link <a href="https://datatracker.ietf.org/doc/html/rfc7231#section-6.5.11">RFC 7231
+   * @see <a href="https://datatracker.ietf.org/doc/html/rfc7231#section-6.5.11">RFC 7231
    *     §6.5.11</a>
    * @deprecated Renamed to {@link #CONTENT_TOO_LARGE} in RFC 9110.
    */
@@ -416,7 +416,7 @@ public enum ProblemStatus {
   /**
    * 413 Content Too Large.
    *
-   * @link <a href="https://datatracker.ietf.org/doc/html/rfc9110#section-15.5.14">RFC 9110
+   * @see <a href="https://datatracker.ietf.org/doc/html/rfc9110#section-15.5.14">RFC 9110
    *     §15.5.14</a>
    */
   CONTENT_TOO_LARGE(ProblemStatus.CONTENT_TOO_LARGE_STATUS, ProblemStatus.CONTENT_TOO_LARGE_TITLE),
@@ -424,7 +424,7 @@ public enum ProblemStatus {
   /**
    * 414 Request URI Too Long.
    *
-   * @link <a href="https://datatracker.ietf.org/doc/html/rfc2616#section-10.4.15">RFC 2616
+   * @see <a href="https://datatracker.ietf.org/doc/html/rfc2616#section-10.4.15">RFC 2616
    *     §10.4.15</a>
    * @deprecated Renamed to {@link #URI_TOO_LONG} by RFC 8297.
    */
@@ -435,7 +435,7 @@ public enum ProblemStatus {
   /**
    * 414 URI Too Long.
    *
-   * @link <a href="https://datatracker.ietf.org/doc/html/rfc9110#section-15.5.15">RFC 9110
+   * @see <a href="https://datatracker.ietf.org/doc/html/rfc9110#section-15.5.15">RFC 9110
    *     §15.5.15</a>
    */
   URI_TOO_LONG(ProblemStatus.URI_TOO_LONG_STATUS, ProblemStatus.URI_TOO_LONG_TITLE),
@@ -443,7 +443,7 @@ public enum ProblemStatus {
   /**
    * 415 Unsupported Media Type.
    *
-   * @link <a href="https://datatracker.ietf.org/doc/html/rfc9110#section-15.5.16">RFC 9110
+   * @see <a href="https://datatracker.ietf.org/doc/html/rfc9110#section-15.5.16">RFC 9110
    *     §15.5.16</a>
    */
   UNSUPPORTED_MEDIA_TYPE(
@@ -452,7 +452,7 @@ public enum ProblemStatus {
   /**
    * 416 Requested Range Not Satisfiable.
    *
-   * @link <a href="https://datatracker.ietf.org/doc/html/rfc2616#section-10.4.17">RFC 2616
+   * @see <a href="https://datatracker.ietf.org/doc/html/rfc2616#section-10.4.17">RFC 2616
    *     §10.5.17</a>
    * @deprecated renamed to {@link #RANGE_NOT_SATISFIABLE} by RFC 9110.
    */
@@ -464,7 +464,7 @@ public enum ProblemStatus {
   /**
    * 416 Range Not Satisfiable.
    *
-   * @link <a href="https://datatracker.ietf.org/doc/html/rfc9110#section-15.5.17">RFC 9110
+   * @see <a href="https://datatracker.ietf.org/doc/html/rfc9110#section-15.5.17">RFC 9110
    *     §15.5.17</a>
    */
   RANGE_NOT_SATISFIABLE(
@@ -473,7 +473,7 @@ public enum ProblemStatus {
   /**
    * 417 Expectation Failed.
    *
-   * @link <a href="https://datatracker.ietf.org/doc/html/rfc9110#section-15.5.18">RFC 9110
+   * @see <a href="https://datatracker.ietf.org/doc/html/rfc9110#section-15.5.18">RFC 9110
    *     §15.5.18</a>
    */
   EXPECTATION_FAILED(
@@ -482,14 +482,14 @@ public enum ProblemStatus {
   /**
    * 418 I'm a teapot.
    *
-   * @link <a href="https://datatracker.ietf.org/doc/html/rfc2324#section-2.3.2">RFC 2324 §2.3.2</a>
+   * @see <a href="https://datatracker.ietf.org/doc/html/rfc2324#section-2.3.2">RFC 2324 §2.3.2</a>
    */
   I_AM_A_TEAPOT(ProblemStatus.I_AM_A_TEAPOT_STATUS, ProblemStatus.I_AM_A_TEAPOT_TITLE),
 
   /**
    * 421 Misdirected Request.
    *
-   * @link <a href="https://datatracker.ietf.org/doc/html/rfc7540#section-9.1.2">RFC 7540 §9.1.2</a>
+   * @see <a href="https://datatracker.ietf.org/doc/html/rfc7540#section-9.1.2">RFC 7540 §9.1.2</a>
    */
   MISDIRECTED_REQUEST(
       ProblemStatus.MISDIRECTED_REQUEST_STATUS, ProblemStatus.MISDIRECTED_REQUEST_TITLE),
@@ -497,7 +497,7 @@ public enum ProblemStatus {
   /**
    * 422 Unprocessable Entity.
    *
-   * @link <a href="https://datatracker.ietf.org/doc/html/rfc4918#section-11.2">RFC 4918 §11.2</a>
+   * @see <a href="https://datatracker.ietf.org/doc/html/rfc4918#section-11.2">RFC 4918 §11.2</a>
    * @deprecated renamed to {@link #UNPROCESSABLE_CONTENT} by RFC 9110.
    */
   @Deprecated
@@ -507,7 +507,7 @@ public enum ProblemStatus {
   /**
    * 422 Unprocessable Content.
    *
-   * @link <a href="https://datatracker.ietf.org/doc/html/rfc9110#section-15.5.21">RFC 9110
+   * @see <a href="https://datatracker.ietf.org/doc/html/rfc9110#section-15.5.21">RFC 9110
    *     §15.5.21</a>
    */
   UNPROCESSABLE_CONTENT(
@@ -516,28 +516,28 @@ public enum ProblemStatus {
   /**
    * 423 Locked.
    *
-   * @link <a href="https://datatracker.ietf.org/doc/html/rfc4918#section-11.3">RFC 4918 §11.3</a>
+   * @see <a href="https://datatracker.ietf.org/doc/html/rfc4918#section-11.3">RFC 4918 §11.3</a>
    */
   LOCKED(ProblemStatus.LOCKED_STATUS, ProblemStatus.LOCKED_TITLE),
 
   /**
    * 424 Failed Dependency.
    *
-   * @link <a href="https://datatracker.ietf.org/doc/html/rfc4918#section-11.4">RFC 4918 §11.4</a>
+   * @see <a href="https://datatracker.ietf.org/doc/html/rfc4918#section-11.4">RFC 4918 §11.4</a>
    */
   FAILED_DEPENDENCY(ProblemStatus.FAILED_DEPENDENCY_STATUS, ProblemStatus.FAILED_DEPENDENCY_TITLE),
 
   /**
    * 425 Too Early.
    *
-   * @link <a href="https://datatracker.ietf.org/doc/html/rfc8470#section-5.2">RFC 8470 §5.2</a>
+   * @see <a href="https://datatracker.ietf.org/doc/html/rfc8470#section-5.2">RFC 8470 §5.2</a>
    */
   TOO_EARLY(ProblemStatus.TOO_EARLY_STATUS, ProblemStatus.TOO_EARLY_TITLE),
 
   /**
    * 426 Upgrade Required.
    *
-   * @link <a href="https://datatracker.ietf.org/doc/html/rfc9110#section-15.5.19">RFC 9110
+   * @see <a href="https://datatracker.ietf.org/doc/html/rfc9110#section-15.5.19">RFC 9110
    *     §15.5.19</a>
    */
   UPGRADE_REQUIRED(ProblemStatus.UPGRADE_REQUIRED_STATUS, ProblemStatus.UPGRADE_REQUIRED_TITLE),
@@ -545,7 +545,7 @@ public enum ProblemStatus {
   /**
    * 428 Precondition Required.
    *
-   * @link <a href="https://datatracker.ietf.org/doc/html/rfc6585#section-3">RFC 6585 §3</a>
+   * @see <a href="https://datatracker.ietf.org/doc/html/rfc6585#section-3">RFC 6585 §3</a>
    */
   PRECONDITION_REQUIRED(
       ProblemStatus.PRECONDITION_REQUIRED_STATUS, ProblemStatus.PRECONDITION_REQUIRED_TITLE),
@@ -553,14 +553,14 @@ public enum ProblemStatus {
   /**
    * 429 Too Many Requests.
    *
-   * @link <a href="https://datatracker.ietf.org/doc/html/rfc6585#section-4">RFC 6585 §4</a>
+   * @see <a href="https://datatracker.ietf.org/doc/html/rfc6585#section-4">RFC 6585 §4</a>
    */
   TOO_MANY_REQUESTS(ProblemStatus.TOO_MANY_REQUESTS_STATUS, ProblemStatus.TOO_MANY_REQUESTS_TITLE),
 
   /**
    * 431 Request Header Fields Too Large.
    *
-   * @link <a href="https://datatracker.ietf.org/doc/html/rfc6585#section-5">RFC 6585 §5</a>
+   * @see <a href="https://datatracker.ietf.org/doc/html/rfc6585#section-5">RFC 6585 §5</a>
    */
   REQUEST_HEADER_FIELDS_TOO_LARGE(
       ProblemStatus.REQUEST_HEADER_FIELDS_TOO_LARGE_STATUS,
@@ -569,7 +569,7 @@ public enum ProblemStatus {
   /**
    * 451 Unavailable For Legal Reasons.
    *
-   * @link <a href="https://datatracker.ietf.org/doc/html/rfc7725#section-3">RFC 7725 §3</a>
+   * @see <a href="https://datatracker.ietf.org/doc/html/rfc7725#section-3">RFC 7725 §3</a>
    */
   UNAVAILABLE_FOR_LEGAL_REASONS(
       ProblemStatus.UNAVAILABLE_FOR_LEGAL_REASONS_STATUS,
@@ -578,7 +578,7 @@ public enum ProblemStatus {
   /**
    * 500 Internal Server Error.
    *
-   * @link <a href="https://datatracker.ietf.org/doc/html/rfc9110#section-15.6.1">RFC 9110
+   * @see <a href="https://datatracker.ietf.org/doc/html/rfc9110#section-15.6.1">RFC 9110
    *     §15.6.1</a>
    */
   INTERNAL_SERVER_ERROR(
@@ -587,7 +587,7 @@ public enum ProblemStatus {
   /**
    * 501 Not Implemented.
    *
-   * @link <a href="https://datatracker.ietf.org/doc/html/rfc9110#section-15.6.2">RFC 9110
+   * @see <a href="https://datatracker.ietf.org/doc/html/rfc9110#section-15.6.2">RFC 9110
    *     §15.6.2</a>
    */
   NOT_IMPLEMENTED(ProblemStatus.NOT_IMPLEMENTED_STATUS, ProblemStatus.NOT_IMPLEMENTED_TITLE),
@@ -595,7 +595,7 @@ public enum ProblemStatus {
   /**
    * 502 Bad Gateway.
    *
-   * @link <a href="https://datatracker.ietf.org/doc/html/rfc9110#section-15.6.3">RFC 9110
+   * @see <a href="https://datatracker.ietf.org/doc/html/rfc9110#section-15.6.3">RFC 9110
    *     §15.6.3</a>
    */
   BAD_GATEWAY(ProblemStatus.BAD_GATEWAY_STATUS, ProblemStatus.BAD_GATEWAY_TITLE),
@@ -603,7 +603,7 @@ public enum ProblemStatus {
   /**
    * 503 Service Unavailable.
    *
-   * @link <a href="https://datatracker.ietf.org/doc/html/rfc9110#section-15.6.4">RFC 9110
+   * @see <a href="https://datatracker.ietf.org/doc/html/rfc9110#section-15.6.4">RFC 9110
    *     §15.6.4</a>
    */
   SERVICE_UNAVAILABLE(
@@ -612,7 +612,7 @@ public enum ProblemStatus {
   /**
    * 504 Gateway Timeout.
    *
-   * @link <a href="https://datatracker.ietf.org/doc/html/rfc9110#section-15.6.5">RFC 9110
+   * @see <a href="https://datatracker.ietf.org/doc/html/rfc9110#section-15.6.5">RFC 9110
    *     §15.6.5</a>
    */
   GATEWAY_TIMEOUT(ProblemStatus.GATEWAY_TIMEOUT_STATUS, ProblemStatus.GATEWAY_TIMEOUT_TITLE),
@@ -620,7 +620,7 @@ public enum ProblemStatus {
   /**
    * 505 HTTP Version Not Supported.
    *
-   * @link <a href="https://datatracker.ietf.org/doc/html/rfc9110#section-15.6.6">RFC 9110
+   * @see <a href="https://datatracker.ietf.org/doc/html/rfc9110#section-15.6.6">RFC 9110
    *     §15.6.6</a>
    */
   HTTP_VERSION_NOT_SUPPORTED(
@@ -630,7 +630,7 @@ public enum ProblemStatus {
   /**
    * 506 Variant Also Negotiates.
    *
-   * @link <a href="https://datatracker.ietf.org/doc/html/rfc2295#section-8.1">RFC 2295 §8.1</a>
+   * @see <a href="https://datatracker.ietf.org/doc/html/rfc2295#section-8.1">RFC 2295 §8.1</a>
    */
   VARIANT_ALSO_NEGOTIATES(
       ProblemStatus.VARIANT_ALSO_NEGOTIATES_STATUS, ProblemStatus.VARIANT_ALSO_NEGOTIATES_TITLE),
@@ -638,7 +638,7 @@ public enum ProblemStatus {
   /**
    * 507 Insufficient Storage (WebDAV).
    *
-   * @link <a href="https://datatracker.ietf.org/doc/html/rfc4918#section-11.5">RFC 4918 §11.5</a>
+   * @see <a href="https://datatracker.ietf.org/doc/html/rfc4918#section-11.5">RFC 4918 §11.5</a>
    */
   INSUFFICIENT_STORAGE(
       ProblemStatus.INSUFFICIENT_STORAGE_STATUS, ProblemStatus.INSUFFICIENT_STORAGE_TITLE),
@@ -646,7 +646,7 @@ public enum ProblemStatus {
   /**
    * 508 Loop Detected (WebDAV).
    *
-   * @link <a href="https://datatracker.ietf.org/doc/html/rfc5842#section-7.2">RFC 5842 §7.2</a>
+   * @see <a href="https://datatracker.ietf.org/doc/html/rfc5842#section-7.2">RFC 5842 §7.2</a>
    */
   LOOP_DETECTED(ProblemStatus.LOOP_DETECTED_STATUS, ProblemStatus.LOOP_DETECTED_TITLE),
 
@@ -657,14 +657,14 @@ public enum ProblemStatus {
   /**
    * 510 Not Extended.
    *
-   * @link <a href="https://datatracker.ietf.org/doc/html/rfc2774#section-7">RFC 2774 §7</a>
+   * @see <a href="https://datatracker.ietf.org/doc/html/rfc2774#section-7">RFC 2774 §7</a>
    */
   NOT_EXTENDED(ProblemStatus.NOT_EXTENDED_STATUS, ProblemStatus.NOT_EXTENDED_TITLE),
 
   /**
    * 511 Network Authentication Required.
    *
-   * @link <a href="https://datatracker.ietf.org/doc/html/rfc6585#section-6">RFC 6585 §6</a>
+   * @see <a href="https://datatracker.ietf.org/doc/html/rfc6585#section-6">RFC 6585 §6</a>
    */
   NETWORK_AUTHENTICATION_REQUIRED(
       ProblemStatus.NETWORK_AUTHENTICATION_REQUIRED_STATUS,

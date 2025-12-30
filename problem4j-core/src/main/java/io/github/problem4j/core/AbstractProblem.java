@@ -244,6 +244,7 @@ public abstract class AbstractProblem implements Problem, Serializable {
     return "\"" + field + "\" : \"" + className + ":" + quote(value.toString()) + "\"";
   }
 
+  /** Represents a single key-value extension in a {@link Problem}. */
   public abstract static class AbstractExtension implements Extension, Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -251,21 +252,39 @@ public abstract class AbstractProblem implements Problem, Serializable {
     private final String key;
     private Object value;
 
+    /**
+     * Creates a new extension entry with the given key and value.
+     *
+     * @param key the extension field name, must not be {@code null}
+     * @param value the extension value, may be {@code null}
+     */
     public AbstractExtension(String key, Object value) {
       this.key = key;
       this.value = value;
     }
 
+    /**
+     * @return the extension key
+     */
     @Override
     public String getKey() {
       return key;
     }
 
+    /**
+     * @return the extension value
+     */
     @Override
     public Object getValue() {
       return value;
     }
 
+    /**
+     * Sets the extension value.
+     *
+     * @param value new value
+     * @return the new value
+     */
     @Override
     public Object setValue(Object value) {
       this.value = value;

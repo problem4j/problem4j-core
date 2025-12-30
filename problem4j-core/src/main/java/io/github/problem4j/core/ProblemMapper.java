@@ -48,7 +48,7 @@ public interface ProblemMapper {
   }
 
   /**
-   * Convert {@link Throwable} -> {@link ProblemBuilder} according to its {@link ProblemMapping}
+   * Convert {@link Throwable} -&gt; {@link ProblemBuilder} according to its {@link ProblemMapping}
    * annotation. Such builder can be further extended or executed to create {@code Problem}
    * response.
    *
@@ -59,7 +59,7 @@ public interface ProblemMapper {
   ProblemBuilder toProblemBuilder(Throwable t);
 
   /**
-   * Convert {@link Throwable} -> {@link ProblemBuilder} according to its {@link ProblemMapping}
+   * Convert {@link Throwable} -&gt; {@link ProblemBuilder} according to its {@link ProblemMapping}
    * annotation. Such builder can be further extended or executed to create {@code Problem}
    * response.
    *

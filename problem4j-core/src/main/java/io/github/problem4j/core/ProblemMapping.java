@@ -30,10 +30,10 @@ import java.lang.annotation.Target;
  * <h3>Interpolation</h3>
  *
  * <ul>
- *   <li>{@code {message}} -> the exception's {@link Throwable#getMessage()}
- *   <li>{@code {context.*}} -> value from {@link ProblemContext} included in {@link ProblemMapper}
- *       methods
- *   <li>{@code {fieldName}} -> value of any field (private or public) in the exception class
+ *   <li>{@code {message}} -&gt; the exception's {@link Throwable#getMessage()}
+ *   <li>{@code {context.*}} -&gt; value from {@link ProblemContext} included in evaluation via
+ *       {@link ProblemMapper}
+ *   <li>{@code {fieldName}} -&gt; value of any field (private or public) in the exception class
  *       hierarchy
  *   <li>Any placeholder that resolves to null or an empty string is ignored in the final output
  * </ul>
@@ -90,17 +90,19 @@ public @interface ProblemMapping {
   /**
    * Interpolated type URI for the problem.
    *
-   * <p>Supports placeholders of the form {@code {name}}:
+   * <p>Supports placeholders of the form {@code "{placeholderValue}"}:
    *
    * <ul>
-   *   <li>{@code {message}} -> exception message
-   *   <li>{@code {context.*}} -> value from {@link ProblemContext} included in {@link
-   *       ProblemMapper} methods
-   *   <li>{@code {fieldName}} -> value of any field in the exception class hierarchy
+   *   <li>{@code {message}} -&gt; exception message
+   *   <li>{@code {context.*}} -&gt; value from {@link ProblemContext} included in problem
+   *       evaluation via {@link ProblemMapper}
+   *   <li>{@code {fieldName}} -&gt; value of any field in the exception class hierarchy
    * </ul>
    *
    * <p>If empty, a default type (e.g., {@code about:blank}) may be applied by the processor. Null
    * or empty placeholders are ignored.
+   *
+   * @return interpolated type URI for the problem
    */
   String type() default "";
 
@@ -111,6 +113,8 @@ public @interface ProblemMapping {
    *
    * <p>If empty, the processor may assign the standard HTTP reason phrase corresponding to the
    * {@link #status()}. Null or empty placeholders are ignored.
+   *
+   * @return interpolated title of the problem
    */
   String title() default "";
 
@@ -119,6 +123,8 @@ public @interface ProblemMapping {
    *
    * <p>{@code 0} means "unspecified"; in that case, the processor may apply a default. Used to
    * determine the response status and may influence default title assignment.
+   *
+   * @return status for the problem
    */
   int status() default 0;
 
@@ -128,6 +134,8 @@ public @interface ProblemMapping {
    * <p>Supports placeholders the same way as {@link #type()}.
    *
    * <p>Null or empty placeholder values are ignored in the resulting string.
+   *
+   * @return interpolated detailed description of the problem
    */
   String detail() default "";
 
@@ -138,17 +146,21 @@ public @interface ProblemMapping {
    *
    * <p>If invalid URI or placeholder resolves to null/empty, the processor ignores it. Useful for
    * linking to logs or trace-specific URLs.
+   *
+   * @return interpolated instance URI identifying this occurrence of the problem
    */
   String instance() default "";
 
   /**
-   * Names of fields in the exception class to expose as Problem extensions.
+   * Names of fields in the exception class to expose as problem extensions.
    *
    * <p>Each name is resolved using the same rules as placeholders. Null or empty values are
    * omitted.
    *
    * <p>This allows exposing additional context-specific data for clients, beyond the standard RFC
    * 7807 fields.
+   *
+   * @return names of fields in the exception class to expose as problem extensions
    */
   String[] extensions() default {};
 }

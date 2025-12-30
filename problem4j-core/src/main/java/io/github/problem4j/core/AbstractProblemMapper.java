@@ -29,11 +29,11 @@ import java.util.regex.Pattern;
  *       {@code instance}):
  *       <ol>
  *         <li>Read the raw annotation value.
- *         <li>Interpolate placeholders of the form {@code {name}}:
+ *         <li>Interpolate placeholders of the form {@code "{placeholderValue}"}:
  *             <ul>
- *               <li>{@code {message}} -> {@link Throwable#getMessage()}
- *               <li>{@code {context.*}} -> {@link ProblemContext#get(String)}
- *               <li>{@code {fieldName}} -> any field in the exception class hierarchy
+ *               <li>{@code {message}} -&gt; {@link Throwable#getMessage()}
+ *               <li>{@code {context.*}} -&gt; {@link ProblemContext#get(String)}
+ *               <li>{@code {fieldName}} -&gt; any field in the exception class hierarchy
  *             </ul>
  *         <li>Ignore placeholders that resolve to null or empty string.
  *         <li>Assign the interpolated value to the {@link ProblemBuilder}, ignoring invalid URIs
@@ -61,13 +61,22 @@ public abstract class AbstractProblemMapper implements ProblemMapper {
   protected static final String MESSAGE_LABEL = "message";
   protected static final String CONTEXT_LABEL_PREFIX = "context.";
 
+  /**
+   * Convert {@link Throwable} -&gt; {@link ProblemBuilder} according to its {@link ProblemMapping}
+   * annotation. Such builder can be further extended or executed to create {@link Problem}
+   * response.
+   *
+   * @param t {@link Throwable} to convert (may be {@code null})
+   * @return a {@link ProblemBuilder} instance
+   * @throws ProblemMappingException when something goes wrong while building the Problem
+   */
   @Override
   public ProblemBuilder toProblemBuilder(Throwable t) {
     return toProblemBuilder(t, null);
   }
 
   /**
-   * Convert {@link Throwable} -> {@link ProblemBuilder} according to its {@link ProblemMapping}
+   * Convert {@link Throwable} -&gt; {@link ProblemBuilder} according to its {@link ProblemMapping}
    * annotation.
    *
    * @param t {@link Throwable} to convert (may be {@code null})
@@ -251,12 +260,12 @@ public abstract class AbstractProblemMapper implements ProblemMapper {
   }
 
   /**
-   * Interpolates placeholders of the form {@code {name}}. Supported keys:
+   * Interpolates placeholders of the form {@code "{placeholderValue}"}. Supported keys:
    *
    * <ul>
    *   <li>{@code message} - throwable message
-   *   <li>{@code {context.*}} -> value from {@link ProblemContext} included in {@link
-   *       ProblemMapper} methods
+   *   <li>{@code {context.*}} -&gt; value from {@link ProblemContext} included in evaluation via
+   *       {@link ProblemMapper}
    *   <li>Any other token - value of a matching field in the throwable class hierarchy
    * </ul>
    *
