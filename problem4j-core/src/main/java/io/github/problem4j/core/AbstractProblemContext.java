@@ -145,11 +145,11 @@ public abstract class AbstractProblemContext implements ProblemContext, Serializ
 
   @Override
   public int hashCode() {
-    return Objects.hashCode(context);
+    return Objects.hashCode(toMap());
   }
 
   @Override
   public String toString() {
-    return context.toString();
+    return toMap().toString();
   }
 }
