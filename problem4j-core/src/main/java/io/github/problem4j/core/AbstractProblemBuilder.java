@@ -17,7 +17,7 @@ package io.github.problem4j.core;
 import java.io.Serializable;
 import java.net.URI;
 import java.util.Collection;
-import java.util.LinkedHashMap;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Stream;
@@ -37,7 +37,7 @@ public abstract class AbstractProblemBuilder implements ProblemBuilder, Serializ
   private int status = 0;
   private String detail;
   private URI instance;
-  private final Map<String, Object> extensions = new LinkedHashMap<>();
+  private final Map<String, Object> extensions = new HashMap<>();
 
   /**
    * Creates a new, empty {@code AbstractProblemBuilder}.
