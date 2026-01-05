@@ -20,12 +20,17 @@
  */
 package io.github.problem4j.core;
 
+import static io.github.problem4j.core.JsonEscape.escape;
+
 import java.io.Serializable;
 import java.net.URI;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /**
@@ -267,7 +272,47 @@ public abstract class AbstractProblemBuilder implements ProblemBuilder, Serializ
     return new ProblemImpl(type, title, status, detail, instance, extensions);
   }
 
+  @Override
+  public String toString() {
+    List<String> lines = new ArrayList<>();
+    if (type != null) {
+      lines.add("\"type\" : \"" + escape(type.toString()) + "\"");
+    }
+    if (title != null) {
+      lines.add("\"title\" : \"" + escape(title) + "\"");
+    }
+    lines.add("\"status\" : " + status);
+    if (detail != null) {
+      lines.add("\"detail\" : \"" + escape(detail) + "\"");
+    }
+    if (instance != null) {
+      lines.add("\"instance\" : \"" + escape(instance.toString()) + "\"");
+    }
+
+    extensions.forEach(
+        (field, value) -> {
+          if (value == null) {
+            return;
+          }
+
+          if (value instanceof String) {
+            lines.add("\"" + field + "\" : \"" + escape((String) value) + "\"");
+          } else if (value instanceof Number || value instanceof Boolean) {
+            lines.add("\"" + field + "\" : " + value);
+          } else {
+            lines.add(getObjectLine(field, value));
+          }
+        });
+
+    return lines.stream().collect(Collectors.joining(", ", "{ ", " }"));
+  }
+
   private static boolean isExtensionValid(Problem.Extension extension) {
     return extension != null && extension.getKey() != null && extension.getValue() != null;
+  }
+
+  private String getObjectLine(String field, Object value) {
+    String className = value.getClass().getSimpleName();
+    return "\"" + field + "\" : \"" + className + ":" + escape(value.toString()) + "\"";
   }
 }

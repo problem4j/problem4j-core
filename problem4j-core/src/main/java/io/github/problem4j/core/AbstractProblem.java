@@ -20,6 +20,8 @@
  */
 package io.github.problem4j.core;
 
+import static io.github.problem4j.core.JsonEscape.escape;
+
 import java.io.Serializable;
 import java.net.URI;
 import java.util.ArrayList;
@@ -209,17 +211,17 @@ public abstract class AbstractProblem implements Problem, Serializable {
   public String toString() {
     List<String> lines = new ArrayList<>();
     if (getType() != null) {
-      lines.add("\"type\" : \"" + quote(getType().toString()) + "\"");
+      lines.add("\"type\" : \"" + escape(getType().toString()) + "\"");
     }
     if (getTitle() != null) {
-      lines.add("\"title\" : \"" + quote(getTitle()) + "\"");
+      lines.add("\"title\" : \"" + escape(getTitle()) + "\"");
     }
     lines.add("\"status\" : " + getStatus());
     if (getDetail() != null) {
-      lines.add("\"detail\" : \"" + quote(getDetail()) + "\"");
+      lines.add("\"detail\" : \"" + escape(getDetail()) + "\"");
     }
     if (getInstance() != null) {
-      lines.add("\"instance\" : \"" + quote(getInstance().toString()) + "\"");
+      lines.add("\"instance\" : \"" + escape(getInstance().toString()) + "\"");
     }
 
     getExtensionMembers()
@@ -230,7 +232,7 @@ public abstract class AbstractProblem implements Problem, Serializable {
               }
 
               if (value instanceof String) {
-                lines.add("\"" + field + "\" : \"" + quote((String) value) + "\"");
+                lines.add("\"" + field + "\" : \"" + escape((String) value) + "\"");
               } else if (value instanceof Number || value instanceof Boolean) {
                 lines.add("\"" + field + "\" : " + value);
               } else {
@@ -241,13 +243,9 @@ public abstract class AbstractProblem implements Problem, Serializable {
     return lines.stream().collect(Collectors.joining(", ", "{ ", " }"));
   }
 
-  private static String quote(String string) {
-    return JsonEscape.escape(string);
-  }
-
   private String getObjectLine(String field, Object value) {
     String className = value.getClass().getSimpleName();
-    return "\"" + field + "\" : \"" + className + ":" + quote(value.toString()) + "\"";
+    return "\"" + field + "\" : \"" + className + ":" + escape(value.toString()) + "\"";
   }
 
   /** Represents a single key-value extension in a {@link Problem}. */
@@ -321,9 +319,9 @@ public abstract class AbstractProblem implements Problem, Serializable {
       if (getValue() instanceof Number || getValue() instanceof Boolean) {
         valueLine = "\"value\" : " + getValue();
       } else {
-        valueLine = "\"value\" : " + "\"" + quote(getValue().toString()) + "\"";
+        valueLine = "\"value\" : " + "\"" + escape(getValue().toString()) + "\"";
       }
-      return "{ \"key\" : \"" + quote(getKey()) + "\", " + valueLine + " }";
+      return "{ \"key\" : \"" + escape(getKey()) + "\", " + valueLine + " }";
     }
   }
 }

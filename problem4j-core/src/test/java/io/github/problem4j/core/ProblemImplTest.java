@@ -244,18 +244,4 @@ class ProblemImplTest {
 
     assertThat(ext1.hashCode()).isNotEqualTo(ext2.hashCode());
   }
-
-  private static class DummyObject {
-
-    private final String value;
-
-    DummyObject(String value) {
-      this.value = value;
-    }
-
-    @Override
-    public String toString() {
-      return value;
-    }
-  }
 }
