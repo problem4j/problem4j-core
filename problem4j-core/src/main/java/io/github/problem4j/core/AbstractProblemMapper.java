@@ -67,6 +67,9 @@ public abstract class AbstractProblemMapper implements ProblemMapper {
   protected static final String MESSAGE_LABEL = "message";
   protected static final String CONTEXT_LABEL_PREFIX = "context.";
 
+  /** Creates a new instance of problem mapper. */
+  public AbstractProblemMapper() {}
+
   /**
    * Convert {@link Throwable} -&gt; {@link ProblemBuilder} according to its {@link ProblemMapping}
    * annotation. Such builder can be further extended or executed to create {@link Problem}
