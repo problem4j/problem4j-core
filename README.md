@@ -27,7 +27,6 @@ It is intended to be used as a **foundation** for other libraries or application
 - ✅ Builder pattern for fluent construction.
 - ✅ `@ProblemMapping` annotation and `ProblemMapper` to allow declarative approach in converting exception instances
   into `Problem` objects.
-- ✅ Builder pattern for fluent construction.
 - ✅ Serializable and easy to log or format.
 - ✅ HTTP-agnostic (no external dependencies).
 - ✅ Follows [RFC 7807][rfc7807] semantics:
