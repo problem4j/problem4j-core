@@ -240,7 +240,9 @@ public abstract class AbstractProblem implements Problem, Serializable {
               }
             });
 
-    return entries.isEmpty() ? "{ }" : entries.stream().collect(Collectors.joining(", ", "{ ", " }"));
+    return entries.isEmpty()
+        ? "{ }"
+        : entries.stream().collect(Collectors.joining(", ", "{ ", " }"));
   }
 
   private String getObjectLine(String field, Object value) {
