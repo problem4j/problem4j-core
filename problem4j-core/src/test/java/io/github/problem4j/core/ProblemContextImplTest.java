@@ -284,7 +284,7 @@ class ProblemContextImplTest {
 
     String result = context.toString();
 
-    assertThat(result).isEqualTo("{}");
+    assertThat(result).isEqualTo("{ }");
   }
 
   @Test

@@ -20,11 +20,14 @@
  */
 package io.github.problem4j.core;
 
+import static io.github.problem4j.core.JsonEscape.escape;
+
 import java.io.Serializable;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 /**
  * Base implementation of {@link ProblemContext} backed by a {@link Map}.
@@ -156,6 +159,15 @@ public abstract class AbstractProblemContext implements ProblemContext, Serializ
 
   @Override
   public String toString() {
-    return toMap().toString();
+    if (toMap().isEmpty()) {
+      return "{ }";
+    }
+    return toMap().entrySet().stream()
+        .map(this::toEntryLine)
+        .collect(Collectors.joining(", ", "{ ", " }"));
+  }
+
+  private String toEntryLine(Map.Entry<String, String> entry) {
+    return "\"" + escape(entry.getKey()) + "\" : \"" + escape(entry.getValue()) + "\"";
   }
 }

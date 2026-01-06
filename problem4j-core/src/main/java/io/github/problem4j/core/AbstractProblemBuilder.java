@@ -274,19 +274,19 @@ public abstract class AbstractProblemBuilder implements ProblemBuilder, Serializ
 
   @Override
   public String toString() {
-    List<String> lines = new ArrayList<>();
+    List<String> entries = new ArrayList<>();
     if (type != null) {
-      lines.add("\"type\" : \"" + escape(type.toString()) + "\"");
+      entries.add("\"type\" : \"" + escape(type.toString()) + "\"");
     }
     if (title != null) {
-      lines.add("\"title\" : \"" + escape(title) + "\"");
+      entries.add("\"title\" : \"" + escape(title) + "\"");
     }
-    lines.add("\"status\" : " + status);
+    entries.add("\"status\" : " + status);
     if (detail != null) {
-      lines.add("\"detail\" : \"" + escape(detail) + "\"");
+      entries.add("\"detail\" : \"" + escape(detail) + "\"");
     }
     if (instance != null) {
-      lines.add("\"instance\" : \"" + escape(instance.toString()) + "\"");
+      entries.add("\"instance\" : \"" + escape(instance.toString()) + "\"");
     }
 
     extensions.forEach(
@@ -296,15 +296,17 @@ public abstract class AbstractProblemBuilder implements ProblemBuilder, Serializ
           }
 
           if (value instanceof String) {
-            lines.add("\"" + field + "\" : \"" + escape((String) value) + "\"");
+            entries.add("\"" + field + "\" : \"" + escape((String) value) + "\"");
           } else if (value instanceof Number || value instanceof Boolean) {
-            lines.add("\"" + field + "\" : " + value);
+            entries.add("\"" + field + "\" : " + value);
           } else {
-            lines.add(getObjectLine(field, value));
+            entries.add(getObjectLine(field, value));
           }
         });
 
-    return lines.stream().collect(Collectors.joining(", ", "{ ", " }"));
+    return entries.isEmpty()
+        ? "{ }"
+        : entries.stream().collect(Collectors.joining(", ", "{ ", " }"));
   }
 
   private static boolean isExtensionValid(Problem.Extension extension) {

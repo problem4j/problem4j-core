@@ -209,19 +209,19 @@ public abstract class AbstractProblem implements Problem, Serializable {
 
   @Override
   public String toString() {
-    List<String> lines = new ArrayList<>();
+    List<String> entries = new ArrayList<>();
     if (getType() != null) {
-      lines.add("\"type\" : \"" + escape(getType().toString()) + "\"");
+      entries.add("\"type\" : \"" + escape(getType().toString()) + "\"");
     }
     if (getTitle() != null) {
-      lines.add("\"title\" : \"" + escape(getTitle()) + "\"");
+      entries.add("\"title\" : \"" + escape(getTitle()) + "\"");
     }
-    lines.add("\"status\" : " + getStatus());
+    entries.add("\"status\" : " + getStatus());
     if (getDetail() != null) {
-      lines.add("\"detail\" : \"" + escape(getDetail()) + "\"");
+      entries.add("\"detail\" : \"" + escape(getDetail()) + "\"");
     }
     if (getInstance() != null) {
-      lines.add("\"instance\" : \"" + escape(getInstance().toString()) + "\"");
+      entries.add("\"instance\" : \"" + escape(getInstance().toString()) + "\"");
     }
 
     getExtensionMembers()
@@ -232,15 +232,15 @@ public abstract class AbstractProblem implements Problem, Serializable {
               }
 
               if (value instanceof String) {
-                lines.add("\"" + field + "\" : \"" + escape((String) value) + "\"");
+                entries.add("\"" + field + "\" : \"" + escape((String) value) + "\"");
               } else if (value instanceof Number || value instanceof Boolean) {
-                lines.add("\"" + field + "\" : " + value);
+                entries.add("\"" + field + "\" : " + value);
               } else {
-                lines.add(getObjectLine(field, value));
+                entries.add(getObjectLine(field, value));
               }
             });
 
-    return lines.stream().collect(Collectors.joining(", ", "{ ", " }"));
+    return entries.isEmpty() ? "{ }" : entries.stream().collect(Collectors.joining(", ", "{ ", " }"));
   }
 
   private String getObjectLine(String field, Object value) {
@@ -315,13 +315,21 @@ public abstract class AbstractProblem implements Problem, Serializable {
 
     @Override
     public String toString() {
-      String valueLine;
-      if (getValue() instanceof Number || getValue() instanceof Boolean) {
-        valueLine = "\"value\" : " + getValue();
-      } else {
-        valueLine = "\"value\" : " + "\"" + escape(getValue().toString()) + "\"";
+      List<String> entries = new ArrayList<>();
+
+      if (getKey() != null) {
+        entries.add("\"key\" : \"" + escape(getKey()) + "\"");
       }
-      return "{ \"key\" : \"" + escape(getKey()) + "\", " + valueLine + " }";
+
+      if (getValue() instanceof Number || getValue() instanceof Boolean) {
+        entries.add("\"value\" : " + getValue());
+      } else if (getValue() != null) {
+        entries.add("\"value\" : " + "\"" + escape(getValue().toString()) + "\"");
+      }
+
+      return entries.isEmpty()
+          ? "{ }"
+          : entries.stream().collect(Collectors.joining(", ", "{ ", " }"));
     }
   }
 }
