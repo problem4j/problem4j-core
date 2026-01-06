@@ -41,11 +41,11 @@ import java.util.stream.Collectors;
  * as:
  *
  * <ul>
- *   <li>{@code type} – a URI identifying the type of the problem
- *   <li>{@code title} – a short, human-readable summary of the problem
- *   <li>{@code status} – the HTTP status code generated for this problem
- *   <li>{@code detail} – a human-readable explanation specific to this occurrence
- *   <li>{@code instance} – a URI identifying the specific occurrence of the problem
+ *   <li>{@code type} - a URI identifying the type of the problem
+ *   <li>{@code title} - a short, human-readable summary of the problem
+ *   <li>{@code status} - the HTTP status code generated for this problem
+ *   <li>{@code detail} - a human-readable explanation specific to this occurrence
+ *   <li>{@code instance} - a URI identifying the specific occurrence of the problem
  * </ul>
  *
  * In addition, custom extensions can be added to provide extra context.
@@ -161,7 +161,7 @@ public abstract class AbstractProblem implements Problem, Serializable {
   /**
    * Returns a map of all extension members.
    *
-   * <p>This method provides a complete view of all extension key–value pairs, which is useful when
+   * <p>This method provides a complete view of all extension key-value pairs, which is useful when
    * callers need to handle extensions in bulk rather than querying them individually. It
    * complements {@link #getExtensionValue(String)} and {@link #hasExtension(String)} by exposing
    * the full extension payload at once.

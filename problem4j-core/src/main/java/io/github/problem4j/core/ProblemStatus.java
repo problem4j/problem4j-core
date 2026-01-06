@@ -60,7 +60,7 @@ import java.util.stream.Collectors;
  *       207 Multi-Status, 422 Unprocessable Entity, 423 Locked, 424 Failed Dependency.
  *   <li><b>1999-06</b> - RFC 2616: Hypertext Transfer Protocol -- HTTP/1.1 (Obsoleted) (<a
  *       href="https://datatracker.ietf.org/doc/html/rfc2616">link</a>) - core set:
- *       100,101,200–206,300–305,400–417,500–505.
+ *       100,101,200-206,300-305,400-417,500-505.
  *   <li><b>2000-02</b> - RFC 2774: An HTTP Extension Framework (<a
  *       href="https://datatracker.ietf.org/doc/html/rfc2774">link</a>) - adds 510 Not Extended.
  *   <li><b>2002-01</b> - RFC 3229: Delta encoding in HTTP (<a
