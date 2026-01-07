@@ -1,6 +1,6 @@
 [versions]
 assertj = "3.27.6"
-junit = "5.14.1"
+junit = "5.14.2"
 nmcp = "1.4.3"
 spotless = "8.1.0"
 
