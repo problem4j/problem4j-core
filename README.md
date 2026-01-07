@@ -17,6 +17,7 @@ It is intended to be used as a **foundation** for other libraries or application
 - [Features](#features)
 - [Example](#example)
 - [Usage](#usage)
+- [Project Status](#project-status)
 - [Problem4J Links](#problem4j-links)
 - [Building from source](#building-from-source)
 
@@ -39,6 +40,8 @@ It is intended to be used as a **foundation** for other libraries or application
 
 ## Example
 
+Throw an instance of `ProblemException`.
+
 ```java
 import io.github.problem4j.core.Problem;
 import io.github.problem4j.core.ProblemException;
@@ -53,6 +56,8 @@ Problem problem =
         .build();
 throw new ProblemException(problem);
 ```
+
+Throw an exception annotated with `@ProblemMapping`.
 
 ```java
 import io.github.problem4j.core.ProblemMapping;
@@ -102,8 +107,17 @@ higher is required to use this library.
    }
     ```
 
+## Project Status
+
+[![Status: Feature Complete](https://img.shields.io/badge/feature%20complete-darkblue?label=status)](#project-status)
+
+**Problem4J Core** is considered *feature complete*. Only **bug fixes** will be added. New features may be included only
+if there is a strong justification for them; otherwise, future projects are expected to build on this one as a
+dependency.
+
 ## Problem4J Links
 
+- [`problem4j.github.io`](https://problem4j.github.io) - Full documentation of all projects from Problem4J family.
 - [`problem4j-core`][problem4j-core] - Core library defining `Problem` model and `ProblemException`.
 - [`problem4j-jackson`][problem4j-jackson] - Jackson module for serializing and deserializing `Problem` objects.
 - [`problem4j-spring`][problem4j-spring] - Spring modules extending `ResponseEntityExceptionHandler` for handling
