@@ -20,6 +20,7 @@
  */
 package io.github.problem4j.core;
 
+import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Inherited;
 import java.lang.annotation.Retention;
@@ -90,9 +91,10 @@ import java.lang.annotation.Target;
  * <p>This annotation provides a simple and consistent way to map exceptions to RFC 7807 Problems,
  * with support for dynamic data inclusion, null/empty-safe interpolation, and subclass inheritance.
  */
-@Target(ElementType.TYPE)
-@Retention(RetentionPolicy.RUNTIME)
+@Documented
 @Inherited
+@Retention(RetentionPolicy.RUNTIME)
+@Target(ElementType.TYPE)
 public @interface ProblemMapping {
 
   /**
