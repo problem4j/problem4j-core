@@ -163,6 +163,7 @@ public abstract class AbstractProblemContext implements ProblemContext, Serializ
       return "{ }";
     }
     return toMap().entrySet().stream()
+        .sorted(Map.Entry.comparingByKey())
         .map(this::toEntryLine)
         .collect(Collectors.joining(", ", "{ ", " }"));
   }

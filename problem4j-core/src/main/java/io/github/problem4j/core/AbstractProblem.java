@@ -224,9 +224,13 @@ public abstract class AbstractProblem implements Problem, Serializable {
       entries.add("\"instance\" : \"" + escape(getInstance().toString()) + "\"");
     }
 
-    getExtensionMembers()
+    getExtensionMembers().entrySet().stream()
+        .sorted(Map.Entry.comparingByKey())
         .forEach(
-            (field, value) -> {
+            entry -> {
+              String field = entry.getKey();
+              Object value = entry.getValue();
+
               if (value == null) {
                 return;
               }

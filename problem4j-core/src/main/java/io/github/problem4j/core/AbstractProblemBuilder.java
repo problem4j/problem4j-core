@@ -289,20 +289,25 @@ public abstract class AbstractProblemBuilder implements ProblemBuilder, Serializ
       entries.add("\"instance\" : \"" + escape(instance.toString()) + "\"");
     }
 
-    extensions.forEach(
-        (field, value) -> {
-          if (value == null) {
-            return;
-          }
+    extensions.entrySet().stream()
+        .sorted(Map.Entry.comparingByKey())
+        .forEach(
+            entry -> {
+              String field = entry.getKey();
+              Object value = entry.getValue();
 
-          if (value instanceof String) {
-            entries.add("\"" + field + "\" : \"" + escape((String) value) + "\"");
-          } else if (value instanceof Number || value instanceof Boolean) {
-            entries.add("\"" + field + "\" : " + value);
-          } else {
-            entries.add(getObjectLine(field, value));
-          }
-        });
+              if (value == null) {
+                return;
+              }
+
+              if (value instanceof String) {
+                entries.add("\"" + field + "\" : \"" + escape((String) value) + "\"");
+              } else if (value instanceof Number || value instanceof Boolean) {
+                entries.add("\"" + field + "\" : " + value);
+              } else {
+                entries.add(getObjectLine(field, value));
+              }
+            });
 
     return entries.isEmpty()
         ? "{ }"
