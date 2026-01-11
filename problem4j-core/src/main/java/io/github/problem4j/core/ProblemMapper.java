@@ -22,7 +22,7 @@ package io.github.problem4j.core;
 
 /**
  * Converts exceptions annotated with {@link ProblemMapping} into {@link ProblemBuilder} instances,
- * which can be further extended or executed to create {@code Problem} response.
+ * which can be further extended or executed to create {@link Problem} response.
  *
  * <p>Implementations may optionally make use of a {@link ProblemContext} to provide request- or
  * application-specific data such as trace IDs.
@@ -37,7 +37,7 @@ package io.github.problem4j.core;
  * }
  * }</pre>
  *
- * <p>Implementations should return {@code null} if the exception class is not annotated with {@code
+ * <p>Implementations should return {@code null} if the exception class is not annotated with {@link
  * ProblemMapping}, and may throw {@link ProblemMappingException} if an error occurs during problem
  * creation.
  */
@@ -55,7 +55,7 @@ public interface ProblemMapper {
 
   /**
    * Convert {@link Throwable} -&gt; {@link ProblemBuilder} according to its {@link ProblemMapping}
-   * annotation. Such builder can be further extended or executed to create {@code Problem}
+   * annotation. Such builder can be further extended or executed to create {@link Problem}
    * response.
    *
    * @param t {@link Throwable} to convert (may be {@code null})
@@ -66,13 +66,13 @@ public interface ProblemMapper {
 
   /**
    * Convert {@link Throwable} -&gt; {@link ProblemBuilder} according to its {@link ProblemMapping}
-   * annotation. Such builder can be further extended or executed to create {@code Problem}
+   * annotation. Such builder can be further extended or executed to create {@link Problem}
    * response.
    *
    * @param t {@link Throwable} to convert (may be {@code null})
    * @param context optional {@link ProblemContext} (may be {@code null})
    * @return a {@link ProblemBuilder} instance
-   * @throws ProblemMappingException when something goes wrong while building the Problem
+   * @throws ProblemMappingException when something goes wrong while building the {@link Problem}
    */
   ProblemBuilder toProblemBuilder(Throwable t, ProblemContext context);
 

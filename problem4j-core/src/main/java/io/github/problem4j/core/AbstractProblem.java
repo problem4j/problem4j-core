@@ -62,7 +62,7 @@ public abstract class AbstractProblem implements Problem, Serializable {
   private final Map<String, Object> extensions;
 
   /**
-   * Constructs a new {@code AbstractProblem} instance with the given details.
+   * Constructs a new {@link AbstractProblem} instance with the given details.
    *
    * @param type the URI that identifies the type of the problem; must not be {@code null}
    * @param title a short, human-readable summary of the problem

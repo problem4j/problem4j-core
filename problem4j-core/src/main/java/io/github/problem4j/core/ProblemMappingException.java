@@ -21,9 +21,9 @@
 package io.github.problem4j.core;
 
 /**
- * Thrown when processing an annotated exception into a Problem fails. {@code @RestControllerAdvice}
- * or any other handlers can catch this and return a safe {@code 500 Problem}. No other exception is
- * supposed to be thrown from {@link ProblemMapper}.
+ * Thrown when processing an annotated exception into a {@link Problem} fails.
+ * {@code @RestControllerAdvice} or any other handlers can catch this and return a safe {@code 500}.
+ * No other exception is supposed to be thrown from {@link ProblemMapper}.
  */
 public class ProblemMappingException extends RuntimeException {
 

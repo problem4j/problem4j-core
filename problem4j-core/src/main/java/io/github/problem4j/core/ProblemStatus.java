@@ -33,7 +33,7 @@ import java.util.stream.Collectors;
  *
  * <pre>{@code
  * // instead of calling two methods
- * Problem problem = Problem.builder()
+ * Problem problem1 = Problem.builder()
  *     .title("Not Found")
  *     .status(404)
  *     .build();
@@ -1189,7 +1189,7 @@ public enum ProblemStatus {
   private final int status;
 
   /**
-   * Construct a {@code ProblemStatus} enum constant.
+   * Construct a {@link ProblemStatus} enum constant.
    *
    * @param status integer HTTP status code
    * @param title human-readable title commonly associated with the status code

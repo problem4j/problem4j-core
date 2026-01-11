@@ -51,20 +51,20 @@ public abstract class AbstractProblemBuilder implements ProblemBuilder, Serializ
   private final Map<String, Object> extensions = new HashMap<>();
 
   /**
-   * Creates a new, empty {@code AbstractProblemBuilder}.
+   * Creates a new, empty {@link AbstractProblemBuilder}.
    *
    * <p>Use this builder to incrementally construct an {@link Problem} instance.
    */
   public AbstractProblemBuilder() {}
 
   /**
-   * Creates a new {@code AbstractProblemBuilder} initialized with values from an existing {@code
+   * Creates a new {@link AbstractProblemBuilder} initialized with values from an existing {@link
    * Problem}.
    *
    * <p>This copies all properties from the given {@code problem} so that modifications to the
-   * builder do not affect the original {@code Problem} instance.
+   * builder do not affect the original {@link Problem} instance.
    *
-   * @param problem the {@code Problem} whose values are copied into the builder; must not be {@code
+   * @param problem the {@link Problem} whose values are copied into the builder; must not be {@code
    *     null}
    */
   public AbstractProblemBuilder(Problem problem) {
@@ -243,15 +243,15 @@ public abstract class AbstractProblemBuilder implements ProblemBuilder, Serializ
    * <p>Default value evaluation (all defaults are applied at build time):
    *
    * <ul>
-   *   <li>If no type was provided, the resulting {@code Problem} will use {@code
+   *   <li>If no type was provided, the resulting {@link Problem} will use {@link
    *       Problem#BLANK_TYPE}.
-   *   <li>If no title was provided, but the numeric status corresponds to a known {@code
-   *       ProblemStatus}, the builder will use the matching {@code ProblemStatus#getTitle()} as the
+   *   <li>If no title was provided, but the numeric status corresponds to a known {@link
+   *       ProblemStatus}, the builder will use the matching {@link ProblemStatus#getTitle()} as the
    *       problem title.
    *   <li>The numeric status defaults to <code>0</code> when not set; a title will not be derived
-   *       from status when it is <code>0</code> or when it does not map to any known {@code
+   *       from status when it is <code>0</code> or when it does not map to any known {@link
    *       ProblemStatus}.
-   *   <li>Any extensions configured on the builder will be present on the created {@code Problem}.
+   *   <li>Any extensions configured on the builder will be present on the created {@link Problem}.
    * </ul>
    *
    * @return a new {@link Problem} instance

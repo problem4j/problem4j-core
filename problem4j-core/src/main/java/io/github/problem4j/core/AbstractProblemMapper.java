@@ -56,9 +56,9 @@ import java.util.regex.Pattern;
  *   <li>Build and return the {@link ProblemBuilder}.
  * </ol>
  *
- * <p>This design allows dynamic, context-aware Problem generation, supports subclass inheritance,
- * and ensures that null or empty values do not appear in the output, making Problems concise and
- * meaningful.
+ * <p>This design allows dynamic, context-aware {@link Problem} generation, supports subclass
+ * inheritance, and ensures that null or empty values do not appear in the output, making Problems
+ * concise and meaningful.
  */
 public abstract class AbstractProblemMapper implements ProblemMapper {
 

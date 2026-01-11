@@ -137,15 +137,15 @@ public interface ProblemBuilder {
    * <p>Default value evaluation (all defaults are applied at build time):
    *
    * <ul>
-   *   <li>If no type was provided, the resulting {@code Problem} will use {@code
+   *   <li>If no type was provided, the resulting {@link Problem} will use {@link
    *       Problem#BLANK_TYPE}.
-   *   <li>If no title was provided, but the numeric status corresponds to a known {@code
-   *       ProblemStatus}, the builder will use the matching {@code ProblemStatus#getTitle()} as the
+   *   <li>If no title was provided, but the numeric status corresponds to a known {@link
+   *       ProblemStatus}, the builder will use the matching {@link ProblemStatus#getTitle()} as the
    *       problem title.
    *   <li>The numeric status defaults to <code>0</code> when not set; a title will not be derived
-   *       from status when it is <code>0</code> or when it does not map to any known {@code
+   *       from status when it is <code>0</code> or when it does not map to any known {@link
    *       ProblemStatus}.
-   *   <li>Any extensions configured on the builder will be present on the created {@code Problem}.
+   *   <li>Any extensions configured on the builder will be present on the created {@link Problem}.
    * </ul>
    *
    * @return a new {@link Problem} instance

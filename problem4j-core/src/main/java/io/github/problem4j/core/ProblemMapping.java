@@ -27,10 +27,12 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Annotation to map a {@link Throwable} to an RFC 7807 {@code Problem}.
+ * Annotation to map a {@link Throwable} to an <a href="https://tools.ietf.org/html/rfc7807">RFC
+ * 7807</a> {@link Problem} (aka. <a href="https://tools.ietf.org/html/rfc9457">RFC 9457</a>)
+ * specification.
  *
  * <p>This annotation allows you to declaratively specify how a specific exception should be
- * converted into a Problem response. All string values support dynamic interpolation of
+ * converted into a {@link Problem} response. All string values support dynamic interpolation of
  * placeholders based on the exception's fields and context.
  *
  * <h3>Interpolation</h3>
@@ -51,9 +53,9 @@ import java.lang.annotation.Target;
  *
  * <h3>Extensions</h3>
  *
- * <p>Use {@link #extensions()} to expose additional fields as Problem extensions. Each name is
- * resolved using the same rules as placeholders (fields in the class hierarchy). Null or empty
- * values are automatically omitted from the final Problem.
+ * <p>Use {@link #extensions()} to expose additional fields as {@link Problem} extensions. Each name
+ * is resolved using the same rules as placeholders (fields in the class hierarchy). Null or empty
+ * values are automatically omitted from the final {@link Problem}.
  *
  * <h3>Defaulting behavior</h3>
  *
