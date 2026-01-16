@@ -6,7 +6,6 @@ spotless = "8.1.0"
 
 [plugins]
 nmcp = { id = "com.gradleup.nmcp", version.ref = "nmcp" }
-nmcp-aggregation = { id = "com.gradleup.nmcp.aggregation", version.ref = "nmcp" }
 spotless = { id = "com.diffplug.spotless", version.ref = "spotless" }
 
 [libraries]

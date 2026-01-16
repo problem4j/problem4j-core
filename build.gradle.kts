@@ -1,18 +1,28 @@
 import com.diffplug.spotless.LineEnding
 
 plugins {
-    id("internal.convention-common")
-    alias(libs.plugins.nmcp).apply(false)
-    alias(libs.plugins.nmcp.aggregation)
+    id("internal.convention-java-library")
+    id("internal.convention-publishing")
+    alias(libs.plugins.nmcp)
     alias(libs.plugins.spotless)
 }
 
-dependencies {
-    nmcpAggregation(project(":problem4j-core"))
+internalPublishing {
+    displayName = "Problem4J Core"
+    description = "Core library implementing Problem model according to RFC7807 (aka RFC9457)."
 }
 
-nmcpAggregation {
-    centralPortal {
+dependencies {
+    testImplementation(platform(libs.junit.bom))
+
+    testImplementation(libs.junit.jupiter)
+    testRuntimeOnly(libs.junit.platform.launcher)
+
+    testImplementation(libs.assertj.core)
+}
+
+nmcp {
+    publishAllPublicationsToCentralPortal {
         username = System.getenv("PUBLISHING_USERNAME")
         password = System.getenv("PUBLISHING_PASSWORD")
 
@@ -40,7 +50,7 @@ spotless {
     }
 
     kotlinGradle {
-        target("*.gradle.kts", "problem4j-*/*.gradle.kts", "buildSrc/*.gradle.kts", "buildSrc/src/**/*.gradle.kts")
+        target("*.gradle.kts", "buildSrc/*.gradle.kts", "buildSrc/src/**/*.gradle.kts")
 
         ktlint("1.8.0").editorConfigOverride(mapOf("max_line_length" to "120"))
         endWithNewline()

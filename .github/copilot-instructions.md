@@ -8,8 +8,6 @@
   libraries/applications.
 - **Languages:** Java (main), Kotlin (build scripts).
 - **Frameworks/Tools:** Gradle (Kotlin DSL), JUnit Jupiter, AssertJ, Spotless, GitHub Actions CI.
-- **Modules:**
-  - `problem4j-core` - core module of Problem4J set of libraries.
 - **Java Version:** Java 8+ (toolchain set to 8, CI builds/tests on JDK 17 due to Gradle 9+ runtime requirements).
 - **Repo Size:** Small (core source, tests, build scripts, CI/CD workflows).
 
@@ -41,12 +39,10 @@
 
 - **Root Files:** `build.gradle.kts`, `settings.gradle.kts`, `README.md`, `RELEASING.md`, `gradlew`, `gradlew.bat`,
   `gradle/libs.versions.toml`, `.github/workflows/`.
-- **Source Code:** `src/main/java` in each module.
-- **Tests:** `src/test/java` in each module.
+- **Source Code:** `src/main/java`.
+- **Tests:** `src/test/java`.
 - **Build Scripts:** All modules have `build.gradle.kts`.
 - **Build Utils:** Custom Gradle scripts in `buildSrc`.
-- **Module Directories:**
-  - `problem4j-core`: Problem4J core, framework-agnostic module.
 
 ## Coding Guidelines
 
