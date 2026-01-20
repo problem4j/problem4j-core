@@ -34,7 +34,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /**
- * Builder interface for constructing {@link Problem} instances.
+ * Base implementation of builder for constructing {@link Problem} instances.
  *
  * <p>Provides a fluent API to set standard fields and custom extensions before creating an
  * immutable {@link Problem}.
