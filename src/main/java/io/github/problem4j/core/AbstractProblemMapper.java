@@ -116,8 +116,9 @@ public abstract class AbstractProblemMapper implements ProblemMapper {
     } catch (ProblemMappingException e) {
       // explicit rethrow so next clause doesn't have ProblemProcessingException as a cause
       throw e;
-    } catch (RuntimeException e) {
-      throw new ProblemMappingException("Unexpected failure while processing @ProblemMapping", e);
+    } catch (Exception e) {
+      throw new ProblemMappingException(
+          "Unexpected failure while processing @ProblemMapping of " + t.getClass().getName(), e);
     }
   }
 
