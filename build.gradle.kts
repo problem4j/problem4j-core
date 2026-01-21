@@ -7,11 +7,6 @@ plugins {
     alias(libs.plugins.spotless)
 }
 
-internalPublishing {
-    displayName = "Problem4J Core"
-    description = "Core library implementing Problem model according to RFC7807 (aka RFC9457)."
-}
-
 dependencies {
     testImplementation(platform(libs.junit.bom))
 
@@ -19,6 +14,12 @@ dependencies {
     testRuntimeOnly(libs.junit.platform.launcher)
 
     testImplementation(libs.assertj.core)
+}
+
+// see buildSrc/src/main/kotlin/internal.publishing-convention.gradle.kts
+internalPublishing {
+    displayName = "Problem4J Core"
+    description = "Core library implementing Problem model according to RFC7807 (aka RFC9457)."
 }
 
 nmcp {
