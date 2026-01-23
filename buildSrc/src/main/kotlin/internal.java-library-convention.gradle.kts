@@ -18,14 +18,12 @@ tasks.withType<JavaCompile>().configureEach {
 tasks.withType<Jar>().configureEach {
     dependsOn("cleanLibs")
     manifest {
-        attributes(
-            "Implementation-Title" to project.name,
-            "Implementation-Version" to project.version,
-            "Build-Jdk-Spec" to java.toolchain.languageVersion.get().toString(),
-            "Created-By" to "Gradle ${gradle.gradleVersion}",
-        )
+        attributes["Implementation-Title"] = project.name
+        attributes["Implementation-Version"] = project.version
+        attributes["Build-Jdk-Spec"] = java.toolchain.languageVersion.get().toString()
+        attributes["Created-By"] = "Gradle ${gradle.gradleVersion}"
     }
-    from("../LICENSE") {
+    from("LICENSE") {
         into("META-INF/")
         rename { "LICENSE.txt" }
     }
