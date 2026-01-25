@@ -30,10 +30,13 @@ package io.github.problem4j.core;
  * <p>Example usage:
  *
  * <pre>{@code
- * ProblemMappingProcessor processor = ...;
+ * ProblemMapper mapper = ...;
+ * ProblemContext context = ...;
+ *
  * Throwable ex = new ValidationException("user-123", "email");
- * if (processor.isAnnotated(ex)) {
- *     Problem problem = processor.toBuilder(ex, context).build();
+ *
+ * if (mapper.isMappingCandidate(ex)) {
+ *     Problem problem = mapper.toProblemBuilder(ex, context).build();
  * }
  * }</pre>
  *
