@@ -1,7 +1,7 @@
 [versions]
 assertj = "3.27.6"
 junit = "5.14.2"
-nmcp = "1.4.3"
+nmcp = "1.4.4"
 spotless = "8.2.0"
 
 [plugins]
