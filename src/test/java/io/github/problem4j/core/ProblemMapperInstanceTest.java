@@ -1,0 +1,82 @@
+/*
+ * Copyright (c) 2026 Damian Malczewski
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ */
+package io.github.problem4j.core;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.mockStatic;
+import static org.mockito.Mockito.when;
+
+import java.util.Iterator;
+import java.util.ServiceLoader;
+import org.junit.jupiter.api.Test;
+import org.mockito.MockedStatic;
+
+class ProblemMapperInstanceTest {
+
+  @Test
+  void
+      givenNoServiceLoaderImplementation_whenLoad_ProblemMapper_thenReturnsDefaultImplementation() {
+    ProblemMapper mapper = ProblemMapperInstance.createInstance();
+
+    assertThat(mapper).isInstanceOf(ProblemMapperImpl.class);
+  }
+
+  @Test
+  void givenServiceLoaderThrowsException_whenLoad_ProblemMapper_thenReturnsDefaultImplementation() {
+    Iterator<ProblemMapper> iterator = mock();
+    when(iterator.hasNext()).thenReturn(true, false);
+    when(iterator.next()).thenThrow(new RuntimeException("test exception"));
+
+    ServiceLoader<ProblemMapper> serviceLoader = mock();
+    when(serviceLoader.iterator()).thenReturn(iterator);
+
+    ProblemMapper mapper;
+
+    try (MockedStatic<ServiceLoader<ProblemMapper>> mocked = mockStatic()) {
+      mocked.when(() -> ServiceLoader.load(ProblemMapper.class)).thenReturn(serviceLoader);
+      mapper = ProblemMapperInstance.createInstance();
+    }
+
+    assertThat(mapper).isInstanceOf(ProblemMapperImpl.class);
+  }
+
+  @Test
+  void givenServiceLoaderWithImplementation_whenLoad_ProblemMapper_thenReturnsThatImplementation() {
+    class DummyProblemMapper extends AbstractProblemMapper {}
+
+    Iterator<ProblemMapper> iterator = mock();
+    when(iterator.hasNext()).thenReturn(true, false);
+    when(iterator.next()).thenReturn(new DummyProblemMapper());
+
+    ServiceLoader<ProblemMapper> serviceLoader = mock();
+    when(serviceLoader.iterator()).thenReturn(iterator);
+
+    ProblemMapper mapper;
+
+    try (MockedStatic<ServiceLoader<ProblemMapper>> mocked = mockStatic()) {
+      mocked.when(() -> ServiceLoader.load(ProblemMapper.class)).thenReturn(serviceLoader);
+      mapper = ProblemMapperInstance.createInstance();
+    }
+
+    assertThat(mapper).isInstanceOf(DummyProblemMapper.class);
+  }
+}
