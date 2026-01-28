@@ -193,7 +193,7 @@ public abstract class AbstractProblemBuilder implements ProblemBuilder, Serializ
    * @return this builder instance for chaining
    */
   @Override
-  public ProblemBuilder extension(Map<String, Object> extensions) {
+  public ProblemBuilder extensions(Map<String, Object> extensions) {
     if (extensions != null && !extensions.isEmpty()) {
       extensions.forEach(
           (key, value) -> {
@@ -212,7 +212,7 @@ public abstract class AbstractProblemBuilder implements ProblemBuilder, Serializ
    * @return this builder instance for chaining
    */
   @Override
-  public ProblemBuilder extension(Problem.Extension... extensions) {
+  public ProblemBuilder extensions(Problem.Extension... extensions) {
     if (extensions != null && extensions.length > 0) {
       Stream.of(extensions)
           .filter(AbstractProblemBuilder::isExtensionValid)
@@ -228,7 +228,7 @@ public abstract class AbstractProblemBuilder implements ProblemBuilder, Serializ
    * @return this builder instance for chaining
    */
   @Override
-  public ProblemBuilder extension(Collection<? extends Problem.Extension> extensions) {
+  public ProblemBuilder extensions(Collection<? extends Problem.Extension> extensions) {
     if (extensions != null && !extensions.isEmpty()) {
       extensions.stream()
           .filter(AbstractProblemBuilder::isExtensionValid)
