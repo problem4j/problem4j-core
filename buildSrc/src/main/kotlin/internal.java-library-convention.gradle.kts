@@ -38,6 +38,9 @@ tasks.withType<Test>().configureEach {
         showStandardStreams = true
     }
 
+    // For resolving warnings from mockito.
+    jvmArgs("-XX:+EnableDynamicAgentLoading")
+
     systemProperty("user.language", "en")
     systemProperty("user.country", "US")
 }
