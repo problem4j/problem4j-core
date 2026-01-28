@@ -14,6 +14,7 @@ dependencies {
     testRuntimeOnly(libs.junit.platform.launcher)
 
     testImplementation(libs.assertj.core)
+    testImplementation(libs.mockito.core)
 }
 
 // see buildSrc/src/main/kotlin/internal.publishing-convention.gradle.kts

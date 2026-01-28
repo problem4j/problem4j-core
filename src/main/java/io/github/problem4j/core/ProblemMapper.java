@@ -50,10 +50,14 @@ public interface ProblemMapper {
    * Creates a default {@link ProblemMapper} instance. The returned mapper provides the standard
    * mapping behavior defined by this library.
    *
+   * <p>To configure a custom implementation, create a file named {@code
+   * META-INF/services/io.github.problem4j.core.ProblemMapper} in your classpath, and list the fully
+   * qualified class name of your implementation in that file.
+   *
    * @return a new {@link ProblemMapper} instance
    */
   static ProblemMapper create() {
-    return new ProblemMapperImpl();
+    return ProblemMapperInstance.createInstance();
   }
 
   /**
