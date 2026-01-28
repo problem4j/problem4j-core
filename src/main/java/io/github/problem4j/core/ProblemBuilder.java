@@ -113,7 +113,17 @@ public interface ProblemBuilder {
    * @param extensions map of extension keys and values
    * @return this builder instance for chaining
    */
-  ProblemBuilder extension(Map<String, Object> extensions);
+  ProblemBuilder extensions(Map<String, Object> extensions);
+
+  /**
+   * Adds multiple custom extensions from varargs of {@link Problem.Extension}.
+   *
+   * @param extension array of extensions
+   * @return this builder instance for chaining
+   */
+  default ProblemBuilder extension(Problem.Extension extension) {
+    return extensions(extension);
+  }
 
   /**
    * Adds multiple custom extensions from varargs of {@link Problem.Extension}.
@@ -121,7 +131,7 @@ public interface ProblemBuilder {
    * @param extensions array of extensions
    * @return this builder instance for chaining
    */
-  ProblemBuilder extension(Problem.Extension... extensions);
+  ProblemBuilder extensions(Problem.Extension... extensions);
 
   /**
    * Adds multiple custom extensions from a collection of {@link Problem.Extension}.
@@ -129,7 +139,7 @@ public interface ProblemBuilder {
    * @param extensions collection of extensions
    * @return this builder instance for chaining
    */
-  ProblemBuilder extension(Collection<? extends Problem.Extension> extensions);
+  ProblemBuilder extensions(Collection<? extends Problem.Extension> extensions);
 
   /**
    * Builds an immutable {@link Problem} instance with the configured properties and extensions.
@@ -151,4 +161,49 @@ public interface ProblemBuilder {
    * @return a new {@link Problem} instance
    */
   Problem build();
+
+  /**
+   * Adds multiple custom extensions from a map.
+   *
+   * <p><b>Deprecated</b> due to confusing name as singular "extension" suggests adding a single
+   * extension, while the method actually adds multiple extensions from the provided map.
+   *
+   * @param extensions map of extension keys and values
+   * @return this builder instance for chaining
+   * @deprecated use {@link #extensions(Map)} instead
+   */
+  @Deprecated
+  default ProblemBuilder extension(Map<String, Object> extensions) {
+    return extensions(extensions);
+  }
+
+  /**
+   * Adds multiple custom extensions from varargs of {@link Problem.Extension}.
+   *
+   * <p><b>Deprecated</b> due to confusing name as singular "extension" suggests adding a single
+   * extension, while the method actually adds multiple extensions from the provided vararg.
+   *
+   * @param extensions array of extensions
+   * @return this builder instance for chaining
+   * @deprecated use {@link #extensions(Problem.Extension...)} instead
+   */
+  @Deprecated
+  default ProblemBuilder extension(Problem.Extension... extensions) {
+    return extensions(extensions);
+  }
+
+  /**
+   * Adds multiple custom extensions from a collection of {@link Problem.Extension}.
+   *
+   * <p><b>Deprecated</b> due to confusing name as singular "extension" suggests adding a single
+   * extension, while the method actually adds multiple extensions from the provided collection.
+   *
+   * @param extensions collection of extensions
+   * @return this builder instance for chaining
+   * @deprecated use {@link #extensions(Collection)} instead
+   */
+  @Deprecated
+  default ProblemBuilder extension(Collection<? extends Problem.Extension> extensions) {
+    return extensions(extensions);
+  }
 }
