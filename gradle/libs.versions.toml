@@ -2,7 +2,7 @@
 assertj = "3.27.7"
 junit = "6.0.2"
 nmcp = "1.4.4"
-spotless = "8.2.0"
+spotless = "8.2.1"
 
 [plugins]
 nmcp = { id = "com.gradleup.nmcp", version.ref = "nmcp" }
