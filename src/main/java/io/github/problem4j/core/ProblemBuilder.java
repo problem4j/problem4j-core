@@ -116,7 +116,7 @@ public interface ProblemBuilder {
   ProblemBuilder extensions(Map<String, Object> extensions);
 
   /**
-   * Adds multiple custom extensions from varargs of {@link Problem.Extension}.
+   * Adds single custom extension from {@link Problem.Extension}.
    *
    * @param extension array of extensions
    * @return this builder instance for chaining
