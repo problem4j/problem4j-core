@@ -50,10 +50,13 @@ public interface ProblemMapper {
    * Creates a default {@link ProblemMapper} instance. The returned mapper provides the standard
    * mapping behavior defined by this library.
    *
+   * <p>Note that because default implementation is thread-safe and stateless, since {@code v1.3.3}
+   * this method returns a singleton instance.
+   *
    * @return a new {@link ProblemMapper} instance
    */
   static ProblemMapper create() {
-    return new ProblemMapperImpl();
+    return ProblemMapperImpl.INSTANCE;
   }
 
   /**

@@ -29,11 +29,11 @@ import org.junit.jupiter.params.provider.CsvSource;
 
 class ProblemMapperTest {
 
-  private ProblemMapper processor;
+  private ProblemMapper mapper;
 
   @BeforeEach
   void beforeEach() {
-    processor = ProblemMapper.create();
+    mapper = ProblemMapper.create();
   }
 
   @Test
@@ -50,7 +50,7 @@ class ProblemMapperTest {
     }
     MessageException ex = new MessageException("boom");
 
-    Problem problem = processor.toProblemBuilder(ex).build();
+    Problem problem = mapper.toProblemBuilder(ex).build();
 
     assertThat(problem).isNotNull();
     assertThat(problem)
@@ -81,7 +81,7 @@ class ProblemMapperTest {
     }
     PrivateFieldException ex = new PrivateFieldException("ignored", "s3cr3t");
 
-    Problem problem = processor.toProblemBuilder(ex).build();
+    Problem problem = mapper.toProblemBuilder(ex).build();
 
     assertThat(problem).isNotNull();
     assertThat(problem)
@@ -125,7 +125,7 @@ class ProblemMapperTest {
     ContextException ex = new ContextException("v");
 
     Problem problem =
-        processor.toProblemBuilder(ex, ProblemContext.create().put("traceId", traceId)).build();
+        mapper.toProblemBuilder(ex, ProblemContext.create().put("traceId", traceId)).build();
 
     assertThat(problem).isNotNull();
     assertThat(problem)
@@ -161,7 +161,7 @@ class ProblemMapperTest {
 
     ExtensionsException ex = new ExtensionsException("s", null);
 
-    Problem problem = processor.toProblemBuilder(ex).build();
+    Problem problem = mapper.toProblemBuilder(ex).build();
 
     assertThat(problem).isNotNull();
     assertThat(problem)
@@ -189,7 +189,7 @@ class ProblemMapperTest {
     }
     RepeatException ex = new RepeatException("X");
 
-    Problem problem = processor.toProblemBuilder(ex).build();
+    Problem problem = mapper.toProblemBuilder(ex).build();
 
     assertThat(problem).isNotNull();
     assertThat(problem)
@@ -224,7 +224,7 @@ class ProblemMapperTest {
     }
     ChildOfAnnotated ex = new ChildOfAnnotated("hello");
 
-    Problem problem = processor.toProblemBuilder(ex).build();
+    Problem problem = mapper.toProblemBuilder(ex).build();
 
     assertThat(problem).isNotNull();
     assertThat(problem)
@@ -246,7 +246,7 @@ class ProblemMapperTest {
     }
     MessageException ex = new MessageException("boom");
 
-    Problem problem = processor.toProblemBuilder(ex).build();
+    Problem problem = mapper.toProblemBuilder(ex).build();
 
     assertThat(problem).isNotNull();
     assertThat(problem).isEqualTo(Problem.builder().status(0).build());
@@ -267,7 +267,7 @@ class ProblemMapperTest {
 
     MalformedPlaceholderException ex = new MalformedPlaceholderException();
 
-    Problem problem = processor.toProblemBuilder(ex).build();
+    Problem problem = mapper.toProblemBuilder(ex).build();
     assertThat(problem).isNotNull();
     assertThat(problem)
         .isEqualTo(
@@ -286,7 +286,7 @@ class ProblemMapperTest {
 
     Throwable ex = new DirectAnnotatedException();
 
-    assertThat(processor.isMappingCandidate(ex)).isTrue();
+    assertThat(mapper.isMappingCandidate(ex)).isTrue();
   }
 
   @Test
@@ -295,7 +295,7 @@ class ProblemMapperTest {
 
     Throwable ex = new PlainException();
 
-    assertThat(processor.isMappingCandidate(ex)).isFalse();
+    assertThat(mapper.isMappingCandidate(ex)).isFalse();
   }
 
   @Test
@@ -307,11 +307,11 @@ class ProblemMapperTest {
 
     Throwable ex = new SubException();
 
-    assertThat(processor.isMappingCandidate(ex)).isTrue();
+    assertThat(mapper.isMappingCandidate(ex)).isTrue();
   }
 
   @Test
   void isMappingCandidate_returnsFalse_forNull() {
-    assertThat(processor.isMappingCandidate(null)).isFalse();
+    assertThat(mapper.isMappingCandidate(null)).isFalse();
   }
 }
