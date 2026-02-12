@@ -19,6 +19,8 @@
  * SOFTWARE.
  */
 
+import org.jspecify.annotations.NullMarked;
+
 /**
  * Core classes and interfaces for the Problem4J set of libraries, implementing <a
  * href="https://tools.ietf.org/html/rfc7807">RFC 7807: Problem Details for HTTP APIs</a>.
@@ -44,17 +46,10 @@
  *
  * <p>This library is framework-agnostic and intended to be used as a basis for higher-level
  * integrations (e.g., with Spring Boot, Micronaut, or other web frameworks).
- *
- * <p>All public APIs in this package are annotated with {@code NullMarked} to indicate that they
- * are non-null by default, unless explicitly annotated with {@code Nullable}.
- *
- * @see io.github.problem4j.core.Problem
- * @see io.github.problem4j.core.ProblemBuilder
- * @see io.github.problem4j.core.ProblemException
- * @see io.github.problem4j.core.ProblemMapper
- * @see io.github.problem4j.core.ProblemMapping
  */
 @NullMarked
-package io.github.problem4j.core;
+module io.github.problem4j.core {
+  requires static org.jspecify;
 
-import org.jspecify.annotations.NullMarked;
+  exports io.github.problem4j.core;
+}
