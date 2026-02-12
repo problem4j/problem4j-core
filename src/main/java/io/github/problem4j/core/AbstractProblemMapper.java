@@ -80,7 +80,7 @@ public abstract class AbstractProblemMapper implements ProblemMapper {
    * @throws ProblemMappingException when something goes wrong while building the Problem
    */
   @Override
-  public ProblemBuilder toProblemBuilder(Throwable t) {
+  public final ProblemBuilder toProblemBuilder(Throwable t) {
     return toProblemBuilder(t, null);
   }
 
