@@ -77,7 +77,7 @@ import java.util.stream.Collectors;
  *       Authentication Required.
  *   <li><b>2014-06</b> - RFC 7231: HTTP/1.1 Semantics and Content (<a
  *       href="https://datatracker.ietf.org/doc/html/rfc7231">link</a>) - deprecates 305 Use Proxy;
- *       renames 413 Request Entity Too Large → Payload Too Large; 414 Request-URI Too Long → URI
+ *       renames 413 Request Entity Too Large to Payload Too Large; 414 Request-URI Too Long to URI
  *       Too Long.
  *   <li><b>2015-04</b> - RFC 7538: Status Code 308 (Permanent Redirect) (<a
  *       href="https://datatracker.ietf.org/doc/html/rfc7538">link</a>) - adds 308 Permanent
@@ -95,8 +95,8 @@ import java.util.stream.Collectors;
  *       href="https://datatracker.ietf.org/doc/html/rfc8470">link</a>) - adds 425 Too Early.
  *   <li><b>2022-06</b> - RFC 9110: HTTP Semantics (<a
  *       href="https://datatracker.ietf.org/doc/html/rfc9110">link</a>) - renames 413 Payload Too
- *       Large → Content Too Large; 416 Requested Range Not Satisfiable → Range Not Satisfiable; 422
- *       Unprocessable Entity → Unprocessable Content; consolidates prior semantics.
+ *       Large to Content Too Large; 416 Requested Range Not Satisfiable to Range Not Satisfiable;
+ *       422 Unprocessable Entity to Unprocessable Content; consolidates prior semantics.
  * </ul>
  *
  * @see <a href="https://http.cat/">HTTP Cats</a>
