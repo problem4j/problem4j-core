@@ -1154,21 +1154,6 @@ public enum ProblemStatus {
       "Network Authentication Required";
 
   /**
-   * Lookup map from integer HTTP status code to {@link ProblemStatus} enum constant.
-   *
-   * <p>This map is created once at class initialization using {@link Arrays#stream(Object[])} and
-   * {@link Collectors#toMap}. The map is used by {@link #findValue(int)} to provide an efficient
-   * code-to-enum lookup.
-   */
-  private static final Map<Integer, ProblemStatus> STATUSES_BY_CODE =
-      Arrays.stream(values())
-          .collect(
-              Collectors.toMap(
-                  ProblemStatus::getStatus,
-                  Function.identity(),
-                  ProblemStatus::resolveDeprecations));
-
-  /**
    * Return the {@link ProblemStatus} matching the given integer HTTP status code.
    *
    * @param status the HTTP status code to look up (for example {@code 404})
@@ -1176,7 +1161,22 @@ public enum ProblemStatus {
    *     if there is no enum constant for the provided code
    */
   public static Optional<ProblemStatus> findValue(int status) {
-    return Optional.ofNullable(STATUSES_BY_CODE.get(status));
+    return StatusMapHolder.findValue(status);
+  }
+
+  /**
+   * Return the {@link ProblemStatus} matching the given integer HTTP status code. Overloaded only
+   * for nullability convenience.
+   *
+   * @param status the HTTP status code to look up (for example {@code 404})
+   * @return an {@link Optional} containing the matching {@link ProblemStatus} if present, or empty
+   *     if there is no enum constant for the provided code
+   */
+  public static Optional<ProblemStatus> findValue(Integer status) {
+    if (status == null) {
+      return Optional.empty();
+    }
+    return StatusMapHolder.findValue(status);
   }
 
   /**
@@ -1246,6 +1246,29 @@ public enum ProblemStatus {
       }
     } catch (NoSuchFieldException e) {
       return existing;
+    }
+  }
+
+  /**
+   * Nested static class to hold the lazily initialized lookup map from integer HTTP status codes to
+   * {@link ProblemStatus} enum constants.
+   *
+   * <p>This classis loaded and its static fields are initialized only when {@link
+   * #findValue(Integer)} is called for the first time, ensuring that the initialization of the
+   * lookup map is deferred until it is actually needed.
+   */
+  private static final class StatusMapHolder {
+
+    private static final Map<Integer, ProblemStatus> STATUSES_BY_CODE =
+        Arrays.stream(values())
+            .collect(
+                Collectors.toMap(
+                    ProblemStatus::getStatus,
+                    Function.identity(),
+                    ProblemStatus::resolveDeprecations));
+
+    private static Optional<ProblemStatus> findValue(Integer status) {
+      return Optional.ofNullable(STATUSES_BY_CODE.get(status));
     }
   }
 }

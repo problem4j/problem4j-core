@@ -20,16 +20,23 @@
  */
 package io.github.problem4j.core;
 
-import static java.util.stream.Collectors.toList;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Stream;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
 class ProblemStatusTest {
+
+  @Test
+  void givenNullStatusCode_shouldReturnEmptyOptional() {
+    Optional<ProblemStatus> optionalStatus = ProblemStatus.findValue(null);
+
+    assertThat(optionalStatus).isEmpty();
+  }
 
   @ParameterizedTest
   @ValueSource(ints = {103, 413, 414, 416, 422})
@@ -45,7 +52,7 @@ class ProblemStatusTest {
     assertThat(deprecationNotice).isNull();
 
     List<ProblemStatus> candidates =
-        Stream.of(ProblemStatus.values()).filter(v -> v.getStatus() == value).collect(toList());
+        Stream.of(ProblemStatus.values()).filter(v -> v.getStatus() == value).toList();
     assertThat(candidates.size())
         .withFailMessage("there was exactly 1 candidate for " + value)
         .isGreaterThan(1);
@@ -63,7 +70,7 @@ class ProblemStatusTest {
     assertThat(deprecationNotice).isNotNull();
 
     List<ProblemStatus> candidates =
-        Stream.of(ProblemStatus.values()).filter(v -> v.getStatus() == value).collect(toList());
+        Stream.of(ProblemStatus.values()).filter(v -> v.getStatus() == value).toList();
     assertThat(candidates.size())
         .withFailMessage("there were more than 1 candidates for " + value)
         .isEqualTo(1);
