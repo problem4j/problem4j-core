@@ -37,7 +37,7 @@ import org.junit.jupiter.api.Test;
 class ProblemImplTest {
 
   @Test
-  void givenAllFieldsPopulated_whenToString_thenContainsAllFieldsProperly() {
+  void givenAllFieldsPopulated_whenToString_thenContainsAllFields() {
     URI type = URI.create("https://example.com/problem");
     String title = "Test Problem";
     int status = 400;
@@ -53,15 +53,15 @@ class ProblemImplTest {
 
     String result = problem.toString();
 
-    assertThat(result).contains("type=\"" + JsonEscape.escape(type.toString()) + "\"");
-    assertThat(result).contains("title=\"" + JsonEscape.escape(title) + "\"");
+    assertThat(result).contains("type=" + type);
+    assertThat(result).contains("title=" + title);
     assertThat(result).contains("status=" + status);
-    assertThat(result).contains("detail=\"" + JsonEscape.escape(detail) + "\"");
-    assertThat(result).contains("instance=\"" + JsonEscape.escape(instance.toString()) + "\"");
-    assertThat(result).contains("stringExt=\"" + JsonEscape.escape("value") + "\"");
+    assertThat(result).contains("detail=" + detail);
+    assertThat(result).contains("instance=" + instance);
+    assertThat(result).contains("stringExt=value");
     assertThat(result).contains("numberExt=42");
     assertThat(result).contains("booleanExt=true");
-    assertThat(result).contains("objectExt=DummyObject{value=boo\\nfoo}");
+    assertThat(result).contains("objectExt=DummyObject{value=boo\nfoo}");
   }
 
   @Test
@@ -72,20 +72,6 @@ class ProblemImplTest {
     String result = problem.toString();
 
     assertThat(result).isEqualTo("Problem{status=200}");
-  }
-
-  @Test
-  void givenOnlyStringExtensions_whenToString_thenContainsQuotedStrings() {
-    Map<String, Object> extensions = new HashMap<>();
-    extensions.put("ext1", "value1");
-    extensions.put("ext2", "value2");
-
-    Problem problem = new ProblemImpl(null, null, 0, null, null, extensions);
-
-    String result = problem.toString();
-
-    assertThat(result).contains("ext1=\"" + JsonEscape.escape("value1") + "\"");
-    assertThat(result).contains("ext2=\"" + JsonEscape.escape("value2") + "\"");
   }
 
   @Test
@@ -117,7 +103,7 @@ class ProblemImplTest {
   }
 
   @Test
-  void givenNonPrimitiveExtension_whenToString_thenUsesClassNamePrefix() {
+  void givenNonPrimitiveExtension_whenToString_thenUsesItsToString() {
     Map<String, Object> extensions = new HashMap<>();
     extensions.put("obj", new DummyObject("biz\tbar"));
 
@@ -125,11 +111,11 @@ class ProblemImplTest {
 
     String result = problem.toString();
 
-    assertThat(result).contains("obj=DummyObject{value=biz\\tbar}");
+    assertThat(result).contains("obj=DummyObject{value=biz\tbar}");
   }
 
   @Test
-  void givenStringWithSpecialCharacters_whenToString_thenProperlyEscapes() {
+  void givenStringWithSpecialCharacters_whenToString_thenProperlyHandlesIt() {
     Map<String, Object> extensions = new HashMap<>();
     extensions.put("ext", "a\"b\\c\nd");
 
@@ -137,7 +123,7 @@ class ProblemImplTest {
 
     String result = problem.toString();
 
-    assertThat(result).contains("ext=\"" + JsonEscape.escape("a\"b\\c\nd") + "\"");
+    assertThat(result).contains("ext=a\"b\\c\nd");
   }
 
   @Test

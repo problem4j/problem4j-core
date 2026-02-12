@@ -20,11 +20,8 @@
  */
 package io.github.problem4j.core;
 
-import static io.github.problem4j.core.JsonEscape.escape;
-
 import java.io.Serializable;
 import java.net.URI;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -282,17 +279,17 @@ public abstract class AbstractProblemBuilder implements ProblemBuilder, Serializ
   public String toString() {
     List<String> entries = new ArrayList<>();
     if (type != null) {
-      entries.add("type=\"" + escape(type.toString()) + "\"");
+      entries.add("type=" + type);
     }
     if (title != null) {
-      entries.add("title=\"" + escape(title) + "\"");
+      entries.add("title=" + title);
     }
     entries.add("status=" + status);
     if (detail != null) {
-      entries.add("detail=\"" + escape(detail) + "\"");
+      entries.add("detail=" + detail);
     }
     if (instance != null) {
-      entries.add("instance=\"" + escape(instance.toString()) + "\"");
+      entries.add("instance=" + instance);
     }
 
     extensions.entrySet().stream()
@@ -306,15 +303,7 @@ public abstract class AbstractProblemBuilder implements ProblemBuilder, Serializ
                 return;
               }
 
-              if (value instanceof CharSequence) {
-                entries.add(escape(field) + "=\"" + escape((CharSequence) value) + "\"");
-              } else if (value instanceof URI || value instanceof URL) {
-                entries.add(escape(field) + "=\"" + escape(value.toString()) + "\"");
-              } else if (value instanceof Number || value instanceof Boolean) {
-                entries.add(escape(field) + "=" + value);
-              } else {
-                entries.add(getObjectLine(field, value));
-              }
+              entries.add(field + "=" + value);
             });
 
     return "ProblemBuilder{" + String.join(", ", entries) + "}";
@@ -322,9 +311,5 @@ public abstract class AbstractProblemBuilder implements ProblemBuilder, Serializ
 
   private static boolean isExtensionValid(Problem.Extension extension) {
     return extension != null && extension.getKey() != null && extension.getValue() != null;
-  }
-
-  private String getObjectLine(String field, Object value) {
-    return escape(field) + "=" + escape(value.toString());
   }
 }

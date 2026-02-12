@@ -20,8 +20,6 @@
  */
 package io.github.problem4j.core;
 
-import static io.github.problem4j.core.JsonEscape.escape;
-
 import java.io.Serializable;
 import java.util.Collections;
 import java.util.HashMap;
@@ -189,6 +187,6 @@ public abstract class AbstractProblemContext implements ProblemContext, Serializ
   }
 
   private String toEntryLine(Map.Entry<String, String> entry) {
-    return escape(entry.getKey()) + "=\"" + escape(entry.getValue()) + "\"";
+    return entry.getKey() + "=" + entry.getValue();
   }
 }

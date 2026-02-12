@@ -314,7 +314,7 @@ class ProblemBuilderTest {
   }
 
   @Test
-  void givenAllFieldsPopulated_whenToString_thenContainsAllFieldsProperly() {
+  void givenAllFieldsPopulated_whenToString_thenContainsAllFields() {
     URI type = URI.create("https://example.com/problem");
     String title = "Test Problem";
     int status = 400;
@@ -332,15 +332,15 @@ class ProblemBuilderTest {
 
     String result = builder.toString();
 
-    assertThat(result).contains("type=\"" + JsonEscape.escape(type.toString()) + "\"");
-    assertThat(result).contains("title=\"" + JsonEscape.escape(title) + "\"");
+    assertThat(result).contains("type=" + type);
+    assertThat(result).contains("title=" + title);
     assertThat(result).contains("status=" + status);
-    assertThat(result).contains("detail=\"" + JsonEscape.escape(detail) + "\"");
-    assertThat(result).contains("instance=\"" + JsonEscape.escape(instance.toString()) + "\"");
-    assertThat(result).contains("stringExt=\"" + JsonEscape.escape("value") + "\"");
+    assertThat(result).contains("detail=" + detail);
+    assertThat(result).contains("instance=" + instance);
+    assertThat(result).contains("stringExt=value");
     assertThat(result).contains("numberExt=42");
     assertThat(result).contains("booleanExt=true");
-    assertThat(result).contains("objectExt=DummyObject{value=boo\\nfoo}");
+    assertThat(result).contains("objectExt=DummyObject{value=boo\nfoo}");
   }
 
   @Test
@@ -348,16 +348,6 @@ class ProblemBuilderTest {
     ProblemBuilder builder = Problem.builder().status(200);
     String result = builder.toString();
     assertThat(result).isEqualTo("ProblemBuilder{status=200}");
-  }
-
-  @Test
-  void givenOnlyStringExtensions_whenToString_thenContainsQuotedStrings() {
-    ProblemBuilder builder = Problem.builder();
-    builder.extension("ext1", "value1");
-    builder.extension("ext2", "value2");
-    String result = builder.toString();
-    assertThat(result).contains("ext1=\"" + JsonEscape.escape("value1") + "\"");
-    assertThat(result).contains("ext2=\"" + JsonEscape.escape("value2") + "\"");
   }
 
   @Test
@@ -381,18 +371,10 @@ class ProblemBuilderTest {
   }
 
   @Test
-  void givenNonPrimitiveExtension_whenToString_thenUsesClassNamePrefix() {
+  void givenNonPrimitiveExtension_whenToString_thenUsesItsToString() {
     ProblemBuilder builder = Problem.builder();
     builder.extension("obj", new DummyObject("biz\tbar"));
     String result = builder.toString();
-    assertThat(result).contains("obj=DummyObject{value=biz\\tbar}");
-  }
-
-  @Test
-  void givenStringWithSpecialCharacters_whenToString_thenProperlyEscapes() {
-    ProblemBuilder builder = Problem.builder();
-    builder.extension("ext", "a\"b\\c\nd");
-    String result = builder.toString();
-    assertThat(result).contains("ext=\"" + JsonEscape.escape("a\"b\\c\nd") + "\"");
+    assertThat(result).contains("obj=DummyObject{value=biz\tbar}");
   }
 }

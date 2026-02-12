@@ -20,11 +20,8 @@
  */
 package io.github.problem4j.core;
 
-import static io.github.problem4j.core.JsonEscape.escape;
-
 import java.io.Serializable;
 import java.net.URI;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -48,7 +45,7 @@ import java.util.Set;
  *   <li>{@code instance} - a URI identifying the specific occurrence of the problem
  * </ul>
  *
- * In addition, custom extensions can be added to provide extra context.
+ * <p>In addition, custom extensions can be added to provide extra context.
  */
 public abstract class AbstractProblem implements Problem, Serializable {
 
@@ -235,17 +232,17 @@ public abstract class AbstractProblem implements Problem, Serializable {
   public String toString() {
     List<String> entries = new ArrayList<>();
     if (getType() != null) {
-      entries.add("type=\"" + escape(getType().toString()) + "\"");
+      entries.add("type=" + getType());
     }
     if (getTitle() != null) {
-      entries.add("title=\"" + escape(getTitle()) + "\"");
+      entries.add("title=" + getTitle());
     }
     entries.add("status=" + getStatus());
     if (getDetail() != null) {
-      entries.add("detail=\"" + escape(getDetail()) + "\"");
+      entries.add("detail=" + getDetail());
     }
     if (getInstance() != null) {
-      entries.add("instance=\"" + escape(getInstance().toString()) + "\"");
+      entries.add("instance=" + getInstance());
     }
 
     getExtensionMembers().entrySet().stream()
@@ -259,22 +256,10 @@ public abstract class AbstractProblem implements Problem, Serializable {
                 return;
               }
 
-              if (value instanceof CharSequence) {
-                entries.add(escape(field) + "=\"" + escape((CharSequence) value) + "\"");
-              } else if (value instanceof URI || value instanceof URL) {
-                entries.add(escape(field) + "=\"" + escape(value.toString()) + "\"");
-              } else if (value instanceof Number || value instanceof Boolean) {
-                entries.add(escape(field) + "=" + value);
-              } else {
-                entries.add(getObjectLine(field, value));
-              }
+              entries.add(field + "=" + value);
             });
 
     return "Problem{" + String.join(", ", entries) + "}";
-  }
-
-  private String getObjectLine(String field, Object value) {
-    return escape(field) + "=" + escape(value.toString());
   }
 
   /** Represents a single key-value extension in a {@link Problem}. */
@@ -365,23 +350,7 @@ public abstract class AbstractProblem implements Problem, Serializable {
      */
     @Override
     public String toString() {
-      List<String> entries = new ArrayList<>();
-
-      if (getKey() != null) {
-        entries.add("key=\"" + escape(getKey()) + "\"");
-      }
-
-      if (getValue() instanceof CharSequence) {
-        entries.add("value=\"" + escape((CharSequence) getValue()) + "\"");
-      } else if (value instanceof URI || value instanceof URL) {
-        entries.add("value=\"" + escape(value.toString()) + "\"");
-      } else if (getValue() instanceof Number || getValue() instanceof Boolean) {
-        entries.add("value=" + getValue());
-      } else if (getValue() != null) {
-        entries.add("value=" + escape(getValue().toString()));
-      }
-
-      return "Extension{" + String.join(", ", entries) + "}";
+      return "Extension{" + getKey() + "=" + getValue() + "}";
     }
   }
 }
