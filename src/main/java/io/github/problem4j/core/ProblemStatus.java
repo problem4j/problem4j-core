@@ -130,6 +130,13 @@ public enum ProblemStatus {
   PROCESSING(ProblemStatus.PROCESSING_STATUS, ProblemStatus.PROCESSING_TITLE),
 
   /**
+   * 103 Early Hints.
+   *
+   * @see <a href="https://datatracker.ietf.org/doc/html/rfc8297#section-2">RFC 8297 §2</a>
+   */
+  EARLY_HINTS(ProblemStatus.EARLY_HINTS_STATUS, ProblemStatus.EARLY_HINTS_TITLE),
+
+  /**
    * 103 Checkpoint.
    *
    * @see <a href="https://datatracker.ietf.org/doc/html/rfc8297#section-2">RFC 8297 §2</a>
@@ -137,13 +144,6 @@ public enum ProblemStatus {
    */
   @Deprecated
   CHECKPOINT(ProblemStatus.CHECKPOINT_STATUS, ProblemStatus.CHECKPOINT_TITLE),
-
-  /**
-   * 103 Early Hints.
-   *
-   * @see <a href="https://datatracker.ietf.org/doc/html/rfc8297#section-2">RFC 8297 §2</a>
-   */
-  EARLY_HINTS(ProblemStatus.EARLY_HINTS_STATUS, ProblemStatus.EARLY_HINTS_TITLE),
 
   /**
    * 200 OK.
@@ -398,16 +398,12 @@ public enum ProblemStatus {
       ProblemStatus.PRECONDITION_FAILED_STATUS, ProblemStatus.PRECONDITION_FAILED_TITLE),
 
   /**
-   * 413 Request Entity Too Large.
+   * 413 Content Too Large.
    *
-   * @see <a href="https://datatracker.ietf.org/doc/html/rfc2616#section-10.4.14">RFC 2616
-   *     §10.4.14</a>
-   * @deprecated Renamed to {@link #PAYLOAD_TOO_LARGE} in RFC 7231, then to {@link
-   *     #CONTENT_TOO_LARGE} in RFC 9110.
+   * @see <a href="https://datatracker.ietf.org/doc/html/rfc9110#section-15.5.14">RFC 9110
+   *     §15.5.14</a>
    */
-  @Deprecated
-  REQUEST_ENTITY_TOO_LARGE(
-      ProblemStatus.REQUEST_ENTITY_TOO_LARGE_STATUS, ProblemStatus.REQUEST_ENTITY_TOO_LARGE_TITLE),
+  CONTENT_TOO_LARGE(ProblemStatus.CONTENT_TOO_LARGE_STATUS, ProblemStatus.CONTENT_TOO_LARGE_TITLE),
 
   /**
    * 413 Payload Too Large.
@@ -420,12 +416,24 @@ public enum ProblemStatus {
   PAYLOAD_TOO_LARGE(ProblemStatus.PAYLOAD_TOO_LARGE_STATUS, ProblemStatus.PAYLOAD_TOO_LARGE_TITLE),
 
   /**
-   * 413 Content Too Large.
+   * 413 Request Entity Too Large.
    *
-   * @see <a href="https://datatracker.ietf.org/doc/html/rfc9110#section-15.5.14">RFC 9110
-   *     §15.5.14</a>
+   * @see <a href="https://datatracker.ietf.org/doc/html/rfc2616#section-10.4.14">RFC 2616
+   *     §10.4.14</a>
+   * @deprecated Renamed to {@link #PAYLOAD_TOO_LARGE} in RFC 7231, then to {@link
+   *     #CONTENT_TOO_LARGE} in RFC 9110.
    */
-  CONTENT_TOO_LARGE(ProblemStatus.CONTENT_TOO_LARGE_STATUS, ProblemStatus.CONTENT_TOO_LARGE_TITLE),
+  @Deprecated
+  REQUEST_ENTITY_TOO_LARGE(
+      ProblemStatus.REQUEST_ENTITY_TOO_LARGE_STATUS, ProblemStatus.REQUEST_ENTITY_TOO_LARGE_TITLE),
+
+  /**
+   * 414 URI Too Long.
+   *
+   * @see <a href="https://datatracker.ietf.org/doc/html/rfc9110#section-15.5.15">RFC 9110
+   *     §15.5.15</a>
+   */
+  URI_TOO_LONG(ProblemStatus.URI_TOO_LONG_STATUS, ProblemStatus.URI_TOO_LONG_TITLE),
 
   /**
    * 414 Request URI Too Long.
@@ -439,14 +447,6 @@ public enum ProblemStatus {
       ProblemStatus.REQUEST_URI_TOO_LONG_STATUS, ProblemStatus.REQUEST_URI_TOO_LONG_TITLE),
 
   /**
-   * 414 URI Too Long.
-   *
-   * @see <a href="https://datatracker.ietf.org/doc/html/rfc9110#section-15.5.15">RFC 9110
-   *     §15.5.15</a>
-   */
-  URI_TOO_LONG(ProblemStatus.URI_TOO_LONG_STATUS, ProblemStatus.URI_TOO_LONG_TITLE),
-
-  /**
    * 415 Unsupported Media Type.
    *
    * @see <a href="https://datatracker.ietf.org/doc/html/rfc9110#section-15.5.16">RFC 9110
@@ -454,6 +454,15 @@ public enum ProblemStatus {
    */
   UNSUPPORTED_MEDIA_TYPE(
       ProblemStatus.UNSUPPORTED_MEDIA_TYPE_STATUS, ProblemStatus.UNSUPPORTED_MEDIA_TYPE_TITLE),
+
+  /**
+   * 416 Range Not Satisfiable.
+   *
+   * @see <a href="https://datatracker.ietf.org/doc/html/rfc9110#section-15.5.17">RFC 9110
+   *     §15.5.17</a>
+   */
+  RANGE_NOT_SATISFIABLE(
+      ProblemStatus.RANGE_NOT_SATISFIABLE_STATUS, ProblemStatus.RANGE_NOT_SATISFIABLE_TITLE),
 
   /**
    * 416 Requested Range Not Satisfiable.
@@ -466,15 +475,6 @@ public enum ProblemStatus {
   REQUESTED_RANGE_NOT_SATISFIABLE(
       ProblemStatus.REQUESTED_RANGE_NOT_SATISFIABLE_STATUS,
       ProblemStatus.REQUESTED_RANGE_NOT_SATISFIABLE_TITLE),
-
-  /**
-   * 416 Range Not Satisfiable.
-   *
-   * @see <a href="https://datatracker.ietf.org/doc/html/rfc9110#section-15.5.17">RFC 9110
-   *     §15.5.17</a>
-   */
-  RANGE_NOT_SATISFIABLE(
-      ProblemStatus.RANGE_NOT_SATISFIABLE_STATUS, ProblemStatus.RANGE_NOT_SATISFIABLE_TITLE),
 
   /**
    * 417 Expectation Failed.
@@ -501,6 +501,15 @@ public enum ProblemStatus {
       ProblemStatus.MISDIRECTED_REQUEST_STATUS, ProblemStatus.MISDIRECTED_REQUEST_TITLE),
 
   /**
+   * 422 Unprocessable Content.
+   *
+   * @see <a href="https://datatracker.ietf.org/doc/html/rfc9110#section-15.5.21">RFC 9110
+   *     §15.5.21</a>
+   */
+  UNPROCESSABLE_CONTENT(
+      ProblemStatus.UNPROCESSABLE_CONTENT_STATUS, ProblemStatus.UNPROCESSABLE_CONTENT_TITLE),
+
+  /**
    * 422 Unprocessable Entity.
    *
    * @see <a href="https://datatracker.ietf.org/doc/html/rfc4918#section-11.2">RFC 4918 §11.2</a>
@@ -509,15 +518,6 @@ public enum ProblemStatus {
   @Deprecated
   UNPROCESSABLE_ENTITY(
       ProblemStatus.UNPROCESSABLE_ENTITY_STATUS, ProblemStatus.UNPROCESSABLE_ENTITY_TITLE),
-
-  /**
-   * 422 Unprocessable Content.
-   *
-   * @see <a href="https://datatracker.ietf.org/doc/html/rfc9110#section-15.5.21">RFC 9110
-   *     §15.5.21</a>
-   */
-  UNPROCESSABLE_CONTENT(
-      ProblemStatus.UNPROCESSABLE_CONTENT_STATUS, ProblemStatus.UNPROCESSABLE_CONTENT_TITLE),
 
   /**
    * 423 Locked.
@@ -694,6 +694,12 @@ public enum ProblemStatus {
   /** Title of {@link #PROCESSING}. */
   public static final String PROCESSING_TITLE = "Processing";
 
+  /** Status of {@link #EARLY_HINTS}. */
+  public static final int EARLY_HINTS_STATUS = 103;
+
+  /** Title of {@link #EARLY_HINTS}. */
+  public static final String EARLY_HINTS_TITLE = "Early Hints";
+
   /**
    * Status of {@link #CHECKPOINT}.
    *
@@ -707,12 +713,6 @@ public enum ProblemStatus {
    * @deprecated Renamed to {@link #EARLY_HINTS} by RFC 8297.
    */
   @Deprecated public static final String CHECKPOINT_TITLE = "Checkpoint";
-
-  /** Status of {@link #EARLY_HINTS}. */
-  public static final int EARLY_HINTS_STATUS = 103;
-
-  /** Title of {@link #EARLY_HINTS}. */
-  public static final String EARLY_HINTS_TITLE = "Early Hints";
 
   /** Status of {@link #OK}. */
   public static final int OK_STATUS = 200;
@@ -908,6 +908,26 @@ public enum ProblemStatus {
   /** Title of {@link #PRECONDITION_FAILED}. */
   public static final String PRECONDITION_FAILED_TITLE = "Precondition Failed";
 
+  /** Status of {@link #CONTENT_TOO_LARGE}. */
+  public static final int CONTENT_TOO_LARGE_STATUS = 413;
+
+  /** Title of {@link #CONTENT_TOO_LARGE}. */
+  public static final String CONTENT_TOO_LARGE_TITLE = "Content Too Large";
+
+  /**
+   * Status of {@link #PAYLOAD_TOO_LARGE}.
+   *
+   * @deprecated Renamed to {@link #CONTENT_TOO_LARGE} in RFC 9110.
+   */
+  @Deprecated public static final int PAYLOAD_TOO_LARGE_STATUS = 413;
+
+  /**
+   * Title of {@link #PAYLOAD_TOO_LARGE}.
+   *
+   * @deprecated Renamed to {@link #CONTENT_TOO_LARGE} in RFC 9110.
+   */
+  @Deprecated public static final String PAYLOAD_TOO_LARGE_TITLE = "Payload Too Large";
+
   /**
    * Status of {@link #REQUEST_ENTITY_TOO_LARGE}.
    *
@@ -925,25 +945,11 @@ public enum ProblemStatus {
   @Deprecated
   public static final String REQUEST_ENTITY_TOO_LARGE_TITLE = "Request Entity Too Large";
 
-  /**
-   * Status of {@link #PAYLOAD_TOO_LARGE}.
-   *
-   * @deprecated Renamed to {@link #CONTENT_TOO_LARGE} in RFC 9110.
-   */
-  @Deprecated public static final int PAYLOAD_TOO_LARGE_STATUS = 413;
+  /** Status of {@link #URI_TOO_LONG}. */
+  public static final int URI_TOO_LONG_STATUS = 414;
 
-  /**
-   * Title of {@link #PAYLOAD_TOO_LARGE}.
-   *
-   * @deprecated Renamed to {@link #CONTENT_TOO_LARGE} in RFC 9110.
-   */
-  @Deprecated public static final String PAYLOAD_TOO_LARGE_TITLE = "Payload Too Large";
-
-  /** Status of {@link #CONTENT_TOO_LARGE}. */
-  public static final int CONTENT_TOO_LARGE_STATUS = 413;
-
-  /** Title of {@link #CONTENT_TOO_LARGE}. */
-  public static final String CONTENT_TOO_LARGE_TITLE = "Content Too Large";
+  /** Title of {@link #URI_TOO_LONG}. */
+  public static final String URI_TOO_LONG_TITLE = "URI Too Long";
 
   /**
    * Status of {@link #REQUEST_URI_TOO_LONG}.
@@ -959,17 +965,17 @@ public enum ProblemStatus {
    */
   @Deprecated public static final String REQUEST_URI_TOO_LONG_TITLE = "Request-URI Too Long";
 
-  /** Status of {@link #URI_TOO_LONG}. */
-  public static final int URI_TOO_LONG_STATUS = 414;
-
-  /** Title of {@link #URI_TOO_LONG}. */
-  public static final String URI_TOO_LONG_TITLE = "URI Too Long";
-
   /** Status of {@link #UNSUPPORTED_MEDIA_TYPE}. */
   public static final int UNSUPPORTED_MEDIA_TYPE_STATUS = 415;
 
   /** Title of {@link #UNSUPPORTED_MEDIA_TYPE}. */
   public static final String UNSUPPORTED_MEDIA_TYPE_TITLE = "Unsupported Media Type";
+
+  /** Status of {@link #RANGE_NOT_SATISFIABLE}. */
+  public static final int RANGE_NOT_SATISFIABLE_STATUS = 416;
+
+  /** Title of {@link #RANGE_NOT_SATISFIABLE}. */
+  public static final String RANGE_NOT_SATISFIABLE_TITLE = "Range Not Satisfiable";
 
   /**
    * Status of {@link #REQUESTED_RANGE_NOT_SATISFIABLE}.
@@ -986,12 +992,6 @@ public enum ProblemStatus {
   @Deprecated
   public static final String REQUESTED_RANGE_NOT_SATISFIABLE_TITLE =
       "Requested Range Not Satisfiable";
-
-  /** Status of {@link #RANGE_NOT_SATISFIABLE}. */
-  public static final int RANGE_NOT_SATISFIABLE_STATUS = 416;
-
-  /** Title of {@link #RANGE_NOT_SATISFIABLE}. */
-  public static final String RANGE_NOT_SATISFIABLE_TITLE = "Range Not Satisfiable";
 
   /** Status of {@link #EXPECTATION_FAILED}. */
   public static final int EXPECTATION_FAILED_STATUS = 417;
@@ -1011,6 +1011,12 @@ public enum ProblemStatus {
   /** Title of {@link #MISDIRECTED_REQUEST}. */
   public static final String MISDIRECTED_REQUEST_TITLE = "Misdirected Request";
 
+  /** Status of {@link #UNPROCESSABLE_CONTENT}. */
+  public static final int UNPROCESSABLE_CONTENT_STATUS = 422;
+
+  /** Title of {@link #UNPROCESSABLE_CONTENT}. */
+  public static final String UNPROCESSABLE_CONTENT_TITLE = "Unprocessable Content";
+
   /**
    * Status of {@link #UNPROCESSABLE_ENTITY}.
    *
@@ -1024,12 +1030,6 @@ public enum ProblemStatus {
    * @deprecated renamed to {@link #UNPROCESSABLE_CONTENT} by RFC 9110.
    */
   @Deprecated public static final String UNPROCESSABLE_ENTITY_TITLE = "Unprocessable Entity";
-
-  /** Status of {@link #UNPROCESSABLE_CONTENT}. */
-  public static final int UNPROCESSABLE_CONTENT_STATUS = 422;
-
-  /** Title of {@link #UNPROCESSABLE_CONTENT}. */
-  public static final String UNPROCESSABLE_CONTENT_TITLE = "Unprocessable Content";
 
   /** Status of {@link #LOCKED}. */
   public static final int LOCKED_STATUS = 423;
@@ -1218,38 +1218,6 @@ public enum ProblemStatus {
   }
 
   /**
-   * Resolves conflicts between two {@link ProblemStatus} enum constants that share the same HTTP
-   * status code, favoring the non-deprecated constant if one exists.
-   *
-   * <p>This method is used during the initialization of the lookup map from integer HTTP status
-   * codes to {@link ProblemStatus} constants. If existing is annotated with {@link Deprecated} and
-   * the replacement is not, the replacement is returned. Otherwise, the existing constant is kept.
-   *
-   * @param existing the current {@link ProblemStatus} already present in the map
-   * @param replacement the new {@link ProblemStatus} being considered for the same HTTP status code
-   * @return the {@link ProblemStatus} to use in the lookup map, preferring non-deprecated constants
-   */
-  private static ProblemStatus resolveDeprecations(
-      ProblemStatus existing, ProblemStatus replacement) {
-    try {
-      boolean existingDeprecated =
-          existing.getClass().getField(existing.name()).getAnnotation(Deprecated.class) != null;
-
-      boolean replacementDeprecated =
-          replacement.getClass().getField(replacement.name()).getAnnotation(Deprecated.class)
-              != null;
-
-      if (existingDeprecated && !replacementDeprecated) {
-        return replacement;
-      } else {
-        return existing;
-      }
-    } catch (NoSuchFieldException e) {
-      return existing;
-    }
-  }
-
-  /**
    * Nested static class to hold the lazily initialized lookup map from integer HTTP status codes to
    * {@link ProblemStatus} enum constants.
    *
@@ -1265,7 +1233,7 @@ public enum ProblemStatus {
                 Collectors.toMap(
                     ProblemStatus::getStatus,
                     Function.identity(),
-                    ProblemStatus::resolveDeprecations));
+                    (existing, replacement) -> existing));
 
     private static Optional<ProblemStatus> findValue(Integer status) {
       return Optional.ofNullable(STATUSES_BY_CODE.get(status));
