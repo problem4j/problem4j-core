@@ -324,7 +324,7 @@ class ProblemBuilderTest {
     extensions.put("stringExt", "value");
     extensions.put("numberExt", 42);
     extensions.put("booleanExt", true);
-    extensions.put("objectExt", new DummyObject("foo"));
+    extensions.put("objectExt", new DummyObject("boo\nfoo"));
 
     ProblemBuilder builder =
         Problem.builder().type(type).title(title).status(status).detail(detail).instance(instance);
@@ -332,23 +332,22 @@ class ProblemBuilderTest {
 
     String result = builder.toString();
 
-    assertThat(result).contains("\"type\" : \"" + JsonEscape.escape(type.toString()) + "\"");
-    assertThat(result).contains("\"title\" : \"" + JsonEscape.escape(title) + "\"");
-    assertThat(result).contains("\"status\" : " + status);
-    assertThat(result).contains("\"detail\" : \"" + JsonEscape.escape(detail) + "\"");
-    assertThat(result)
-        .contains("\"instance\" : \"" + JsonEscape.escape(instance.toString()) + "\"");
-    assertThat(result).contains("\"stringExt\" : \"" + JsonEscape.escape("value") + "\"");
-    assertThat(result).contains("\"numberExt\" : 42");
-    assertThat(result).contains("\"booleanExt\" : true");
-    assertThat(result).contains("\"objectExt\" : \"DummyObject:" + JsonEscape.escape("foo") + "\"");
+    assertThat(result).contains("type=\"" + JsonEscape.escape(type.toString()) + "\"");
+    assertThat(result).contains("title=\"" + JsonEscape.escape(title) + "\"");
+    assertThat(result).contains("status=" + status);
+    assertThat(result).contains("detail=\"" + JsonEscape.escape(detail) + "\"");
+    assertThat(result).contains("instance=\"" + JsonEscape.escape(instance.toString()) + "\"");
+    assertThat(result).contains("stringExt=\"" + JsonEscape.escape("value") + "\"");
+    assertThat(result).contains("numberExt=42");
+    assertThat(result).contains("booleanExt=true");
+    assertThat(result).contains("objectExt=DummyObject{value=boo\\nfoo}");
   }
 
   @Test
   void givenNullExtensionsAndNullableFields_whenToString_thenOmitsNulls() {
     ProblemBuilder builder = Problem.builder().status(200);
     String result = builder.toString();
-    assertThat(result).isEqualTo("{ \"status\" : 200 }");
+    assertThat(result).isEqualTo("ProblemBuilder{status=200}");
   }
 
   @Test
@@ -357,8 +356,8 @@ class ProblemBuilderTest {
     builder.extension("ext1", "value1");
     builder.extension("ext2", "value2");
     String result = builder.toString();
-    assertThat(result).contains("\"ext1\" : \"" + JsonEscape.escape("value1") + "\"");
-    assertThat(result).contains("\"ext2\" : \"" + JsonEscape.escape("value2") + "\"");
+    assertThat(result).contains("ext1=\"" + JsonEscape.escape("value1") + "\"");
+    assertThat(result).contains("ext2=\"" + JsonEscape.escape("value2") + "\"");
   }
 
   @Test
@@ -367,8 +366,8 @@ class ProblemBuilderTest {
     builder.extension("ext1", 123);
     builder.extension("ext2", 456.78);
     String result = builder.toString();
-    assertThat(result).contains("\"ext1\" : 123");
-    assertThat(result).contains("\"ext2\" : 456.78");
+    assertThat(result).contains("ext1=123");
+    assertThat(result).contains("ext2=456.78");
   }
 
   @Test
@@ -377,16 +376,16 @@ class ProblemBuilderTest {
     builder.extension("flag1", true);
     builder.extension("flag2", false);
     String result = builder.toString();
-    assertThat(result).contains("\"flag1\" : true");
-    assertThat(result).contains("\"flag2\" : false");
+    assertThat(result).contains("flag1=true");
+    assertThat(result).contains("flag2=false");
   }
 
   @Test
   void givenNonPrimitiveExtension_whenToString_thenUsesClassNamePrefix() {
     ProblemBuilder builder = Problem.builder();
-    builder.extension("obj", new DummyObject("bar"));
+    builder.extension("obj", new DummyObject("biz\tbar"));
     String result = builder.toString();
-    assertThat(result).contains("\"obj\" : \"DummyObject:" + JsonEscape.escape("bar") + "\"");
+    assertThat(result).contains("obj=DummyObject{value=biz\\tbar}");
   }
 
   @Test
@@ -394,6 +393,6 @@ class ProblemBuilderTest {
     ProblemBuilder builder = Problem.builder();
     builder.extension("ext", "a\"b\\c\nd");
     String result = builder.toString();
-    assertThat(result).contains("\"ext\" : \"" + JsonEscape.escape("a\"b\\c\nd") + "\"");
+    assertThat(result).contains("ext=\"" + JsonEscape.escape("a\"b\\c\nd") + "\"");
   }
 }

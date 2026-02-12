@@ -33,6 +33,6 @@ class DummyObject {
 
   @Override
   public String toString() {
-    return value;
+    return "DummyObject{value=" + value + "}";
   }
 }

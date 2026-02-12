@@ -24,13 +24,13 @@ import static io.github.problem4j.core.JsonEscape.escape;
 
 import java.io.Serializable;
 import java.net.URI;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /**
@@ -272,21 +272,27 @@ public abstract class AbstractProblemBuilder implements ProblemBuilder, Serializ
     return new ProblemImpl(type, title, status, detail, instance, extensions);
   }
 
+  /**
+   * Returns a string representation of this builder, including all set properties and extensions,
+   * in similar format to {@link AbstractProblem#toString()}.
+   *
+   * @return a string representation of this builder
+   */
   @Override
   public String toString() {
     List<String> entries = new ArrayList<>();
     if (type != null) {
-      entries.add("\"type\" : \"" + escape(type.toString()) + "\"");
+      entries.add("type=\"" + escape(type.toString()) + "\"");
     }
     if (title != null) {
-      entries.add("\"title\" : \"" + escape(title) + "\"");
+      entries.add("title=\"" + escape(title) + "\"");
     }
-    entries.add("\"status\" : " + status);
+    entries.add("status=" + status);
     if (detail != null) {
-      entries.add("\"detail\" : \"" + escape(detail) + "\"");
+      entries.add("detail=\"" + escape(detail) + "\"");
     }
     if (instance != null) {
-      entries.add("\"instance\" : \"" + escape(instance.toString()) + "\"");
+      entries.add("instance=\"" + escape(instance.toString()) + "\"");
     }
 
     extensions.entrySet().stream()
@@ -300,18 +306,18 @@ public abstract class AbstractProblemBuilder implements ProblemBuilder, Serializ
                 return;
               }
 
-              if (value instanceof String) {
-                entries.add("\"" + field + "\" : \"" + escape((String) value) + "\"");
+              if (value instanceof CharSequence) {
+                entries.add(escape(field) + "=\"" + escape((CharSequence) value) + "\"");
+              } else if (value instanceof URI || value instanceof URL) {
+                entries.add(escape(field) + "=\"" + escape(value.toString()) + "\"");
               } else if (value instanceof Number || value instanceof Boolean) {
-                entries.add("\"" + field + "\" : " + value);
+                entries.add(escape(field) + "=" + value);
               } else {
                 entries.add(getObjectLine(field, value));
               }
             });
 
-    return entries.isEmpty()
-        ? "{ }"
-        : entries.stream().collect(Collectors.joining(", ", "{ ", " }"));
+    return "ProblemBuilder{" + String.join(", ", entries) + "}";
   }
 
   private static boolean isExtensionValid(Problem.Extension extension) {
@@ -319,7 +325,6 @@ public abstract class AbstractProblemBuilder implements ProblemBuilder, Serializ
   }
 
   private String getObjectLine(String field, Object value) {
-    String className = value.getClass().getSimpleName();
-    return "\"" + field + "\" : \"" + className + ":" + escape(value.toString()) + "\"";
+    return escape(field) + "=" + escape(value.toString());
   }
 }

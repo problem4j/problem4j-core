@@ -47,22 +47,21 @@ class ProblemImplTest {
     extensions.put("stringExt", "value");
     extensions.put("numberExt", 42);
     extensions.put("booleanExt", true);
-    extensions.put("objectExt", new DummyObject("foo"));
+    extensions.put("objectExt", new DummyObject("boo\nfoo"));
 
     Problem problem = new ProblemImpl(type, title, status, detail, instance, extensions);
 
     String result = problem.toString();
 
-    assertThat(result).contains("\"type\" : \"" + JsonEscape.escape(type.toString()) + "\"");
-    assertThat(result).contains("\"title\" : \"" + JsonEscape.escape(title) + "\"");
-    assertThat(result).contains("\"status\" : " + status);
-    assertThat(result).contains("\"detail\" : \"" + JsonEscape.escape(detail) + "\"");
-    assertThat(result)
-        .contains("\"instance\" : \"" + JsonEscape.escape(instance.toString()) + "\"");
-    assertThat(result).contains("\"stringExt\" : \"" + JsonEscape.escape("value") + "\"");
-    assertThat(result).contains("\"numberExt\" : 42");
-    assertThat(result).contains("\"booleanExt\" : true");
-    assertThat(result).contains("\"objectExt\" : \"DummyObject:" + JsonEscape.escape("foo") + "\"");
+    assertThat(result).contains("type=\"" + JsonEscape.escape(type.toString()) + "\"");
+    assertThat(result).contains("title=\"" + JsonEscape.escape(title) + "\"");
+    assertThat(result).contains("status=" + status);
+    assertThat(result).contains("detail=\"" + JsonEscape.escape(detail) + "\"");
+    assertThat(result).contains("instance=\"" + JsonEscape.escape(instance.toString()) + "\"");
+    assertThat(result).contains("stringExt=\"" + JsonEscape.escape("value") + "\"");
+    assertThat(result).contains("numberExt=42");
+    assertThat(result).contains("booleanExt=true");
+    assertThat(result).contains("objectExt=DummyObject{value=boo\\nfoo}");
   }
 
   @Test
@@ -72,7 +71,7 @@ class ProblemImplTest {
 
     String result = problem.toString();
 
-    assertThat(result).isEqualTo("{ \"status\" : 200 }");
+    assertThat(result).isEqualTo("Problem{status=200}");
   }
 
   @Test
@@ -85,8 +84,8 @@ class ProblemImplTest {
 
     String result = problem.toString();
 
-    assertThat(result).contains("\"ext1\" : \"" + JsonEscape.escape("value1") + "\"");
-    assertThat(result).contains("\"ext2\" : \"" + JsonEscape.escape("value2") + "\"");
+    assertThat(result).contains("ext1=\"" + JsonEscape.escape("value1") + "\"");
+    assertThat(result).contains("ext2=\"" + JsonEscape.escape("value2") + "\"");
   }
 
   @Test
@@ -99,8 +98,8 @@ class ProblemImplTest {
 
     String result = problem.toString();
 
-    assertThat(result).contains("\"ext1\" : 123");
-    assertThat(result).contains("\"ext2\" : 456.78");
+    assertThat(result).contains("ext1=123");
+    assertThat(result).contains("ext2=456.78");
   }
 
   @Test
@@ -113,20 +112,20 @@ class ProblemImplTest {
 
     String result = problem.toString();
 
-    assertThat(result).contains("\"flag1\" : true");
-    assertThat(result).contains("\"flag2\" : false");
+    assertThat(result).contains("flag1=true");
+    assertThat(result).contains("flag2=false");
   }
 
   @Test
   void givenNonPrimitiveExtension_whenToString_thenUsesClassNamePrefix() {
     Map<String, Object> extensions = new HashMap<>();
-    extensions.put("obj", new DummyObject("bar"));
+    extensions.put("obj", new DummyObject("biz\tbar"));
 
     Problem problem = new ProblemImpl(null, null, 0, null, null, extensions);
 
     String result = problem.toString();
 
-    assertThat(result).contains("\"obj\" : \"DummyObject:" + JsonEscape.escape("bar") + "\"");
+    assertThat(result).contains("obj=DummyObject{value=biz\\tbar}");
   }
 
   @Test
@@ -138,7 +137,7 @@ class ProblemImplTest {
 
     String result = problem.toString();
 
-    assertThat(result).contains("\"ext\" : \"" + JsonEscape.escape("a\"b\\c\nd") + "\"");
+    assertThat(result).contains("ext=\"" + JsonEscape.escape("a\"b\\c\nd") + "\"");
   }
 
   @Test

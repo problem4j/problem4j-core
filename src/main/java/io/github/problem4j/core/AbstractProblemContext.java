@@ -140,6 +140,13 @@ public abstract class AbstractProblemContext implements ProblemContext, Serializ
     return Collections.unmodifiableMap(context);
   }
 
+  /**
+   * Compares this context to the specified object for equality. Two contexts are considered equal
+   * if they contain the same key-value pairs, regardless of their internal implementation or order.
+   *
+   * @param obj the reference object with which to compare
+   * @return {@code true} if this context is equal to the specified object, {@code false} otherwise
+   */
   @Override
   public boolean equals(Object obj) {
     if (this == obj) {
@@ -152,23 +159,36 @@ public abstract class AbstractProblemContext implements ProblemContext, Serializ
     return Objects.equals(toMap(), context.toMap());
   }
 
+  /**
+   * Returns a hash code value for this context. The hash code is computed based on the entries in
+   * the context, ensuring that equal contexts have the same hash code regardless of their internal
+   * implementation or order.
+   *
+   * @return a hash code value for this context
+   */
   @Override
   public int hashCode() {
     return Objects.hashCode(toMap());
   }
 
+  /**
+   * Returns a string representation of this context. The string is formatted as {@code
+   * "ProblemContext{key1=value1, key2=value2, ...}"}, where the entries are sorted by key for
+   * consistent ordering.
+   *
+   * @return a string representation of this context
+   */
   @Override
   public String toString() {
-    if (toMap().isEmpty()) {
-      return "{ }";
-    }
-    return toMap().entrySet().stream()
-        .sorted(Map.Entry.comparingByKey())
-        .map(this::toEntryLine)
-        .collect(Collectors.joining(", ", "{ ", " }"));
+    return "ProblemContext{"
+        + toMap().entrySet().stream()
+            .sorted(Map.Entry.comparingByKey())
+            .map(this::toEntryLine)
+            .collect(Collectors.joining(", "))
+        + "}";
   }
 
   private String toEntryLine(Map.Entry<String, String> entry) {
-    return "\"" + escape(entry.getKey()) + "\" : \"" + escape(entry.getValue()) + "\"";
+    return escape(entry.getKey()) + "=\"" + escape(entry.getValue()) + "\"";
   }
 }

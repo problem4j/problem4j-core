@@ -45,9 +45,6 @@ final class JsonEscape {
     REPLACEMENTS.put('/', "\\/");
   }
 
-  /** Private constructor to prevent instantiation. */
-  private JsonEscape() {}
-
   /**
    * Escapes the given string for inclusion in JSON.
    *
@@ -57,10 +54,11 @@ final class JsonEscape {
    * @param value the string to escape
    * @return the escaped string
    */
-  static String escape(String value) {
+  static String escape(CharSequence value) {
     StringBuilder result = new StringBuilder();
 
-    for (char character : value.toCharArray()) {
+    for (int i = 0; i < value.length(); i++) {
+      char character = value.charAt(i);
       if (shouldBeReplaced(character)) {
         replace(result, character);
       } else if (shouldBeHexed(character)) {
@@ -125,4 +123,7 @@ final class JsonEscape {
     }
     result.append(hexedCharacter);
   }
+
+  /** Private constructor to prevent instantiation. */
+  private JsonEscape() {}
 }

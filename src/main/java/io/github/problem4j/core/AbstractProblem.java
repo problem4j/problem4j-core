@@ -24,6 +24,7 @@ import static io.github.problem4j.core.JsonEscape.escape;
 
 import java.io.Serializable;
 import java.net.URI;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -31,7 +32,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 /**
  * Represents a problem detail according to the <a href="https://tools.ietf.org/html/rfc7807">RFC
@@ -184,6 +184,14 @@ public abstract class AbstractProblem implements Problem, Serializable {
     return new ProblemBuilderImpl(this);
   }
 
+  /**
+   * Compares this problem instance to another object for equality. Two problem instances are
+   * considered equal if they have the same type, title, status, detail, instance, and extension
+   * members.
+   *
+   * @param obj the reference object with which to compare.
+   * @return {@code true} if this object is the same as the obj argument; {@code false} otherwise.
+   */
   @Override
   public boolean equals(Object obj) {
     if (this == obj) {
@@ -201,27 +209,43 @@ public abstract class AbstractProblem implements Problem, Serializable {
         && Objects.equals(getExtensionMembers(), problem.getExtensionMembers());
   }
 
+  /**
+   * Returns a hash code value for this problem instance. The hash code is computed based on all
+   * standard fields (type, title, status, detail, instance) and the extension members.
+   *
+   * @return a hash code value for this problem instance
+   */
   @Override
   public int hashCode() {
     return Objects.hash(
         getType(), getTitle(), getStatus(), getDetail(), getInstance(), getExtensionMembers());
   }
 
+  /**
+   * Returns a string representation of this problem instance, including all standard fields and
+   * extensions in the format {@code "Problem{type=..., title=..., status=..., detail=...,
+   * instance=..., ext1=..., ext2=..., ...}"}, where each field is included only if it is not {@code
+   * null}. Extensions are sorted by their keys for consistent output. This method is useful for
+   * debugging and logging purposes, providing a clear and comprehensive view of the problem's
+   * state.
+   *
+   * @return a string representation of this problem instance
+   */
   @Override
   public String toString() {
     List<String> entries = new ArrayList<>();
     if (getType() != null) {
-      entries.add("\"type\" : \"" + escape(getType().toString()) + "\"");
+      entries.add("type=\"" + escape(getType().toString()) + "\"");
     }
     if (getTitle() != null) {
-      entries.add("\"title\" : \"" + escape(getTitle()) + "\"");
+      entries.add("title=\"" + escape(getTitle()) + "\"");
     }
-    entries.add("\"status\" : " + getStatus());
+    entries.add("status=" + getStatus());
     if (getDetail() != null) {
-      entries.add("\"detail\" : \"" + escape(getDetail()) + "\"");
+      entries.add("detail=\"" + escape(getDetail()) + "\"");
     }
     if (getInstance() != null) {
-      entries.add("\"instance\" : \"" + escape(getInstance().toString()) + "\"");
+      entries.add("instance=\"" + escape(getInstance().toString()) + "\"");
     }
 
     getExtensionMembers().entrySet().stream()
@@ -235,23 +259,22 @@ public abstract class AbstractProblem implements Problem, Serializable {
                 return;
               }
 
-              if (value instanceof String) {
-                entries.add("\"" + field + "\" : \"" + escape((String) value) + "\"");
+              if (value instanceof CharSequence) {
+                entries.add(escape(field) + "=\"" + escape((CharSequence) value) + "\"");
+              } else if (value instanceof URI || value instanceof URL) {
+                entries.add(escape(field) + "=\"" + escape(value.toString()) + "\"");
               } else if (value instanceof Number || value instanceof Boolean) {
-                entries.add("\"" + field + "\" : " + value);
+                entries.add(escape(field) + "=" + value);
               } else {
                 entries.add(getObjectLine(field, value));
               }
             });
 
-    return entries.isEmpty()
-        ? "{ }"
-        : entries.stream().collect(Collectors.joining(", ", "{ ", " }"));
+    return "Problem{" + String.join(", ", entries) + "}";
   }
 
   private String getObjectLine(String field, Object value) {
-    String className = value.getClass().getSimpleName();
-    return "\"" + field + "\" : \"" + className + ":" + escape(value.toString()) + "\"";
+    return escape(field) + "=" + escape(value.toString());
   }
 
   /** Represents a single key-value extension in a {@link Problem}. */
@@ -301,6 +324,14 @@ public abstract class AbstractProblem implements Problem, Serializable {
       return value;
     }
 
+    /**
+     * Compares this extension to another object for equality. Two extensions are considered equal
+     * if they have the same key and value.
+     *
+     * @param obj object to be compared for equality with this map entry
+     * @return {@code true} if the specified object is equal to this map entry, {@code false}
+     *     otherwise
+     */
     @Override
     public boolean equals(Object obj) {
       if (this == obj) {
@@ -314,28 +345,43 @@ public abstract class AbstractProblem implements Problem, Serializable {
           && Objects.equals(getValue(), extension.getValue());
     }
 
+    /**
+     * Returns the hash code value for this extension. The hash code is computed based on the key
+     * and value of the extension, ensuring that equal extensions have the same hash code.
+     *
+     * @return the hash code value for this extension
+     */
     @Override
     public int hashCode() {
       return Objects.hash(getKey(), getValue());
     }
 
+    /**
+     * Returns a string representation of this extension in the format {@code
+     * "Extension{key=value}"}. This method is useful for debugging and logging purposes, providing
+     * a clear and concise representation of the extension's key and value.
+     *
+     * @return a string representation of this extension
+     */
     @Override
     public String toString() {
       List<String> entries = new ArrayList<>();
 
       if (getKey() != null) {
-        entries.add("\"key\" : \"" + escape(getKey()) + "\"");
+        entries.add("key=\"" + escape(getKey()) + "\"");
       }
 
-      if (getValue() instanceof Number || getValue() instanceof Boolean) {
-        entries.add("\"value\" : " + getValue());
+      if (getValue() instanceof CharSequence) {
+        entries.add("value=\"" + escape((CharSequence) getValue()) + "\"");
+      } else if (value instanceof URI || value instanceof URL) {
+        entries.add("value=\"" + escape(value.toString()) + "\"");
+      } else if (getValue() instanceof Number || getValue() instanceof Boolean) {
+        entries.add("value=" + getValue());
       } else if (getValue() != null) {
-        entries.add("\"value\" : " + "\"" + escape(getValue().toString()) + "\"");
+        entries.add("value=" + escape(getValue().toString()));
       }
 
-      return entries.isEmpty()
-          ? "{ }"
-          : entries.stream().collect(Collectors.joining(", ", "{ ", " }"));
+      return "Extension{" + String.join(", ", entries) + "}";
     }
   }
 }
