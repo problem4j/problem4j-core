@@ -20,6 +20,8 @@
  */
 package io.github.problem4j.core;
 
+import org.jspecify.annotations.Nullable;
+
 /**
  * Converts exceptions annotated with {@link ProblemMapping} into {@link ProblemBuilder} instances,
  * which can be further extended or executed to create {@link Problem} response.
@@ -68,7 +70,7 @@ public interface ProblemMapper {
    * @return a {@link ProblemBuilder} instance
    * @throws ProblemMappingException when something goes wrong while building the Problem
    */
-  ProblemBuilder toProblemBuilder(Throwable t);
+  ProblemBuilder toProblemBuilder(@Nullable Throwable t);
 
   /**
    * Convert {@link Throwable} -&gt; {@link ProblemBuilder} according to its {@link ProblemMapping}
@@ -80,7 +82,7 @@ public interface ProblemMapper {
    * @return a {@link ProblemBuilder} instance
    * @throws ProblemMappingException when something goes wrong while building the {@link Problem}
    */
-  ProblemBuilder toProblemBuilder(Throwable t, ProblemContext context);
+  ProblemBuilder toProblemBuilder(@Nullable Throwable t, @Nullable ProblemContext context);
 
   /**
    * Checks whether the given exception class is annotated with {@link ProblemMapping}.
@@ -89,5 +91,5 @@ public interface ProblemMapper {
    * @return {@code true} if the exception is annotated with {@link ProblemMapping}, {@code false}
    *     otherwise
    */
-  boolean isMappingCandidate(Throwable t);
+  boolean isMappingCandidate(@Nullable Throwable t);
 }

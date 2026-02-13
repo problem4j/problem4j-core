@@ -23,6 +23,7 @@ package io.github.problem4j.core;
 import java.net.URI;
 import java.util.Collection;
 import java.util.Map;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Builder interface for constructing {@link Problem} instances.
@@ -38,7 +39,7 @@ public interface ProblemBuilder {
    * @param type the URI identifying the problem type
    * @return this builder instance for chaining
    */
-  ProblemBuilder type(URI type);
+  ProblemBuilder type(@Nullable URI type);
 
   /**
    * Sets the problem type from a string representation of a URI.
@@ -47,7 +48,7 @@ public interface ProblemBuilder {
    * @return this builder instance for chaining
    * @throws IllegalArgumentException if the string is not a valid URI
    */
-  ProblemBuilder type(String type);
+  ProblemBuilder type(@Nullable String type);
 
   /**
    * Sets the short, human-readable title for the problem.
@@ -55,7 +56,7 @@ public interface ProblemBuilder {
    * @param title the problem title
    * @return this builder instance for chaining
    */
-  ProblemBuilder title(String title);
+  ProblemBuilder title(@Nullable String title);
 
   /**
    * Sets the HTTP status code for this problem.
@@ -71,7 +72,7 @@ public interface ProblemBuilder {
    * @param status the {@link ProblemStatus} representing the HTTP status
    * @return this builder instance for chaining
    */
-  ProblemBuilder status(ProblemStatus status);
+  ProblemBuilder status(@Nullable ProblemStatus status);
 
   /**
    * Sets a detailed, human-readable description of this problem instance.
@@ -79,7 +80,7 @@ public interface ProblemBuilder {
    * @param detail the detail message
    * @return this builder instance for chaining
    */
-  ProblemBuilder detail(String detail);
+  ProblemBuilder detail(@Nullable String detail);
 
   /**
    * Sets the URI identifying this specific occurrence of the problem.
@@ -87,7 +88,7 @@ public interface ProblemBuilder {
    * @param instance the instance URI
    * @return this builder instance for chaining
    */
-  ProblemBuilder instance(URI instance);
+  ProblemBuilder instance(@Nullable URI instance);
 
   /**
    * Sets the instance URI from a string representation.
@@ -96,7 +97,7 @@ public interface ProblemBuilder {
    * @return this builder instance for chaining
    * @throws IllegalArgumentException if the string is not a valid URI
    */
-  ProblemBuilder instance(String instance);
+  ProblemBuilder instance(@Nullable String instance);
 
   /**
    * Adds a single custom extension.
@@ -105,7 +106,7 @@ public interface ProblemBuilder {
    * @param value the extension value
    * @return this builder instance for chaining
    */
-  ProblemBuilder extension(String name, Object value);
+  ProblemBuilder extension(@Nullable String name, @Nullable Object value);
 
   /**
    * Adds multiple custom extensions from a map.
@@ -113,7 +114,7 @@ public interface ProblemBuilder {
    * @param extensions map of extension keys and values
    * @return this builder instance for chaining
    */
-  ProblemBuilder extensions(Map<String, Object> extensions);
+  ProblemBuilder extensions(@Nullable Map<String, @Nullable Object> extensions);
 
   /**
    * Adds single custom extension from {@link Problem.Extension}.
@@ -121,7 +122,7 @@ public interface ProblemBuilder {
    * @param extension array of extensions
    * @return this builder instance for chaining
    */
-  default ProblemBuilder extension(Problem.Extension extension) {
+  default ProblemBuilder extension(Problem.@Nullable Extension extension) {
     return extensions(extension);
   }
 
@@ -131,7 +132,7 @@ public interface ProblemBuilder {
    * @param extensions array of extensions
    * @return this builder instance for chaining
    */
-  ProblemBuilder extensions(Problem.Extension... extensions);
+  ProblemBuilder extensions(Problem.@Nullable Extension @Nullable ... extensions);
 
   /**
    * Adds multiple custom extensions from a collection of {@link Problem.Extension}.
@@ -139,7 +140,7 @@ public interface ProblemBuilder {
    * @param extensions collection of extensions
    * @return this builder instance for chaining
    */
-  ProblemBuilder extensions(Collection<? extends Problem.Extension> extensions);
+  ProblemBuilder extensions(@Nullable Collection<? extends Problem.@Nullable Extension> extensions);
 
   /**
    * Builds an immutable {@link Problem} instance with the configured properties and extensions.
@@ -173,7 +174,7 @@ public interface ProblemBuilder {
    * @deprecated use {@link #extensions(Map)} instead
    */
   @Deprecated
-  default ProblemBuilder extension(Map<String, Object> extensions) {
+  default ProblemBuilder extension(@Nullable Map<String, @Nullable Object> extensions) {
     return extensions(extensions);
   }
 
@@ -188,7 +189,7 @@ public interface ProblemBuilder {
    * @deprecated use {@link #extensions(Problem.Extension...)} instead
    */
   @Deprecated
-  default ProblemBuilder extension(Problem.Extension... extensions) {
+  default ProblemBuilder extension(Problem.@Nullable Extension @Nullable ... extensions) {
     return extensions(extensions);
   }
 
@@ -203,7 +204,8 @@ public interface ProblemBuilder {
    * @deprecated use {@link #extensions(Collection)} instead
    */
   @Deprecated
-  default ProblemBuilder extension(Collection<? extends Problem.Extension> extensions) {
+  default ProblemBuilder extension(
+      @Nullable Collection<? extends Problem.@Nullable Extension> extensions) {
     return extensions(extensions);
   }
 }

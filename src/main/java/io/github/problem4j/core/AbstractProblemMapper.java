@@ -23,6 +23,7 @@ package io.github.problem4j.core;
 import java.lang.reflect.Field;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import org.jspecify.annotations.Nullable;
 
 /**
  * This processor supports dynamic interpolation of placeholders in the annotation values. The
@@ -80,7 +81,7 @@ public abstract class AbstractProblemMapper implements ProblemMapper {
    * @throws ProblemMappingException when something goes wrong while building the Problem
    */
   @Override
-  public final ProblemBuilder toProblemBuilder(Throwable t) {
+  public final ProblemBuilder toProblemBuilder(@Nullable Throwable t) {
     return toProblemBuilder(t, null);
   }
 
@@ -94,7 +95,7 @@ public abstract class AbstractProblemMapper implements ProblemMapper {
    * @throws ProblemMappingException when something goes wrong while building the Problem
    */
   @Override
-  public ProblemBuilder toProblemBuilder(Throwable t, ProblemContext context) {
+  public ProblemBuilder toProblemBuilder(@Nullable Throwable t, @Nullable ProblemContext context) {
     if (t == null) {
       return Problem.builder();
     }
@@ -130,7 +131,7 @@ public abstract class AbstractProblemMapper implements ProblemMapper {
    *     false} otherwise
    */
   @Override
-  public boolean isMappingCandidate(Throwable t) {
+  public boolean isMappingCandidate(@Nullable Throwable t) {
     return t != null && t.getClass().isAnnotationPresent(ProblemMapping.class);
   }
 
@@ -140,7 +141,7 @@ public abstract class AbstractProblemMapper implements ProblemMapper {
    * @param clazz the class to inspect
    * @return the {@link ProblemMapping} annotation if present, otherwise null
    */
-  protected ProblemMapping findAnnotation(Class<?> clazz) {
+  protected @Nullable ProblemMapping findAnnotation(Class<?> clazz) {
     return clazz.getAnnotation(ProblemMapping.class);
   }
 
@@ -154,9 +155,11 @@ public abstract class AbstractProblemMapper implements ProblemMapper {
    * @param context the problem context for additional data
    */
   protected void applyTypeOnBuilder(
-      ProblemBuilder builder, ProblemMapping mapping, Throwable t, ProblemContext context) {
-    String rawType =
-        mapping.type() != null && !mapping.type().isEmpty() ? mapping.type().trim() : "";
+      ProblemBuilder builder,
+      ProblemMapping mapping,
+      Throwable t,
+      @Nullable ProblemContext context) {
+    String rawType = !mapping.type().isEmpty() ? mapping.type().trim() : "";
     if (!rawType.isEmpty()) {
       String typeInterpolated = interpolate(rawType, t, context);
       if (!typeInterpolated.isEmpty()) {
@@ -178,9 +181,11 @@ public abstract class AbstractProblemMapper implements ProblemMapper {
    * @param context the problem context for additional data
    */
   protected void applyTitleOnBuilder(
-      ProblemBuilder builder, ProblemMapping mapping, Throwable t, ProblemContext context) {
-    String titleRaw =
-        mapping.title() != null && !mapping.title().isEmpty() ? mapping.title().trim() : "";
+      ProblemBuilder builder,
+      ProblemMapping mapping,
+      Throwable t,
+      @Nullable ProblemContext context) {
+    String titleRaw = !mapping.title().isEmpty() ? mapping.title().trim() : "";
     if (!titleRaw.isEmpty()) {
       String titleInterpolated = interpolate(titleRaw, t, context);
       if (!titleInterpolated.isEmpty()) {
@@ -210,9 +215,11 @@ public abstract class AbstractProblemMapper implements ProblemMapper {
    * @param context the problem context for additional data
    */
   protected void applyDetailOnBuilder(
-      ProblemBuilder builder, ProblemMapping mapping, Throwable t, ProblemContext context) {
-    String detailRaw =
-        mapping.detail() != null && !mapping.detail().isEmpty() ? mapping.detail().trim() : "";
+      ProblemBuilder builder,
+      ProblemMapping mapping,
+      Throwable t,
+      @Nullable ProblemContext context) {
+    String detailRaw = !mapping.detail().isEmpty() ? mapping.detail().trim() : "";
     if (!detailRaw.isEmpty()) {
       String detailInterpolated = interpolate(detailRaw, t, context);
       if (!detailInterpolated.isEmpty()) {
@@ -230,11 +237,11 @@ public abstract class AbstractProblemMapper implements ProblemMapper {
    * @param context the problem context for additional data
    */
   protected void applyInstanceOnBuilder(
-      ProblemBuilder builder, ProblemMapping mapping, Throwable t, ProblemContext context) {
-    String rawInstance =
-        mapping.instance() != null && !mapping.instance().isEmpty()
-            ? mapping.instance().trim()
-            : "";
+      ProblemBuilder builder,
+      ProblemMapping mapping,
+      Throwable t,
+      @Nullable ProblemContext context) {
+    String rawInstance = !mapping.instance().isEmpty() ? mapping.instance().trim() : "";
     if (!rawInstance.isEmpty()) {
       String instanceInterpolated = interpolate(rawInstance, t, context);
       if (!instanceInterpolated.isEmpty()) {
@@ -258,7 +265,7 @@ public abstract class AbstractProblemMapper implements ProblemMapper {
       ProblemBuilder builder, ProblemMapping mapping, Throwable t) {
     String[] extensions = mapping.extensions();
     for (String name : extensions) {
-      if (name == null || name.trim().isEmpty()) {
+      if (name.trim().isEmpty()) {
         continue;
       }
       name = name.trim();
@@ -286,7 +293,7 @@ public abstract class AbstractProblemMapper implements ProblemMapper {
    * @param context the problem context for additional data
    * @return the interpolated string with placeholders replaced by actual values
    */
-  protected String interpolate(String template, Throwable t, ProblemContext context) {
+  protected String interpolate(String template, Throwable t, @Nullable ProblemContext context) {
     Matcher m = PLACEHOLDER.matcher(template);
     StringBuilder sb = new StringBuilder();
 
@@ -323,8 +330,8 @@ public abstract class AbstractProblemMapper implements ProblemMapper {
    * @param name the field name to look for
    * @return the field value if found, otherwise null
    */
-  protected Object resolvePlaceholderSource(Throwable t, String name) {
-    if (name == null || name.isEmpty()) {
+  protected @Nullable Object resolvePlaceholderSource(Throwable t, String name) {
+    if (name.isEmpty()) {
       return null;
     }
     Class<?> search = t.getClass();

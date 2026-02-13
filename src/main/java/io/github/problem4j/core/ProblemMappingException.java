@@ -20,6 +20,8 @@
  */
 package io.github.problem4j.core;
 
+import org.jspecify.annotations.Nullable;
+
 /**
  * Thrown when processing an annotated exception into a {@link Problem} fails.
  * {@code @RestControllerAdvice} or any other handlers can catch this and return a safe {@code 500}.
@@ -37,7 +39,7 @@ public class ProblemMappingException extends RuntimeException {
    *
    * @param message human-readable explanation of the failure
    */
-  public ProblemMappingException(String message) {
+  public ProblemMappingException(@Nullable String message) {
     super(message);
   }
 
@@ -46,17 +48,17 @@ public class ProblemMappingException extends RuntimeException {
    *
    * @param cause underlying cause (may be {@code null})
    */
-  public ProblemMappingException(Throwable cause) {
+  public ProblemMappingException(@Nullable Throwable cause) {
     super(cause);
   }
 
   /**
    * Creates a new exception with the specified detail message and cause.
    *
-   * @param message human-readable explanation
+   * @param message human-readable explanation of the failure
    * @param cause underlying cause (may be {@code null})
    */
-  public ProblemMappingException(String message, Throwable cause) {
+  public ProblemMappingException(@Nullable String message, @Nullable Throwable cause) {
     super(message, cause);
   }
 
@@ -70,7 +72,10 @@ public class ProblemMappingException extends RuntimeException {
    * @param writableStackTrace whether the stack trace should be writable
    */
   protected ProblemMappingException(
-      String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
+      @Nullable String message,
+      @Nullable Throwable cause,
+      boolean enableSuppression,
+      boolean writableStackTrace) {
     super(message, cause, enableSuppression, writableStackTrace);
   }
 }

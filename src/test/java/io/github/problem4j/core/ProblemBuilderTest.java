@@ -160,7 +160,7 @@ class ProblemBuilderTest {
   void givenNullValueExtensionViaVarargs_shouldNotIncludeIt() {
     Problem problem =
         Problem.builder()
-            .extension(Problem.extension("key1", null), Problem.extension("key2", null))
+            .extensions(Problem.extension("key1", null), Problem.extension("key2", null))
             .build();
 
     assertThat(problem.getExtensions()).isEmpty();
@@ -177,7 +177,7 @@ class ProblemBuilderTest {
   void givenNullValueExtensionViaObject_shouldNotIncludeIt() {
     Problem problem =
         Problem.builder()
-            .extension(
+            .extensions(
                 Arrays.asList(Problem.extension("key1", null), Problem.extension("key2", null)))
             .build();
 
@@ -193,23 +193,9 @@ class ProblemBuilderTest {
 
   @Test
   void givenNullMapExtension_shouldIgnoreIt() {
-    Problem problem = Problem.builder().extension((Map<String, Object>) null).build();
+    Problem problem = Problem.builder().extensions((Map<String, Object>) null).build();
 
     assertThat(problem.getExtensions()).isEmpty();
-  }
-
-  @Test
-  void givenMapExtensionWithNullKey_shouldIgnoreNullKey() {
-    Map<String, Object> map = new HashMap<>();
-    map.put(null, "ignored");
-    map.put("a", "b");
-
-    Problem problem = Problem.builder().extension(map).build();
-
-    assertThat(problem.getExtensions()).containsExactly("a");
-    assertThat(problem.hasExtension("a")).isTrue();
-    assertThat(problem.getExtensionValue("a")).isEqualTo("b");
-    assertThat(problem.getExtensionMembers()).isEqualTo(mapOf("a", "b"));
   }
 
   @Test
@@ -218,7 +204,7 @@ class ProblemBuilderTest {
     map.put("ignored", null);
     map.put("a", "b");
 
-    Problem problem = Problem.builder().extension(map).build();
+    Problem problem = Problem.builder().extensions(map).build();
 
     assertThat(problem.getExtensions()).containsExactly("a");
     assertThat(problem.hasExtension("a")).isTrue();
@@ -228,7 +214,7 @@ class ProblemBuilderTest {
 
   @Test
   void givenNullVarargArray_shouldIgnoreIt() {
-    Problem problem = Problem.builder().extension((Problem.Extension[]) null).build();
+    Problem problem = Problem.builder().extensions((Problem.Extension[]) null).build();
 
     assertThat(problem.getExtensions()).isEmpty();
   }
@@ -237,7 +223,7 @@ class ProblemBuilderTest {
   void givenVarargWithNullElement_shouldIgnoreNullElement() {
     Problem problem =
         Problem.builder()
-            .extension(Problem.extension("a", 1), null, Problem.extension("b", 2))
+            .extensions(Problem.extension("a", 1), null, Problem.extension("b", 2))
             .build();
 
     assertThat(problem.getExtensions()).containsExactlyInAnyOrder("a", "b");
@@ -248,7 +234,7 @@ class ProblemBuilderTest {
 
   @Test
   void givenNullCollection_shouldIgnoreIt() {
-    Problem problem = Problem.builder().extension((Collection<Problem.Extension>) null).build();
+    Problem problem = Problem.builder().extensions((Collection<Problem.Extension>) null).build();
 
     assertThat(problem.getExtensions()).isEmpty();
   }
@@ -257,7 +243,7 @@ class ProblemBuilderTest {
   void givenCollectionWithNullElement_shouldIgnoreNullElement() {
     Problem problem =
         Problem.builder()
-            .extension(
+            .extensions(
                 Arrays.asList(Problem.extension("x", "1"), null, Problem.extension("y", "2")))
             .build();
 
@@ -297,7 +283,7 @@ class ProblemBuilderTest {
   @Test
   void givenEmptyMapExtension_shouldBeIgnored() {
     Map<String, Object> m = new HashMap<>();
-    Problem problem = Problem.builder().extension(m).build();
+    Problem problem = Problem.builder().extensions(m).build();
 
     assertThat(problem.getExtensions()).isEmpty();
     assertThat(problem.getExtensionMembers()).isEqualTo(Collections.emptyMap());

@@ -29,6 +29,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Represents a problem detail according to the <a href="https://tools.ietf.org/html/rfc7807">RFC
@@ -52,10 +53,10 @@ public abstract class AbstractProblem implements Problem, Serializable {
   private static final long serialVersionUID = 1L;
 
   private final URI type;
-  private final String title;
+  private final @Nullable String title;
   private final int status;
-  private final String detail;
-  private final URI instance;
+  private final @Nullable String detail;
+  private final @Nullable URI instance;
   private final Map<String, Object> extensions;
 
   /**
@@ -71,13 +72,13 @@ public abstract class AbstractProblem implements Problem, Serializable {
    *     instance
    */
   public AbstractProblem(
-      URI type,
-      String title,
+      @Nullable URI type,
+      @Nullable String title,
       int status,
-      String detail,
-      URI instance,
+      @Nullable String detail,
+      @Nullable URI instance,
       Map<String, Object> extensions) {
-    this.type = type;
+    this.type = type != null ? type : Problem.BLANK_TYPE;
     this.title = title;
     this.status = status;
     this.detail = detail;
@@ -97,7 +98,7 @@ public abstract class AbstractProblem implements Problem, Serializable {
    * @return a short, human-readable title describing the problem
    */
   @Override
-  public String getTitle() {
+  public @Nullable String getTitle() {
     return this.title;
   }
 
@@ -113,7 +114,7 @@ public abstract class AbstractProblem implements Problem, Serializable {
    * @return a detailed, human-readable explanation specific to this occurrence
    */
   @Override
-  public String getDetail() {
+  public @Nullable String getDetail() {
     return this.detail;
   }
 
@@ -121,7 +122,7 @@ public abstract class AbstractProblem implements Problem, Serializable {
    * @return a URI identifying the specific occurrence of the problem
    */
   @Override
-  public URI getInstance() {
+  public @Nullable URI getInstance() {
     return this.instance;
   }
 
@@ -140,7 +141,7 @@ public abstract class AbstractProblem implements Problem, Serializable {
    * @return the value of the extension, or {@code null} if not present
    */
   @Override
-  public Object getExtensionValue(String name) {
+  public @Nullable Object getExtensionValue(String name) {
     return extensions.get(name);
   }
 
@@ -190,7 +191,7 @@ public abstract class AbstractProblem implements Problem, Serializable {
    * @return {@code true} if this object is the same as the obj argument; {@code false} otherwise.
    */
   @Override
-  public boolean equals(Object obj) {
+  public boolean equals(@Nullable Object obj) {
     if (this == obj) {
       return true;
     }
@@ -231,9 +232,7 @@ public abstract class AbstractProblem implements Problem, Serializable {
   @Override
   public String toString() {
     List<String> entries = new ArrayList<>();
-    if (getType() != null) {
-      entries.add("type=" + getType());
-    }
+    entries.add("type=" + getType());
     if (getTitle() != null) {
       entries.add("title=" + getTitle());
     }
@@ -247,17 +246,7 @@ public abstract class AbstractProblem implements Problem, Serializable {
 
     getExtensionMembers().entrySet().stream()
         .sorted(Map.Entry.comparingByKey())
-        .forEach(
-            entry -> {
-              String field = entry.getKey();
-              Object value = entry.getValue();
-
-              if (value == null) {
-                return;
-              }
-
-              entries.add(field + "=" + value);
-            });
+        .forEach(entry -> entries.add(entry.getKey() + "=" + entry.getValue()));
 
     return "Problem{" + String.join(", ", entries) + "}";
   }
@@ -268,7 +257,7 @@ public abstract class AbstractProblem implements Problem, Serializable {
     private static final long serialVersionUID = 1L;
 
     private final String key;
-    private Object value;
+    private @Nullable Object value;
 
     /**
      * Creates a new extension entry with the given key and value.
@@ -276,7 +265,7 @@ public abstract class AbstractProblem implements Problem, Serializable {
      * @param key the extension field name, must not be {@code null}
      * @param value the extension value, may be {@code null}
      */
-    public AbstractExtension(String key, Object value) {
+    public AbstractExtension(String key, @Nullable Object value) {
       this.key = key;
       this.value = value;
     }
@@ -293,7 +282,7 @@ public abstract class AbstractProblem implements Problem, Serializable {
      * @return the extension value
      */
     @Override
-    public Object getValue() {
+    public @Nullable Object getValue() {
       return value;
     }
 
@@ -304,7 +293,7 @@ public abstract class AbstractProblem implements Problem, Serializable {
      * @return the new value
      */
     @Override
-    public Object setValue(Object value) {
+    public @Nullable Object setValue(@Nullable Object value) {
       this.value = value;
       return value;
     }
@@ -318,7 +307,7 @@ public abstract class AbstractProblem implements Problem, Serializable {
      *     otherwise
      */
     @Override
-    public boolean equals(Object obj) {
+    public boolean equals(@Nullable Object obj) {
       if (this == obj) {
         return true;
       }

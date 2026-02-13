@@ -20,6 +20,8 @@
  */
 package io.github.problem4j.core;
 
+import org.jspecify.annotations.Nullable;
+
 /**
  * Runtime exception that wraps a {@link Problem} instance.
  *
@@ -53,8 +55,8 @@ public class ProblemException extends RuntimeException {
    * @param message custom exception message
    * @param problem the problem instance to associate with this exception
    */
-  public ProblemException(String message, Problem problem) {
-    super(message);
+  public ProblemException(@Nullable String message, Problem problem) {
+    super(message != null && !message.isEmpty() ? message : produceExceptionMessage(problem));
     this.problem = problem;
   }
 
@@ -68,7 +70,7 @@ public class ProblemException extends RuntimeException {
    * @param cause the root cause of this exception (a {@code null} value is permitted, and indicates
    *     that the cause is nonexistent or unknown)
    */
-  public ProblemException(Problem problem, Throwable cause) {
+  public ProblemException(Problem problem, @Nullable Throwable cause) {
     super(produceExceptionMessage(problem), cause);
     this.problem = problem;
   }
@@ -82,8 +84,9 @@ public class ProblemException extends RuntimeException {
    * @param cause the root cause of this exception (a {@code null} value is permitted, and indicates
    *     that the cause is nonexistent or unknown)
    */
-  public ProblemException(String message, Problem problem, Throwable cause) {
-    super(message, cause);
+  public ProblemException(@Nullable String message, Problem problem, @Nullable Throwable cause) {
+    super(
+        message != null && !message.isEmpty() ? message : produceExceptionMessage(problem), cause);
     this.problem = problem;
   }
 
@@ -102,12 +105,16 @@ public class ProblemException extends RuntimeException {
    * @param writableStackTrace whether the stack trace should be writable
    */
   protected ProblemException(
-      String message,
+      @Nullable String message,
       Problem problem,
-      Throwable cause,
+      @Nullable Throwable cause,
       boolean enableSuppression,
       boolean writableStackTrace) {
-    super(message, cause, enableSuppression, writableStackTrace);
+    super(
+        message != null && !message.isEmpty() ? message : produceExceptionMessage(problem),
+        cause,
+        enableSuppression,
+        writableStackTrace);
     this.problem = problem;
   }
 
@@ -127,7 +134,7 @@ public class ProblemException extends RuntimeException {
    * @param problem the problem instance
    * @return a formatted exception message or {@code null} if empty
    */
-  private static String produceExceptionMessage(Problem problem) {
+  private static @Nullable String produceExceptionMessage(Problem problem) {
     StringBuilder builder = new StringBuilder();
 
     if (problem.getTitle() != null) {

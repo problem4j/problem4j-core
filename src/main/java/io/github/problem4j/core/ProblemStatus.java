@@ -25,6 +25,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Collectors;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Utility enum for generic HTTP status codes, to be used with {@link ProblemBuilder} without having
@@ -1172,7 +1173,7 @@ public enum ProblemStatus {
    * @return an {@link Optional} containing the matching {@link ProblemStatus} if present, or empty
    *     if there is no enum constant for the provided code
    */
-  public static Optional<ProblemStatus> findValue(Integer status) {
+  public static Optional<ProblemStatus> findValue(@Nullable Integer status) {
     if (status == null) {
       return Optional.empty();
     }

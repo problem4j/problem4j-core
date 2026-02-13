@@ -20,6 +20,7 @@
  */
 package io.github.problem4j.core;
 
+import io.github.problem4j.core.Problem.Extension;
 import java.io.Serializable;
 import java.net.URI;
 import java.util.ArrayList;
@@ -27,8 +28,10 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Stream;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Base implementation of builder for constructing {@link Problem} instances.
@@ -40,11 +43,11 @@ public abstract class AbstractProblemBuilder implements ProblemBuilder, Serializ
 
   private static final long serialVersionUID = 1L;
 
-  private URI type;
-  private String title;
+  private @Nullable URI type;
+  private @Nullable String title;
   private int status = 0;
-  private String detail;
-  private URI instance;
+  private @Nullable String detail;
+  private @Nullable URI instance;
   private final Map<String, Object> extensions = new HashMap<>();
 
   /**
@@ -80,7 +83,7 @@ public abstract class AbstractProblemBuilder implements ProblemBuilder, Serializ
    * @return this builder instance for chaining
    */
   @Override
-  public ProblemBuilder type(URI type) {
+  public ProblemBuilder type(@Nullable URI type) {
     this.type = type;
     return this;
   }
@@ -93,7 +96,7 @@ public abstract class AbstractProblemBuilder implements ProblemBuilder, Serializ
    * @throws IllegalArgumentException if the string is not a valid URI
    */
   @Override
-  public ProblemBuilder type(String type) {
+  public ProblemBuilder type(@Nullable String type) {
     return type != null ? type(URI.create(type)) : type((URI) null);
   }
 
@@ -104,7 +107,7 @@ public abstract class AbstractProblemBuilder implements ProblemBuilder, Serializ
    * @return this builder instance for chaining
    */
   @Override
-  public ProblemBuilder title(String title) {
+  public ProblemBuilder title(@Nullable String title) {
     this.title = title;
     return this;
   }
@@ -128,7 +131,7 @@ public abstract class AbstractProblemBuilder implements ProblemBuilder, Serializ
    * @return this builder instance for chaining
    */
   @Override
-  public ProblemBuilder status(ProblemStatus status) {
+  public ProblemBuilder status(@Nullable ProblemStatus status) {
     return status != null ? status(status.getStatus()) : status(0);
   }
 
@@ -139,7 +142,7 @@ public abstract class AbstractProblemBuilder implements ProblemBuilder, Serializ
    * @return this builder instance for chaining
    */
   @Override
-  public ProblemBuilder detail(String detail) {
+  public ProblemBuilder detail(@Nullable String detail) {
     this.detail = detail;
     return this;
   }
@@ -151,7 +154,7 @@ public abstract class AbstractProblemBuilder implements ProblemBuilder, Serializ
    * @return this builder instance for chaining
    */
   @Override
-  public ProblemBuilder instance(URI instance) {
+  public ProblemBuilder instance(@Nullable URI instance) {
     this.instance = instance;
     return this;
   }
@@ -164,7 +167,7 @@ public abstract class AbstractProblemBuilder implements ProblemBuilder, Serializ
    * @throws IllegalArgumentException if the string is not a valid URI
    */
   @Override
-  public ProblemBuilder instance(String instance) {
+  public ProblemBuilder instance(@Nullable String instance) {
     return instance != null ? instance(URI.create(instance)) : instance((URI) null);
   }
 
@@ -176,7 +179,7 @@ public abstract class AbstractProblemBuilder implements ProblemBuilder, Serializ
    * @return this builder instance for chaining
    */
   @Override
-  public ProblemBuilder extension(String name, Object value) {
+  public ProblemBuilder extension(@Nullable String name, @Nullable Object value) {
     if (name != null && value != null) {
       extensions.put(name, value);
     }
@@ -190,11 +193,11 @@ public abstract class AbstractProblemBuilder implements ProblemBuilder, Serializ
    * @return this builder instance for chaining
    */
   @Override
-  public ProblemBuilder extensions(Map<String, Object> extensions) {
+  public ProblemBuilder extensions(@Nullable Map<String, @Nullable Object> extensions) {
     if (extensions != null && !extensions.isEmpty()) {
       extensions.forEach(
           (key, value) -> {
-            if (key != null && value != null) {
+            if (value != null) {
               this.extensions.put(key, value);
             }
           });
@@ -209,11 +212,11 @@ public abstract class AbstractProblemBuilder implements ProblemBuilder, Serializ
    * @return this builder instance for chaining
    */
   @Override
-  public ProblemBuilder extensions(Problem.Extension... extensions) {
+  public ProblemBuilder extensions(Problem.@Nullable Extension @Nullable ... extensions) {
     if (extensions != null && extensions.length > 0) {
       Stream.of(extensions)
           .filter(AbstractProblemBuilder::isExtensionValid)
-          .forEach(e -> this.extensions.put(e.getKey(), e.getValue()));
+          .forEach(e -> this.extensions.put(e.getKey(), Objects.requireNonNull(e.getValue())));
     }
     return this;
   }
@@ -225,11 +228,12 @@ public abstract class AbstractProblemBuilder implements ProblemBuilder, Serializ
    * @return this builder instance for chaining
    */
   @Override
-  public ProblemBuilder extensions(Collection<? extends Problem.Extension> extensions) {
+  public ProblemBuilder extensions(
+      @Nullable Collection<? extends Problem.@Nullable Extension> extensions) {
     if (extensions != null && !extensions.isEmpty()) {
       extensions.stream()
           .filter(AbstractProblemBuilder::isExtensionValid)
-          .forEach(e -> this.extensions.put(e.getKey(), e.getValue()));
+          .forEach(e -> this.extensions.put(e.getKey(), Objects.requireNonNull(e.getValue())));
     }
     return this;
   }
@@ -294,22 +298,12 @@ public abstract class AbstractProblemBuilder implements ProblemBuilder, Serializ
 
     extensions.entrySet().stream()
         .sorted(Map.Entry.comparingByKey())
-        .forEach(
-            entry -> {
-              String field = entry.getKey();
-              Object value = entry.getValue();
-
-              if (value == null) {
-                return;
-              }
-
-              entries.add(field + "=" + value);
-            });
+        .forEach(entry -> entries.add(entry.getKey() + "=" + entry.getValue()));
 
     return "ProblemBuilder{" + String.join(", ", entries) + "}";
   }
 
-  private static boolean isExtensionValid(Problem.Extension extension) {
-    return extension != null && extension.getKey() != null && extension.getValue() != null;
+  private static boolean isExtensionValid(@Nullable Extension extension) {
+    return extension != null && extension.getValue() != null;
   }
 }

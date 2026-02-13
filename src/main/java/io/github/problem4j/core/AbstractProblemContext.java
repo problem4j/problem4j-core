@@ -26,6 +26,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Base implementation of {@link ProblemContext} backed by a {@link Map}.
@@ -98,7 +99,7 @@ public abstract class AbstractProblemContext implements ProblemContext, Serializ
    * @return the value associated with the key, or {@code null} if no value is found
    */
   @Override
-  public String get(String key) {
+  public @Nullable String get(String key) {
     return context.get(key);
   }
 
@@ -119,7 +120,7 @@ public abstract class AbstractProblemContext implements ProblemContext, Serializ
    *     the key
    */
   @Override
-  public ProblemContext put(String key, String value) {
+  public ProblemContext put(String key, @Nullable String value) {
     if (value == null) {
       context.remove(key);
     } else {
@@ -146,7 +147,7 @@ public abstract class AbstractProblemContext implements ProblemContext, Serializ
    * @return {@code true} if this context is equal to the specified object, {@code false} otherwise
    */
   @Override
-  public boolean equals(Object obj) {
+  public boolean equals(@Nullable Object obj) {
     if (this == obj) {
       return true;
     }

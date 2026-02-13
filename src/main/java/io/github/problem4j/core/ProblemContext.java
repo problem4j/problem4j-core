@@ -21,6 +21,7 @@
 package io.github.problem4j.core;
 
 import java.util.Map;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Context passed for problem processing. Used by {@link ProblemMapper}. Provides access to values
@@ -51,7 +52,7 @@ public interface ProblemContext {
    * @param key the key whose associated value is to be returned
    * @return the value associated with the key, or {@code null} if no value is found
    */
-  String get(String key);
+  @Nullable String get(String key);
 
   /**
    * Associates the specified value with the specified key in the context and returns the context
@@ -69,7 +70,7 @@ public interface ProblemContext {
    * @return the previous value associated with the key, or {@code null} if there was no mapping for
    *     the key
    */
-  ProblemContext put(String key, String value);
+  ProblemContext put(String key, @Nullable String value);
 
   /**
    * Returns an immutable snapshot of the current context as a {@link Map}.

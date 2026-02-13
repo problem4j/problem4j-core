@@ -23,6 +23,7 @@ package io.github.problem4j.core;
 import java.net.URI;
 import java.util.Map;
 import java.util.Set;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Represents a problem detail according to the <a href="https://tools.ietf.org/html/rfc7807">RFC
@@ -66,7 +67,7 @@ public interface Problem {
    * @return a new {@link Problem.Extension} instance
    * @throws IllegalArgumentException if the {@code key} is {@code null}
    */
-  static Extension extension(String key, Object value) {
+  static Extension extension(@Nullable String key, @Nullable Object value) {
     if (key == null) {
       throw new IllegalArgumentException("key cannot be null");
     }
@@ -81,7 +82,7 @@ public interface Problem {
   /**
    * @return a short, human-readable title describing the problem
    */
-  String getTitle();
+  @Nullable String getTitle();
 
   /**
    * @return the HTTP status code generated for this problem
@@ -91,12 +92,12 @@ public interface Problem {
   /**
    * @return a detailed, human-readable explanation specific to this occurrence
    */
-  String getDetail();
+  @Nullable String getDetail();
 
   /**
    * @return a URI identifying the specific occurrence of the problem
    */
-  URI getInstance();
+  @Nullable URI getInstance();
 
   /**
    * @return an unmodifiable set of custom extension keys present in this problem
@@ -109,7 +110,7 @@ public interface Problem {
    * @param name the extension key
    * @return the value of the extension, or {@code null} if not present
    */
-  Object getExtensionValue(String name);
+  @Nullable Object getExtensionValue(String name);
 
   /**
    * Checks whether a given extension key is present.
@@ -146,11 +147,11 @@ public interface Problem {
    * @return {@code true} if {@code type} is assigned to a non-blank value, {@code false} otherwise
    */
   default boolean isTypeNonBlank() {
-    return getType() != null && !getType().equals(BLANK_TYPE) && !getType().toString().isEmpty();
+    return !getType().equals(BLANK_TYPE) && !getType().toString().isEmpty();
   }
 
   /** Represents a single key-value extension in a {@link Problem}. */
-  interface Extension extends Map.Entry<String, Object> {
+  interface Extension extends Map.Entry<String, @Nullable Object> {
 
     /**
      * @return the extension key
@@ -162,7 +163,7 @@ public interface Problem {
      * @return the extension value
      */
     @Override
-    Object getValue();
+    @Nullable Object getValue();
 
     /**
      * Sets the extension value.
@@ -171,6 +172,6 @@ public interface Problem {
      * @return the new value
      */
     @Override
-    Object setValue(Object value);
+    @Nullable Object setValue(@Nullable Object value);
   }
 }

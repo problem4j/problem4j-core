@@ -22,17 +22,18 @@ package io.github.problem4j.core;
 
 import java.net.URI;
 import java.util.Map;
+import org.jspecify.annotations.Nullable;
 
 final class ProblemImpl extends AbstractProblem {
 
   private static final long serialVersionUID = 1L;
 
   ProblemImpl(
-      URI type,
-      String title,
+      @Nullable URI type,
+      @Nullable String title,
       int status,
-      String detail,
-      URI instance,
+      @Nullable String detail,
+      @Nullable URI instance,
       Map<String, Object> extensions) {
     super(type, title, status, detail, instance, extensions);
   }
@@ -41,7 +42,7 @@ final class ProblemImpl extends AbstractProblem {
 
     private static final long serialVersionUID = 1L;
 
-    ExtensionImpl(String key, Object value) {
+    ExtensionImpl(String key, @Nullable Object value) {
       super(key, value);
     }
   }
