@@ -20,7 +20,6 @@
  */
 package io.github.problem4j.core;
 
-import io.github.problem4j.core.Problem.Extension;
 import java.io.Serializable;
 import java.net.URI;
 import java.util.ArrayList;
@@ -28,9 +27,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Optional;
-import java.util.stream.Stream;
 import org.jspecify.annotations.Nullable;
 
 /**
@@ -213,10 +210,12 @@ public abstract class AbstractProblemBuilder implements ProblemBuilder, Serializ
    */
   @Override
   public ProblemBuilder extensions(Problem.@Nullable Extension @Nullable ... extensions) {
-    if (extensions != null && extensions.length > 0) {
-      Stream.of(extensions)
-          .filter(AbstractProblemBuilder::isExtensionValid)
-          .forEach(e -> this.extensions.put(e.getKey(), Objects.requireNonNull(e.getValue())));
+    if (extensions != null) {
+      for (Problem.@Nullable Extension e : extensions) {
+        if (e != null && e.getValue() != null) {
+          this.extensions.put(e.getKey(), e.getValue());
+        }
+      }
     }
     return this;
   }
@@ -231,9 +230,7 @@ public abstract class AbstractProblemBuilder implements ProblemBuilder, Serializ
   public ProblemBuilder extensions(
       @Nullable Collection<? extends Problem.@Nullable Extension> extensions) {
     if (extensions != null && !extensions.isEmpty()) {
-      extensions.stream()
-          .filter(AbstractProblemBuilder::isExtensionValid)
-          .forEach(e -> this.extensions.put(e.getKey(), Objects.requireNonNull(e.getValue())));
+      extensions(extensions.toArray(new Problem.Extension[0]));
     }
     return this;
   }
@@ -299,9 +296,5 @@ public abstract class AbstractProblemBuilder implements ProblemBuilder, Serializ
         .forEach(entry -> entries.add(entry.getKey() + "=" + entry.getValue()));
 
     return "ProblemBuilder{" + String.join(", ", entries) + "}";
-  }
-
-  private static boolean isExtensionValid(@Nullable Extension extension) {
-    return extension != null && extension.getValue() != null;
   }
 }

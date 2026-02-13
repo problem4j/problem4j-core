@@ -74,6 +74,8 @@ public interface Problem {
    * @throws IllegalArgumentException if the {@code key} is {@code null}
    */
   static Extension extension(@Nullable String key, @Nullable Object value) {
+    // with JSpecify, the nullability check might not be necessary, kept to not break existing
+    // behavior, may be revisited in future major versions
     if (key == null) {
       throw new IllegalArgumentException("key cannot be null");
     }

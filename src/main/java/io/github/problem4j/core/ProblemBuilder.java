@@ -123,7 +123,10 @@ public interface ProblemBuilder {
    * @return this builder instance for chaining
    */
   default ProblemBuilder extension(Problem.@Nullable Extension extension) {
-    return extensions(extension);
+    if (extension != null) {
+      return extension(extension.getKey(), extension.getValue());
+    }
+    return this;
   }
 
   /**
