@@ -67,11 +67,11 @@ class ProblemImplTest {
   @Test
   void givenNullExtensionsAndNullableFields_whenToString_thenOmitsNulls() {
     Map<String, Object> extensions = new HashMap<>();
-    Problem problem = new ProblemImpl(null, null, 200, null, null, extensions);
+    Problem problem = new ProblemImpl(null, ProblemStatus.OK_TITLE, 200, null, null, extensions);
 
     String result = problem.toString();
 
-    assertThat(result).isEqualTo("Problem{type=about:blank, status=200}");
+    assertThat(result).isEqualTo("Problem{type=about:blank, title=OK, status=200}");
   }
 
   @Test
@@ -80,7 +80,8 @@ class ProblemImplTest {
     extensions.put("ext1", 123);
     extensions.put("ext2", 456.78);
 
-    Problem problem = new ProblemImpl(null, null, 0, null, null, extensions);
+    Problem problem =
+        new ProblemImpl(null, ProblemStatus.INTERNAL_SERVER_ERROR_TITLE, 0, null, null, extensions);
 
     String result = problem.toString();
 
@@ -94,7 +95,8 @@ class ProblemImplTest {
     extensions.put("flag1", true);
     extensions.put("flag2", false);
 
-    Problem problem = new ProblemImpl(null, null, 0, null, null, extensions);
+    Problem problem =
+        new ProblemImpl(null, ProblemStatus.INTERNAL_SERVER_ERROR_TITLE, 0, null, null, extensions);
 
     String result = problem.toString();
 
@@ -107,7 +109,8 @@ class ProblemImplTest {
     Map<String, Object> extensions = new HashMap<>();
     extensions.put("obj", new DummyObject("biz\tbar"));
 
-    Problem problem = new ProblemImpl(null, null, 0, null, null, extensions);
+    Problem problem =
+        new ProblemImpl(null, ProblemStatus.INTERNAL_SERVER_ERROR_TITLE, 0, null, null, extensions);
 
     String result = problem.toString();
 
@@ -119,7 +122,8 @@ class ProblemImplTest {
     Map<String, Object> extensions = new HashMap<>();
     extensions.put("ext", "a\"b\\c\nd");
 
-    Problem problem = new ProblemImpl(null, null, 0, null, null, extensions);
+    Problem problem =
+        new ProblemImpl(null, ProblemStatus.INTERNAL_SERVER_ERROR_TITLE, 0, null, null, extensions);
 
     String result = problem.toString();
 

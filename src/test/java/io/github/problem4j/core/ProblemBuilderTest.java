@@ -77,7 +77,7 @@ class ProblemBuilderTest {
     Problem problem = Problem.builder().status(null).build();
 
     assertThat(problem.getStatus()).isZero();
-    assertThat(problem.getTitle()).isNull();
+    assertThat(problem.getTitle()).isEqualTo(Problem.UNKNOWN_TITLE);
   }
 
   @Test
@@ -266,7 +266,7 @@ class ProblemBuilderTest {
     Problem problem = Problem.builder().status(999).build();
 
     assertThat(problem.getStatus()).isEqualTo(999);
-    assertThat(problem.getTitle()).isNull();
+    assertThat(problem.getTitle()).isEqualTo(Problem.UNKNOWN_TITLE);
   }
 
   @Test

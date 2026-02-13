@@ -30,7 +30,7 @@ final class ProblemImpl extends AbstractProblem {
 
   ProblemImpl(
       @Nullable URI type,
-      @Nullable String title,
+      String title,
       int status,
       @Nullable String detail,
       @Nullable URI instance,

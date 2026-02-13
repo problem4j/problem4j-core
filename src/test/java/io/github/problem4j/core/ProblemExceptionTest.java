@@ -98,7 +98,7 @@ class ProblemExceptionTest {
 
     ProblemException exception = new ProblemException(problem);
 
-    assertEquals("Something went wrong", exception.getMessage());
+    assertEquals("Unknown Error: Something went wrong", exception.getMessage());
   }
 
   @Test
@@ -144,7 +144,7 @@ class ProblemExceptionTest {
 
     ProblemException exception = new ProblemException(problem);
 
-    assertEquals("Custom protocol error (code: 999)", exception.getMessage());
+    assertEquals("Unknown Error: Custom protocol error (code: 999)", exception.getMessage());
   }
 
   @Test

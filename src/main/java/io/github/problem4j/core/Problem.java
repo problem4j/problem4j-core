@@ -47,6 +47,12 @@ public interface Problem {
   /** Default type URI for generic problems. */
   URI BLANK_TYPE = URI.create("about:blank");
 
+  /**
+   * Fallback to resolution of {@code title} field while calling {@link ProblemBuilder#build()}
+   * method.
+   */
+  String UNKNOWN_TITLE = "Unknown Error";
+
   /** MIME content type for this problem. */
   String CONTENT_TYPE = "application/problem+json";
 
@@ -82,7 +88,7 @@ public interface Problem {
   /**
    * @return a short, human-readable title describing the problem
    */
-  @Nullable String getTitle();
+  String getTitle();
 
   /**
    * @return the HTTP status code generated for this problem

@@ -53,7 +53,7 @@ public abstract class AbstractProblem implements Problem, Serializable {
   private static final long serialVersionUID = 1L;
 
   private final URI type;
-  private final @Nullable String title;
+  private final String title;
   private final int status;
   private final @Nullable String detail;
   private final @Nullable URI instance;
@@ -73,7 +73,7 @@ public abstract class AbstractProblem implements Problem, Serializable {
    */
   public AbstractProblem(
       @Nullable URI type,
-      @Nullable String title,
+      String title,
       int status,
       @Nullable String detail,
       @Nullable URI instance,
@@ -98,7 +98,7 @@ public abstract class AbstractProblem implements Problem, Serializable {
    * @return a short, human-readable title describing the problem
    */
   @Override
-  public @Nullable String getTitle() {
+  public String getTitle() {
     return this.title;
   }
 
@@ -233,9 +233,7 @@ public abstract class AbstractProblem implements Problem, Serializable {
   public String toString() {
     List<String> entries = new ArrayList<>();
     entries.add("type=" + getType());
-    if (getTitle() != null) {
-      entries.add("title=" + getTitle());
-    }
+    entries.add("title=" + getTitle());
     entries.add("status=" + getStatus());
     if (getDetail() != null) {
       entries.add("detail=" + getDetail());

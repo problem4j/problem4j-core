@@ -266,9 +266,7 @@ public abstract class AbstractProblemBuilder implements ProblemBuilder, Serializ
     String title = this.title;
     if (title == null) {
       Optional<ProblemStatus> status = ProblemStatus.findValue(this.status);
-      if (status.isPresent()) {
-        title = status.get().getTitle();
-      }
+      title = status.map(ProblemStatus::getTitle).orElse(Problem.UNKNOWN_TITLE);
     }
     return new ProblemImpl(type, title, status, detail, instance, extensions);
   }

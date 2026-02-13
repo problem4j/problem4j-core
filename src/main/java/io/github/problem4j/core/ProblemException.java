@@ -136,10 +136,7 @@ public class ProblemException extends RuntimeException {
    */
   private static @Nullable String produceExceptionMessage(Problem problem) {
     StringBuilder builder = new StringBuilder();
-
-    if (problem.getTitle() != null) {
-      builder.append(problem.getTitle());
-    }
+    builder.append(problem.getTitle());
 
     if (problem.getDetail() != null) {
       if (builder.length() > 0) {
