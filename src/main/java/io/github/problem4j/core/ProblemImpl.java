@@ -28,8 +28,17 @@ final class ProblemImpl extends AbstractProblem {
 
   private static final long serialVersionUID = 1L;
 
+  public ProblemImpl(String title, int status, @Nullable Map<String, Object> extensions) {
+    super(title, status, extensions);
+  }
+
+  public ProblemImpl(
+      String title, int status, @Nullable String detail, @Nullable Map<String, Object> extensions) {
+    super(title, status, detail, extensions);
+  }
+
   ProblemImpl(
-      @Nullable URI type,
+      URI type,
       String title,
       int status,
       @Nullable String detail,

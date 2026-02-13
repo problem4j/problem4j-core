@@ -67,7 +67,7 @@ class ProblemImplTest {
   @Test
   void givenNullExtensionsAndNullableFields_whenToString_thenOmitsNulls() {
     Map<String, Object> extensions = new HashMap<>();
-    Problem problem = new ProblemImpl(null, ProblemStatus.OK_TITLE, 200, null, null, extensions);
+    Problem problem = new ProblemImpl(ProblemStatus.OK_TITLE, 200, extensions);
 
     String result = problem.toString();
 
@@ -80,8 +80,7 @@ class ProblemImplTest {
     extensions.put("ext1", 123);
     extensions.put("ext2", 456.78);
 
-    Problem problem =
-        new ProblemImpl(null, ProblemStatus.INTERNAL_SERVER_ERROR_TITLE, 0, null, null, extensions);
+    Problem problem = new ProblemImpl(ProblemStatus.INTERNAL_SERVER_ERROR_TITLE, 0, extensions);
 
     String result = problem.toString();
 
@@ -95,8 +94,7 @@ class ProblemImplTest {
     extensions.put("flag1", true);
     extensions.put("flag2", false);
 
-    Problem problem =
-        new ProblemImpl(null, ProblemStatus.INTERNAL_SERVER_ERROR_TITLE, 0, null, null, extensions);
+    Problem problem = new ProblemImpl(ProblemStatus.INTERNAL_SERVER_ERROR_TITLE, 0, extensions);
 
     String result = problem.toString();
 
@@ -109,8 +107,7 @@ class ProblemImplTest {
     Map<String, Object> extensions = new HashMap<>();
     extensions.put("obj", new DummyObject("biz\tbar"));
 
-    Problem problem =
-        new ProblemImpl(null, ProblemStatus.INTERNAL_SERVER_ERROR_TITLE, 0, null, null, extensions);
+    Problem problem = new ProblemImpl(ProblemStatus.INTERNAL_SERVER_ERROR_TITLE, 0, extensions);
 
     String result = problem.toString();
 
@@ -122,8 +119,7 @@ class ProblemImplTest {
     Map<String, Object> extensions = new HashMap<>();
     extensions.put("ext", "a\"b\\c\nd");
 
-    Problem problem =
-        new ProblemImpl(null, ProblemStatus.INTERNAL_SERVER_ERROR_TITLE, 0, null, null, extensions);
+    Problem problem = new ProblemImpl(ProblemStatus.INTERNAL_SERVER_ERROR_TITLE, 0, extensions);
 
     String result = problem.toString();
 
@@ -132,8 +128,8 @@ class ProblemImplTest {
 
   @Test
   void givenTwoEqualProblems_shouldBeEqual() {
-    Problem problem1 = new ProblemImpl(null, "title", 404, "detail", null, mapOf("key", "value"));
-    Problem problem2 = new ProblemImpl(null, "title", 404, "detail", null, mapOf("key", "value"));
+    Problem problem1 = new ProblemImpl("title", 404, "detail", mapOf("key", "value"));
+    Problem problem2 = new ProblemImpl("title", 404, "detail", mapOf("key", "value"));
 
     assertThat(problem1).isEqualTo(problem2);
   }
@@ -143,24 +139,22 @@ class ProblemImplTest {
     Object problem;
     Object other;
 
-    problem = other = new ProblemImpl(null, "title", 404, "detail", null, mapOf("key", "value"));
+    problem = other = new ProblemImpl( "title", 404, "detail", mapOf("key", "value"));
 
     assertThat(problem).isEqualTo(other);
   }
 
   @Test
   void givenTwoDifferentProblems_shouldNotBeEqual() {
-    Problem problem1 =
-        new ProblemImpl(null, "title1", 404, "detail1", null, mapOf("key", "value1"));
-    Problem problem2 =
-        new ProblemImpl(null, "title2", 500, "detail2", null, mapOf("key", "value2"));
+    Problem problem1 = new ProblemImpl("title1", 404, "detail1", mapOf("key", "value1"));
+    Problem problem2 = new ProblemImpl("title2", 500, "detail2", mapOf("key", "value2"));
 
     assertThat(problem1).isNotEqualTo(problem2);
   }
 
   @Test
   void givenProblemAndDifferentObject_shouldNotBeEqual() {
-    Object problem = new ProblemImpl(null, "title1", 404, "detail1", null, mapOf("key", "value"));
+    Object problem = new ProblemImpl( "title1", 404, "detail1",  mapOf("key", "value"));
     Object differentObject = "always wanted to be a problem";
 
     assertThat(problem).isNotEqualTo(differentObject);
@@ -168,8 +162,8 @@ class ProblemImplTest {
 
   @Test
   void givenTwoEqualProblems_shouldHaveSameHashCode() {
-    Problem problem1 = new ProblemImpl(null, "title", 404, "detail", null, mapOf("key", "value"));
-    Problem problem2 = new ProblemImpl(null, "title", 404, "detail", null, mapOf("key", "value"));
+    Problem problem1 = new ProblemImpl( "title", 404, "detail",  mapOf("key", "value"));
+    Problem problem2 = new ProblemImpl( "title", 404, "detail",  mapOf("key", "value"));
 
     assertThat(problem1.hashCode()).isEqualTo(problem2.hashCode());
   }
@@ -177,9 +171,9 @@ class ProblemImplTest {
   @Test
   void givenTwoDifferentProblems_shouldHaveDifferentHashCodes() {
     Problem problem1 =
-        new ProblemImpl(null, "title1", 404, "detail1", null, mapOf("key", "value1"));
+        new ProblemImpl( "title1", 404, "detail1",  mapOf("key", "value1"));
     Problem problem2 =
-        new ProblemImpl(null, "title2", 500, "detail2", null, mapOf("key", "value2"));
+        new ProblemImpl( "title2", 500, "detail2",  mapOf("key", "value2"));
 
     assertThat(problem1.hashCode()).isNotEqualTo(problem2.hashCode());
   }
