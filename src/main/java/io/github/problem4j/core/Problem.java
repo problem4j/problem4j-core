@@ -78,6 +78,17 @@ public interface Problem {
   /**
    * Creates a new {@link Problem} instance with the given details.
    *
+   * @param status the HTTP status code applicable to this problem
+   * @param detail a human-readable explanation specific to this occurrence of the problem
+   * @return a new {@link Problem} instance
+   */
+  static Problem of(int status, @Nullable String detail) {
+    return builder().status(status).detail(detail).build();
+  }
+
+  /**
+   * Creates a new {@link Problem} instance with the given details.
+   *
    * @param title a short, human-readable summary of the problem
    * @param status the HTTP status code applicable to this problem
    * @return a new {@link Problem} instance
