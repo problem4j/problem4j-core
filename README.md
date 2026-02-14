@@ -7,7 +7,7 @@
 This library provides a minimal, framework-agnostic Java model of the [RFC 7807][rfc7807] "Problem Details" object, with
 an immutable `Problem` class and a fluent `ProblemBuilder` for convenient construction.
 
-> Note that [RFC 7807][rfc7807] was later extended in [RFC 9457][rfc9457], however core concepts remain the same. 
+> Note that [RFC 7807][rfc7807] was later extended in [RFC 9457][rfc9457], however core concepts remain the same.
 
 It is intended to be used as a **foundation** for other libraries or applications that add framework-specific behavior
 (e.g. Jackson, Spring - see [Problem4J Links](#problem4j-links) chapter).
@@ -26,6 +26,7 @@ It is intended to be used as a **foundation** for other libraries or application
 - ✅ Immutable `Problem` data model.
 - ✅ Dedicated unchecked `ProblemException` to be used in error handling.
 - ✅ Builder pattern for fluent construction.
+- ✅ Static `Problem.of(...)` factory methods for in-place creation convenience (since `v1.4.0`).
 - ✅ `@ProblemMapping` annotation and `ProblemMapper` to allow declarative approach in converting exception instances
   into `Problem` objects.
 - ✅ Serializable and easy to log or format.
@@ -37,6 +38,14 @@ It is intended to be used as a **foundation** for other libraries or application
     - `detail` (detailed description),
     - `instance` (URI to the specific occurrence),
     - custom field extensions.
+- ✅ Integrated with JSpecify annotations for nullability and Kotlin interop (since `v1.4.0`).
+- ✅ Supports Java version 8+, but due to producing multi-release JAR, can support **Java Platform Module System** if
+  using Java version 9+ (since `v1.4.0`).
+  ```java
+  module org.exmple.project {
+    requires io.github.problem4j.core;
+  }
+  ```
 
 ## Example
 
@@ -70,7 +79,7 @@ import io.github.problem4j.core.ProblemMapper;
         detail = "failed: {message}",
         extensions = {"subject"})
 public class MessageException extends RuntimeException {
-    
+
     private final String subject;
 
     public MessageException(String subject, String message) {
