@@ -65,26 +65,21 @@ public abstract class AbstractProblem implements Problem, Serializable {
    * @param status the HTTP status code applicable to this problem
    */
   public AbstractProblem(int status) {
-    this(
-        Problem.BLANK_TYPE,
-        ProblemStatus.findValue(status).map(ProblemStatus::getTitle).orElse(Problem.UNKNOWN_TITLE),
-        status,
-        null,
-        null,
-        Collections.emptyMap());
+    this(status, null);
   }
 
   /**
    * Constructs a new {@link AbstractProblem} instance with the given details.
    *
    * @param status the HTTP status code applicable to this problem
+   * @param detail a human-readable explanation specific to this occurrence of the problem
    */
-  public AbstractProblem(ProblemStatus status) {
+  public AbstractProblem(int status, @Nullable String detail) {
     this(
         Problem.BLANK_TYPE,
-        status.getTitle(),
-        status.getStatus(),
-        null,
+        ProblemStatus.findValue(status).map(ProblemStatus::getTitle).orElse(Problem.UNKNOWN_TITLE),
+        status,
+        detail,
         null,
         Collections.emptyMap());
   }
@@ -96,7 +91,7 @@ public abstract class AbstractProblem implements Problem, Serializable {
    * @param status the HTTP status code applicable to this problem
    */
   public AbstractProblem(String title, int status) {
-    this(Problem.BLANK_TYPE, title, status, null, null, Collections.emptyMap());
+    this(title, status, null);
   }
 
   /**
@@ -113,79 +108,12 @@ public abstract class AbstractProblem implements Problem, Serializable {
   /**
    * Constructs a new {@link AbstractProblem} instance with the given details.
    *
-   * @param title a short, human-readable summary of the problem
-   * @param status the HTTP status code applicable to this problem
-   * @param instance a URI reference that identifies the specific occurrence of the problem
-   */
-  public AbstractProblem(String title, int status, @Nullable URI instance) {
-    this(Problem.BLANK_TYPE, title, status, null, instance, Collections.emptyMap());
-  }
-
-  /**
-   * Constructs a new {@link AbstractProblem} instance with the given details.
-   *
-   * @param title a short, human-readable summary of the problem
-   * @param status the HTTP status code applicable to this problem
-   * @param extensions a map of additional, application-specific properties to include in the
-   *     problem; a defensive copy is made, so changes to the original map do not affect this
-   *     instance
-   */
-  public AbstractProblem(String title, int status, @Nullable Map<String, Object> extensions) {
-    this(Problem.BLANK_TYPE, title, status, null, null, extensions);
-  }
-
-  /**
-   * Constructs a new {@link AbstractProblem} instance with the given details.
-   *
-   * @param title a short, human-readable summary of the problem
-   * @param status the HTTP status code applicable to this problem
-   * @param instance a URI reference that identifies the specific occurrence of the problem
-   * @param extensions a map of additional, application-specific properties to include in the
-   *     problem; a defensive copy is made, so changes to the original map do not affect this
-   *     instance
-   */
-  public AbstractProblem(
-      String title, int status, @Nullable URI instance, @Nullable Map<String, Object> extensions) {
-    this(Problem.BLANK_TYPE, title, status, null, instance, extensions);
-  }
-
-  /**
-   * Constructs a new {@link AbstractProblem} instance with the given details.
-   *
-   * @param title a short, human-readable summary of the problem
-   * @param status the HTTP status code applicable to this problem
-   * @param detail a human-readable explanation specific to this occurrence of the problem
-   * @param instance a URI reference that identifies the specific occurrence of the problem
-   */
-  public AbstractProblem(
-      String title, int status, @Nullable String detail, @Nullable URI instance) {
-    this(Problem.BLANK_TYPE, title, status, detail, instance, Collections.emptyMap());
-  }
-
-  /**
-   * Constructs a new {@link AbstractProblem} instance with the given details.
-   *
-   * @param title a short, human-readable summary of the problem
-   * @param status the HTTP status code applicable to this problem
-   * @param detail a human-readable explanation specific to this occurrence of the problem
-   * @param extensions a map of additional, application-specific properties to include in the
-   *     problem; a defensive copy is made, so changes to the original map do not affect this
-   *     instance
-   */
-  public AbstractProblem(
-      String title, int status, @Nullable String detail, @Nullable Map<String, Object> extensions) {
-    this(Problem.BLANK_TYPE, title, status, detail, null, extensions);
-  }
-
-  /**
-   * Constructs a new {@link AbstractProblem} instance with the given details.
-   *
    * @param type the URI that identifies the type of the problem; must not be {@code null}
    * @param title a short, human-readable summary of the problem
    * @param status the HTTP status code applicable to this problem
    */
   public AbstractProblem(URI type, String title, int status) {
-    this(type, title, status, null, null, Collections.emptyMap());
+    this(type, title, status, null);
   }
 
   /**
@@ -198,87 +126,6 @@ public abstract class AbstractProblem implements Problem, Serializable {
    */
   public AbstractProblem(URI type, String title, int status, @Nullable String detail) {
     this(type, title, status, detail, null, Collections.emptyMap());
-  }
-
-  /**
-   * Constructs a new {@link AbstractProblem} instance with the given details.
-   *
-   * @param type the URI that identifies the type of the problem; must not be {@code null}
-   * @param title a short, human-readable summary of the problem
-   * @param status the HTTP status code applicable to this problem
-   * @param instance a URI reference that identifies the specific occurrence of the problem
-   */
-  public AbstractProblem(URI type, String title, int status, @Nullable URI instance) {
-    this(type, title, status, null, instance, Collections.emptyMap());
-  }
-
-  /**
-   * Constructs a new {@link AbstractProblem} instance with the given details.
-   *
-   * @param type the URI that identifies the type of the problem; must not be {@code null}
-   * @param title a short, human-readable summary of the problem
-   * @param status the HTTP status code applicable to this problem
-   * @param extensions a map of additional, application-specific properties to include in the
-   *     problem; a defensive copy is made, so changes to the original map do not affect this
-   *     instance
-   */
-  public AbstractProblem(
-      URI type, String title, int status, @Nullable Map<String, Object> extensions) {
-    this(type, title, status, null, null, extensions);
-  }
-
-  /**
-   * Constructs a new {@link AbstractProblem} instance with the given details.
-   *
-   * @param type the URI that identifies the type of the problem; must not be {@code null}
-   * @param title a short, human-readable summary of the problem
-   * @param status the HTTP status code applicable to this problem
-   * @param instance a URI reference that identifies the specific occurrence of the problem
-   * @param extensions a map of additional, application-specific properties to include in the
-   *     problem; a defensive copy is made, so changes to the original map do not affect this
-   *     instance
-   */
-  public AbstractProblem(
-      URI type,
-      String title,
-      int status,
-      @Nullable URI instance,
-      @Nullable Map<String, Object> extensions) {
-    this(type, title, status, null, instance, extensions);
-  }
-
-  /**
-   * Constructs a new {@link AbstractProblem} instance with the given details.
-   *
-   * @param type the URI that identifies the type of the problem; must not be {@code null}
-   * @param title a short, human-readable summary of the problem
-   * @param status the HTTP status code applicable to this problem
-   * @param detail a human-readable explanation specific to this occurrence of the problem
-   * @param instance a URI reference that identifies the specific occurrence of the problem
-   */
-  public AbstractProblem(
-      URI type, String title, int status, @Nullable String detail, @Nullable URI instance) {
-    this(type, title, status, detail, instance, Collections.emptyMap());
-  }
-
-  /**
-   * Constructs a new {@link AbstractProblem} instance with the given details.
-   *
-   * @param type the URI that identifies the type of the problem; must not be {@code null}
-   * @param title a short, human-readable summary of the problem
-   * @param status the HTTP status code applicable to this problem
-   * @param detail a human-readable explanation specific to this occurrence of the problem
-   * @param extensions a map of additional, application-specific properties to include in the
-   *     problem; a defensive copy is made, so changes to the original map do not affect this
-   *     instance
-   */
-  public AbstractProblem(
-      URI type,
-      String title,
-      int status,
-      @Nullable String detail,
-      @Nullable Map<String, Object> extensions) {
-    this(type, title, status, detail, null, extensions);
   }
 
   /**

@@ -29,12 +29,12 @@ final class ProblemImpl extends AbstractProblem {
   private static final long serialVersionUID = 1L;
 
   public ProblemImpl(String title, int status, @Nullable Map<String, Object> extensions) {
-    super(title, status, extensions);
+    super(Problem.BLANK_TYPE, title, status, null, null, extensions);
   }
 
   public ProblemImpl(
       String title, int status, @Nullable String detail, @Nullable Map<String, Object> extensions) {
-    super(title, status, detail, extensions);
+    super(Problem.BLANK_TYPE, title, status, detail, null, extensions);
   }
 
   ProblemImpl(
