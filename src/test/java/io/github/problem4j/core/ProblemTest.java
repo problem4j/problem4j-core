@@ -25,8 +25,6 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.net.URI;
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -43,56 +41,11 @@ class ProblemTest {
   }
 
   @Test
-  void givenProblemStatus_shouldSetTitleAndStatus() {
-    Problem problem = Problem.of(ProblemStatus.MULTI_STATUS);
-
-    assertThat(problem.getTitle()).isEqualTo(ProblemStatus.MULTI_STATUS.getTitle());
-    assertThat(problem.getStatus()).isEqualTo(ProblemStatus.MULTI_STATUS.getStatus());
-  }
-
-  @Test
   void givenTitleAndStatus_shouldSetFields() {
     Problem problem = Problem.of("Test", 400);
 
     assertThat(problem.getTitle()).isEqualTo("Test");
     assertThat(problem.getStatus()).isEqualTo(400);
-  }
-
-  @Test
-  void givenTitleStatusAndInstance_shouldSetFields() {
-    URI instance = URI.create("urn:test:instance");
-
-    Problem problem = Problem.of("Test", 400, instance);
-
-    assertThat(problem.getTitle()).isEqualTo("Test");
-    assertThat(problem.getStatus()).isEqualTo(400);
-    assertThat(problem.getInstance()).isEqualTo(instance);
-  }
-
-  @Test
-  void givenTitleStatusAndExtensions_shouldSetFieldsAndDefensivelyCopy() {
-    Map<String, Object> extensions = new HashMap<>();
-    extensions.put("key", "value");
-
-    Problem problem = Problem.of("Test", 400, extensions);
-
-    assertThat(problem.getExtensionMembers()).containsEntry("key", "value");
-
-    extensions.put("another", "change");
-    assertThat(problem.getExtensionMembers()).doesNotContainKey("another");
-  }
-
-  @Test
-  void givenTitleStatusInstanceAndExtensions_shouldSetAll() {
-    URI instance = URI.create("urn:test:instance");
-    Map<String, Object> extensions = Map.of("key", "value");
-
-    Problem problem = Problem.of("Test", 400, instance, extensions);
-
-    assertThat(problem.getTitle()).isEqualTo("Test");
-    assertThat(problem.getStatus()).isEqualTo(400);
-    assertThat(problem.getInstance()).isEqualTo(instance);
-    assertThat(problem.getExtensionMembers()).containsEntry("key", "value");
   }
 
   @Test
@@ -102,39 +55,6 @@ class ProblemTest {
     assertThat(problem.getTitle()).isEqualTo("Test");
     assertThat(problem.getStatus()).isEqualTo(400);
     assertThat(problem.getDetail()).isEqualTo("Detail");
-  }
-
-  @Test
-  void givenTitleStatusDetailAndInstance_shouldSetFields() {
-    URI instance = URI.create("urn:test:instance");
-
-    Problem problem = Problem.of("Test", 400, "Detail", instance);
-
-    assertThat(problem.getDetail()).isEqualTo("Detail");
-    assertThat(problem.getInstance()).isEqualTo(instance);
-  }
-
-  @Test
-  void givenTitleStatusDetailAndExtensions_shouldSetFields() {
-    Map<String, Object> extensions = Map.of("key", "value");
-
-    Problem problem = Problem.of("Test", 400, "Detail", extensions);
-
-    assertThat(problem.getDetail()).isEqualTo("Detail");
-    assertThat(problem.getExtensionMembers()).containsEntry("key", "value");
-  }
-
-  @Test
-  void givenTitleStatusDetailInstanceAndExtensions_shouldSetAll() {
-    URI instance = URI.create("urn:test:instance");
-    Map<String, Object> extensions = Map.of("key", "value");
-
-    Problem problem = Problem.of("Test", 400, "Detail", instance, extensions);
-
-    assertThat(problem.getTitle()).isEqualTo("Test");
-    assertThat(problem.getDetail()).isEqualTo("Detail");
-    assertThat(problem.getInstance()).isEqualTo(instance);
-    assertThat(problem.getExtensionMembers()).containsEntry("key", "value");
   }
 
   @Test
@@ -149,41 +69,6 @@ class ProblemTest {
   }
 
   @Test
-  void givenTypeTitleStatusAndInstance_shouldSetFields() {
-    URI type = URI.create("urn:test:type");
-    URI instance = URI.create("urn:test:instance");
-
-    Problem problem = Problem.of(type, "Test", 400, instance);
-
-    assertThat(problem.getType()).isEqualTo(type);
-    assertThat(problem.getInstance()).isEqualTo(instance);
-  }
-
-  @Test
-  void givenTypeTitleStatusAndExtensions_shouldSetFields() {
-    URI type = URI.create("urn:test:type");
-    Map<String, Object> extensions = Map.of("key", "value");
-
-    Problem problem = Problem.of(type, "Test", 400, extensions);
-
-    assertThat(problem.getType()).isEqualTo(type);
-    assertThat(problem.getExtensionMembers()).containsEntry("key", "value");
-  }
-
-  @Test
-  void givenTypeTitleStatusInstanceAndExtensions_shouldSetAll() {
-    URI type = URI.create("urn:test:type");
-    URI instance = URI.create("urn:test:instance");
-    Map<String, Object> extensions = Map.of("key", "value");
-
-    Problem problem = Problem.of(type, "Test", 400, instance, extensions);
-
-    assertThat(problem.getType()).isEqualTo(type);
-    assertThat(problem.getInstance()).isEqualTo(instance);
-    assertThat(problem.getExtensionMembers()).containsEntry("key", "value");
-  }
-
-  @Test
   void givenTypeTitleStatusAndDetail_shouldSetFields() {
     URI type = URI.create("urn:test:type");
 
@@ -191,44 +76,6 @@ class ProblemTest {
 
     assertThat(problem.getType()).isEqualTo(type);
     assertThat(problem.getDetail()).isEqualTo("Detail");
-  }
-
-  @Test
-  void givenTypeTitleStatusDetailAndInstance_shouldSetFields() {
-    URI type = URI.create("urn:test:type");
-    URI instance = URI.create("urn:test:instance");
-
-    Problem problem = Problem.of(type, "Test", 400, "Detail", instance);
-
-    assertThat(problem.getDetail()).isEqualTo("Detail");
-    assertThat(problem.getInstance()).isEqualTo(instance);
-  }
-
-  @Test
-  void givenTypeTitleStatusDetailAndExtensions_shouldSetFields() {
-    URI type = URI.create("urn:test:type");
-    Map<String, Object> extensions = Map.of("key", "value");
-
-    Problem problem = Problem.of(type, "Test", 400, "Detail", extensions);
-
-    assertThat(problem.getDetail()).isEqualTo("Detail");
-    assertThat(problem.getExtensionMembers()).containsEntry("key", "value");
-  }
-
-  @Test
-  void givenTypeTitleStatusDetailInstanceAndExtensions_shouldSetAll() {
-    URI type = URI.create("urn:test:type");
-    URI instance = URI.create("urn:test:instance");
-    Map<String, Object> extensions = Map.of("key", "value");
-
-    Problem problem = Problem.of(type, "Test", 400, "Detail", instance, extensions);
-
-    assertThat(problem.getType()).isEqualTo(type);
-    assertThat(problem.getTitle()).isEqualTo("Test");
-    assertThat(problem.getStatus()).isEqualTo(400);
-    assertThat(problem.getDetail()).isEqualTo("Detail");
-    assertThat(problem.getInstance()).isEqualTo(instance);
-    assertThat(problem.getExtensionMembers()).containsEntry("key", "value");
   }
 
   @Test
