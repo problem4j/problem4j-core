@@ -66,6 +66,312 @@ public interface Problem {
   }
 
   /**
+   * Creates a new {@link Problem} instance with the given HTTP status code.
+   *
+   * @param status the HTTP status code applicable to this problem
+   * @return a new {@link Problem} instance
+   */
+  static Problem of(int status) {
+    return builder().status(status).build();
+  }
+
+  /**
+   * Creates a new {@link Problem} instance with the given {@link ProblemStatus}.
+   *
+   * @param status the {@link ProblemStatus} applicable to this problem
+   * @return a new {@link Problem} instance
+   */
+  static Problem of(ProblemStatus status) {
+    return builder().status(status).build();
+  }
+
+  /**
+   * Creates a new {@link Problem} instance with the given details.
+   *
+   * @param title a short, human-readable summary of the problem
+   * @param status the HTTP status code applicable to this problem
+   * @return a new {@link Problem} instance
+   */
+  static Problem of(String title, int status) {
+    return builder().title(title).status(status).build();
+  }
+
+  /**
+   * Creates a new {@link Problem} instance with the given details.
+   *
+   * @param title a short, human-readable summary of the problem
+   * @param status the HTTP status code applicable to this problem
+   * @param instance a URI reference that identifies the specific occurrence of the problem
+   * @return a new {@link Problem} instance
+   */
+  static Problem of(String title, int status, @Nullable URI instance) {
+    return builder().title(title).status(status).instance(instance).build();
+  }
+
+  /**
+   * Creates a new {@link Problem} instance with the given details.
+   *
+   * @param title a short, human-readable summary of the problem
+   * @param status the HTTP status code applicable to this problem
+   * @param extensions a map of additional, application-specific properties to include in the
+   *     problem; a defensive copy is made, so changes to the original map do not affect this
+   *     instance
+   * @return a new {@link Problem} instance
+   */
+  static Problem of(String title, int status, @Nullable Map<String, @Nullable Object> extensions) {
+    return builder().title(title).status(status).extensions(extensions).build();
+  }
+
+  /**
+   * Creates a new {@link Problem} instance with the given details.
+   *
+   * @param title a short, human-readable summary of the problem
+   * @param status the HTTP status code applicable to this problem
+   * @param instance a URI reference that identifies the specific occurrence of the problem
+   * @param extensions a map of additional, application-specific properties to include in the
+   *     problem; a defensive copy is made, so changes to the original map do not affect this
+   *     instance
+   * @return a new {@link Problem} instance
+   */
+  static Problem of(
+      String title,
+      int status,
+      @Nullable URI instance,
+      @Nullable Map<String, @Nullable Object> extensions) {
+    return builder().title(title).status(status).instance(instance).extensions(extensions).build();
+  }
+
+  /**
+   * Creates a new {@link Problem} instance with the given details.
+   *
+   * @param title a short, human-readable summary of the problem
+   * @param status the HTTP status code applicable to this problem
+   * @param detail a human-readable explanation specific to this occurrence of the problem
+   * @return a new {@link Problem} instance
+   */
+  static Problem of(String title, int status, @Nullable String detail) {
+    return builder().title(title).status(status).detail(detail).build();
+  }
+
+  /**
+   * Creates a new {@link Problem} instance with the given details.
+   *
+   * @param title a short, human-readable summary of the problem
+   * @param status the HTTP status code applicable to this problem
+   * @param detail a human-readable explanation specific to this occurrence of the problem
+   * @param instance a URI reference that identifies the specific occurrence of the problem
+   * @return a new {@link Problem} instance
+   */
+  static Problem of(String title, int status, @Nullable String detail, @Nullable URI instance) {
+    return builder().title(title).status(status).detail(detail).instance(instance).build();
+  }
+
+  /**
+   * Creates a new {@link Problem} instance with the given details.
+   *
+   * @param title a short, human-readable summary of the problem
+   * @param status the HTTP status code applicable to this problem
+   * @param detail a human-readable explanation specific to this occurrence of the problem
+   * @param extensions a map of additional, application-specific properties to include in the
+   *     problem; a defensive copy is made, so changes to the original map do not affect this
+   *     instance
+   * @return a new {@link Problem} instance
+   */
+  static Problem of(
+      String title,
+      int status,
+      @Nullable String detail,
+      @Nullable Map<String, @Nullable Object> extensions) {
+    return builder().title(title).status(status).detail(detail).extensions(extensions).build();
+  }
+
+  /**
+   * Creates a new {@link Problem} instance with the given details.
+   *
+   * @param title a short, human-readable summary of the problem
+   * @param status the HTTP status code applicable to this problem
+   * @param detail a human-readable explanation specific to this occurrence of the problem
+   * @param instance a URI reference that identifies the specific occurrence of the problem
+   * @param extensions a map of additional, application-specific properties to include in the
+   *     problem; a defensive copy is made, so changes to the original map do not affect this
+   *     instance
+   * @return a new {@link Problem} instance
+   */
+  static Problem of(
+      String title,
+      int status,
+      @Nullable String detail,
+      @Nullable URI instance,
+      @Nullable Map<String, @Nullable Object> extensions) {
+    return builder()
+        .title(title)
+        .status(status)
+        .detail(detail)
+        .instance(instance)
+        .extensions(extensions)
+        .build();
+  }
+
+  /**
+   * Creates a new {@link Problem} instance with the given details.
+   *
+   * @param type the URI that identifies the type of the problem
+   * @param title a short, human-readable summary of the problem
+   * @param status the HTTP status code applicable to this problem
+   * @return a new {@link Problem} instance
+   */
+  static Problem of(URI type, String title, int status) {
+    return builder().type(type).title(title).status(status).build();
+  }
+
+  /**
+   * Creates a new {@link Problem} instance with the given details.
+   *
+   * @param type the URI that identifies the type of the problem
+   * @param title a short, human-readable summary of the problem
+   * @param status the HTTP status code applicable to this problem
+   * @param instance a URI reference that identifies the specific occurrence of the problem
+   * @return a new {@link Problem} instance
+   */
+  static Problem of(URI type, String title, int status, @Nullable URI instance) {
+    return builder().type(type).title(title).status(status).instance(instance).build();
+  }
+
+  /**
+   * Creates a new {@link Problem} instance with the given details.
+   *
+   * @param type the URI that identifies the type of the problem
+   * @param title a short, human-readable summary of the problem
+   * @param status the HTTP status code applicable to this problem
+   * @param extensions a map of additional, application-specific properties to include in the
+   *     problem; a defensive copy is made, so changes to the original map do not affect this
+   *     instance
+   * @return a new {@link Problem} instance
+   */
+  static Problem of(
+      URI type, String title, int status, @Nullable Map<String, @Nullable Object> extensions) {
+    return builder().type(type).title(title).status(status).extensions(extensions).build();
+  }
+
+  /**
+   * Creates a new {@link Problem} instance with the given details.
+   *
+   * @param type the URI that identifies the type of the problem
+   * @param title a short, human-readable summary of the problem
+   * @param status the HTTP status code applicable to this problem
+   * @param instance a URI reference that identifies the specific occurrence of the problem
+   * @param extensions a map of additional, application-specific properties to include in the
+   *     problem; a defensive copy is made, so changes to the original map do not affect this
+   *     instance
+   * @return a new {@link Problem} instance
+   */
+  static Problem of(
+      URI type,
+      String title,
+      int status,
+      @Nullable URI instance,
+      @Nullable Map<String, @Nullable Object> extensions) {
+    return builder()
+        .type(type)
+        .title(title)
+        .status(status)
+        .instance(instance)
+        .extensions(extensions)
+        .build();
+  }
+
+  /**
+   * Creates a new {@link Problem} instance with the given details.
+   *
+   * @param type the URI that identifies the type of the problem
+   * @param title a short, human-readable summary of the problem
+   * @param status the HTTP status code applicable to this problem
+   * @param detail a human-readable explanation specific to this occurrence of the problem
+   * @return a new {@link Problem} instance
+   */
+  static Problem of(URI type, String title, int status, @Nullable String detail) {
+    return builder().type(type).title(title).status(status).detail(detail).build();
+  }
+
+  /**
+   * Creates a new {@link Problem} instance with the given details.
+   *
+   * @param type the URI that identifies the type of the problem
+   * @param title a short, human-readable summary of the problem
+   * @param status the HTTP status code applicable to this problem
+   * @param detail a human-readable explanation specific to this occurrence of the problem
+   * @param instance a URI reference that identifies the specific occurrence of the problem
+   * @return a new {@link Problem} instance
+   */
+  static Problem of(
+      URI type, String title, int status, @Nullable String detail, @Nullable URI instance) {
+    return builder()
+        .type(type)
+        .title(title)
+        .status(status)
+        .detail(detail)
+        .instance(instance)
+        .build();
+  }
+
+  /**
+   * Creates a new {@link Problem} instance with the given details.
+   *
+   * @param type the URI that identifies the type of the problem
+   * @param title a short, human-readable summary of the problem
+   * @param status the HTTP status code applicable to this problem
+   * @param detail a human-readable explanation specific to this occurrence of the problem
+   * @param extensions a map of additional, application-specific properties to include in the
+   *     problem; a defensive copy is made, so changes to the original map do not affect this
+   *     instance
+   * @return a new {@link Problem} instance
+   */
+  static Problem of(
+      URI type,
+      String title,
+      int status,
+      @Nullable String detail,
+      @Nullable Map<String, @Nullable Object> extensions) {
+    return builder()
+        .type(type)
+        .title(title)
+        .status(status)
+        .detail(detail)
+        .extensions(extensions)
+        .build();
+  }
+
+  /**
+   * Creates a new {@link Problem} instance with the given details.
+   *
+   * @param type the URI that identifies the type of the problem
+   * @param title a short, human-readable summary of the problem
+   * @param status the HTTP status code applicable to this problem
+   * @param detail a human-readable explanation specific to this occurrence of the problem
+   * @param instance a URI reference that identifies the specific occurrence of the problem
+   * @param extensions a map of additional, application-specific properties to include in the
+   *     problem; a defensive copy is made, so changes to the original map do not affect this
+   *     instance
+   * @return a new {@link Problem} instance
+   */
+  static Problem of(
+      URI type,
+      String title,
+      int status,
+      @Nullable String detail,
+      @Nullable URI instance,
+      @Nullable Map<String, @Nullable Object> extensions) {
+    return builder()
+        .type(type)
+        .title(title)
+        .status(status)
+        .detail(detail)
+        .instance(instance)
+        .extensions(extensions)
+        .build();
+  }
+
+  /**
    * Creates a named extension for use in a {@link Problem}.
    *
    * @param key the extension key, must not be {@code null}
