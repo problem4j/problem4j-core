@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2025-2026 Problem4J Team & Contributors
+ * Copyright (c) 2025-2026 The Problem4J Authors
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
