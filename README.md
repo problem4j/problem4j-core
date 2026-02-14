@@ -42,7 +42,7 @@ It is intended to be used as a **foundation** for other libraries or application
 - ✅ Supports Java version 8+, but due to producing multi-release JAR, can support **Java Platform Module System** if
   using Java version 9+ (since `v1.4.0`).
   ```java
-  module org.exmple.project {
+  module org.example.project {
     requires io.github.problem4j.core;
   }
   ```
