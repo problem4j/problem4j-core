@@ -43,7 +43,7 @@ It is intended to be used as a **foundation** for other libraries or application
   using Java version 9+ (since `v1.4.0`).
   ```java
   module org.example.project {
-    requires io.github.problem4j.core;
+      requires io.github.problem4j.core;
   }
   ```
 
