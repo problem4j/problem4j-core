@@ -277,7 +277,7 @@ public abstract class AbstractProblemBuilder implements ProblemBuilder, Serializ
   @Override
   public String toString() {
     List<String> entries = new ArrayList<>();
-    if (type != null) {
+    if (type != null && !Problem.BLANK_TYPE.equals(type)) {
       entries.add("type=" + type);
     }
     if (title != null) {

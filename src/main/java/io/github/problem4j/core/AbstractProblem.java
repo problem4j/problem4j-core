@@ -301,7 +301,9 @@ public abstract class AbstractProblem implements Problem, Serializable {
   @Override
   public String toString() {
     List<String> entries = new ArrayList<>();
-    entries.add("type=" + getType());
+    if (isTypeNonBlank()) {
+      entries.add("type=" + getType());
+    }
     entries.add("title=" + getTitle());
     entries.add("status=" + getStatus());
     if (getDetail() != null) {
