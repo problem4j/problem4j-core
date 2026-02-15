@@ -28,6 +28,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.Set;
 import org.jspecify.annotations.Nullable;
 
@@ -75,13 +76,7 @@ public abstract class AbstractProblem implements Problem, Serializable {
    * @param detail a human-readable explanation specific to this occurrence of the problem
    */
   public AbstractProblem(int status, @Nullable String detail) {
-    this(
-        Problem.BLANK_TYPE,
-        ProblemStatus.findValue(status).map(ProblemStatus::getTitle).orElse(Problem.UNKNOWN_TITLE),
-        status,
-        detail,
-        null,
-        Collections.emptyMap());
+    this(findTitle(status), status, detail);
   }
 
   /**
@@ -102,7 +97,7 @@ public abstract class AbstractProblem implements Problem, Serializable {
    * @param detail a human-readable explanation specific to this occurrence of the problem
    */
   public AbstractProblem(String title, int status, @Nullable String detail) {
-    this(Problem.BLANK_TYPE, title, status, detail, null, Collections.emptyMap());
+    this(BLANK_TYPE, title, status, detail, null, Collections.emptyMap());
   }
 
   /**
@@ -318,6 +313,20 @@ public abstract class AbstractProblem implements Problem, Serializable {
         .forEach(entry -> entries.add(entry.getKey() + "=" + entry.getValue()));
 
     return "Problem{" + String.join(", ", entries) + "}";
+  }
+
+  /**
+   * Finds the default title for a given HTTP status code by looking it up in the {@link
+   * ProblemStatus} enum. If the status code is not recognized, it returns a generic {@link
+   * #UNKNOWN_TITLE} title.
+   *
+   * @param status the HTTP status code for which to find the default title
+   * @return the default title corresponding to the given status code, or {@link #UNKNOWN_TITLE} if
+   *     not found
+   */
+  protected static String findTitle(int status) {
+    Optional<ProblemStatus> optionalStatus = ProblemStatus.findValue(status);
+    return optionalStatus.map(ProblemStatus::getTitle).orElse(UNKNOWN_TITLE);
   }
 
   /** Represents a single key-value extension in a {@link Problem}. */

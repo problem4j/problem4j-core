@@ -71,7 +71,7 @@ class ProblemImplTest {
 
     String result = problem.toString();
 
-    assertThat(result).isEqualTo("Problem{type=about:blank, title=OK, status=200}");
+    assertThat(result).isEqualTo("Problem{title=OK, status=200}");
   }
 
   @Test
