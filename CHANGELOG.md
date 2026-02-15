@@ -85,8 +85,6 @@ This release of `problem4j-core` is considered a first "public" release, so the 
 - All interfaces provided by this library have abstract implementations that can be extended or used as-is, so users can
   choose to implement their own or use the provided ones.
 
-[rfc7807]: https://datatracker.ietf.org/doc/html/rfc7807
-
 [keepachangelog]: https://keepachangelog.com/en/1.1.0/
 
 [semver]: https://semver.org/spec/v2.0.0.html

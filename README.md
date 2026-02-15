@@ -41,11 +41,6 @@ It is intended to be used as a **foundation** for other libraries or application
 - ✅ Integrated with JSpecify annotations for nullability and Kotlin interop (since `v1.4.0`).
 - ✅ Supports Java version 8+, but due to producing multi-release JAR, can support **Java Platform Module System** if
   using Java version 9+ (since `v1.4.0`).
-  ```java
-  module org.example.project {
-      requires io.github.problem4j.core;
-  }
-  ```
 
 ## Example
 
@@ -92,6 +87,14 @@ MessageException ex = new MessageException("sub", "boom");
 
 ProblemMapper mapper = ProblemMapper.create();
 Problem problem = mapper.toProblemBuilder(ex).build();
+```
+
+If using Java module system, add the following `requires` directive to your `module-info.java` file.
+
+```java
+module org.example.project {
+    requires io.github.problem4j.core;
+}
 ```
 
 ## Usage
