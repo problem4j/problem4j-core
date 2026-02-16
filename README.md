@@ -50,6 +50,8 @@ Throw an instance of `ProblemException`.
 import io.github.problem4j.core.Problem;
 import io.github.problem4j.core.ProblemException;
 
+// using fully-fledged builder
+
 Problem problem =
     Problem.builder()
         .type("https://example.com/errors/invalid-request")
@@ -59,6 +61,10 @@ Problem problem =
         .instance("https://example.com/instances/1234")
         .build();
 throw new ProblemException(problem);
+
+// using convenience factory method
+
+throw new ProblemException(Problem.of("Invalid Request", 400, "not a valid json"));
 ```
 
 Throw an exception annotated with `@ProblemMapping`.
@@ -68,7 +74,7 @@ import io.github.problem4j.core.ProblemMapping;
 import io.github.problem4j.core.ProblemMapper;
 
 @ProblemMapping(
-        type = "https://example.org/probs/tests",
+        type = "https://example.org/test/problem",
         title = "Test problem",
         status = 400,
         detail = "failed: {message}",
