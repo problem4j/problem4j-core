@@ -53,7 +53,7 @@ public interface Problem {
    */
   String UNKNOWN_TITLE = "Unknown Error";
 
-  /** MIME content type for this problem. */
+  /** MIME content type for problem instances. */
   String CONTENT_TYPE = "application/problem+json";
 
   /**
