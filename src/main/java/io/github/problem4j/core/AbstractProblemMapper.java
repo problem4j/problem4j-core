@@ -159,7 +159,7 @@ public abstract class AbstractProblemMapper implements ProblemMapper {
       ProblemMapping mapping,
       Throwable t,
       @Nullable ProblemContext context) {
-    String rawType = !mapping.type().isEmpty() ? mapping.type().trim() : "";
+    String rawType = getRawType(mapping);
     if (!rawType.isEmpty()) {
       String typeInterpolated = interpolate(rawType, t, context);
       if (!typeInterpolated.isEmpty()) {
@@ -170,6 +170,16 @@ public abstract class AbstractProblemMapper implements ProblemMapper {
         }
       }
     }
+  }
+
+  /**
+   * Returns the raw type from the mapping, or empty string if not present or blank.
+   *
+   * @param mapping the {@link ProblemMapping} annotation containing the type value
+   * @return the raw type string, or empty string if not present or blank
+   */
+  protected String getRawType(ProblemMapping mapping) {
+    return !mapping.type().isEmpty() ? mapping.type().trim() : "";
   }
 
   /**
@@ -185,13 +195,23 @@ public abstract class AbstractProblemMapper implements ProblemMapper {
       ProblemMapping mapping,
       Throwable t,
       @Nullable ProblemContext context) {
-    String titleRaw = !mapping.title().isEmpty() ? mapping.title().trim() : "";
-    if (!titleRaw.isEmpty()) {
-      String titleInterpolated = interpolate(titleRaw, t, context);
+    String rawTitle = getRawTitle(mapping);
+    if (!rawTitle.isEmpty()) {
+      String titleInterpolated = interpolate(rawTitle, t, context);
       if (!titleInterpolated.isEmpty()) {
         builder.title(titleInterpolated);
       }
     }
+  }
+
+  /**
+   * Returns the raw title from the mapping, or empty string if not present or blank.
+   *
+   * @param mapping the {@link ProblemMapping} annotation containing the title value
+   * @return the raw title string, or empty string if not present or blank
+   */
+  protected String getRawTitle(ProblemMapping mapping) {
+    return !mapping.title().isEmpty() ? mapping.title().trim() : "";
   }
 
   /**
@@ -219,13 +239,23 @@ public abstract class AbstractProblemMapper implements ProblemMapper {
       ProblemMapping mapping,
       Throwable t,
       @Nullable ProblemContext context) {
-    String detailRaw = !mapping.detail().isEmpty() ? mapping.detail().trim() : "";
-    if (!detailRaw.isEmpty()) {
-      String detailInterpolated = interpolate(detailRaw, t, context);
+    String rawDetail = getRawDetail(mapping);
+    if (!rawDetail.isEmpty()) {
+      String detailInterpolated = interpolate(rawDetail, t, context);
       if (!detailInterpolated.isEmpty()) {
         builder.detail(detailInterpolated);
       }
     }
+  }
+
+  /**
+   * Returns the raw detail from the mapping, or empty string if not present or blank.
+   *
+   * @param mapping the {@link ProblemMapping} annotation containing the detail value
+   * @return the raw detail string, or empty string if not present or blank
+   */
+  protected String getRawDetail(ProblemMapping mapping) {
+    return !mapping.detail().isEmpty() ? mapping.detail().trim() : "";
   }
 
   /**
@@ -241,7 +271,7 @@ public abstract class AbstractProblemMapper implements ProblemMapper {
       ProblemMapping mapping,
       Throwable t,
       @Nullable ProblemContext context) {
-    String rawInstance = !mapping.instance().isEmpty() ? mapping.instance().trim() : "";
+    String rawInstance = getRawInstance(mapping);
     if (!rawInstance.isEmpty()) {
       String instanceInterpolated = interpolate(rawInstance, t, context);
       if (!instanceInterpolated.isEmpty()) {
@@ -252,6 +282,16 @@ public abstract class AbstractProblemMapper implements ProblemMapper {
         }
       }
     }
+  }
+
+  /**
+   * Returns the raw instance from the mapping, or empty string if not present or blank.
+   *
+   * @param mapping the {@link ProblemMapping} annotation containing the instance value
+   * @return the raw instance string, or empty string if not present or blank
+   */
+  protected String getRawInstance(ProblemMapping mapping) {
+    return !mapping.instance().isEmpty() ? mapping.instance().trim() : "";
   }
 
   /**
