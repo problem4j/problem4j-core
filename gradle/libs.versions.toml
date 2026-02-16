@@ -1,7 +1,7 @@
 [versions]
 assertj = "3.27.7"
 jspecify = "1.0.0"
-junit = "6.0.2"
+junit = "6.0.3"
 nmcp = "1.4.4"
 spotless = "8.2.1"
 
