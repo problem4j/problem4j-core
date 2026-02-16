@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog][keepachangelog], and this project adhe
 
 ## [Unreleased]
 
+## [1.4.0] - 2026-02-16
+
 ### Added
 
 - Add various static `Problem.of(...)` factory methods for in-place creation convenience.
