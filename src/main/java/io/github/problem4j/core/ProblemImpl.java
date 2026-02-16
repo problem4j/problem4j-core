@@ -28,13 +28,13 @@ final class ProblemImpl extends AbstractProblem {
 
   private static final long serialVersionUID = 1L;
 
-  public ProblemImpl(String title, int status, @Nullable Map<String, Object> extensions) {
-    super(Problem.BLANK_TYPE, title, status, null, null, extensions);
+  ProblemImpl(String title, int status, @Nullable Map<String, Object> extensions) {
+    super(BLANK_TYPE, title, status, null, null, extensions);
   }
 
-  public ProblemImpl(
+  ProblemImpl(
       String title, int status, @Nullable String detail, @Nullable Map<String, Object> extensions) {
-    super(Problem.BLANK_TYPE, title, status, detail, null, extensions);
+    super(BLANK_TYPE, title, status, detail, null, extensions);
   }
 
   ProblemImpl(
@@ -47,7 +47,7 @@ final class ProblemImpl extends AbstractProblem {
     super(type, title, status, detail, instance, extensions);
   }
 
-  static final class ExtensionImpl extends AbstractProblem.AbstractExtension {
+  static final class ExtensionImpl extends AbstractExtension {
 
     private static final long serialVersionUID = 1L;
 
