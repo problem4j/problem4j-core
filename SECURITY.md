@@ -4,7 +4,7 @@
 
 The following version lines are actively supported:
 
-- `v1.3.x` (`main` branch).
+- `v1.4.x` (`main` branch).
 
 ## Dependencies
 
