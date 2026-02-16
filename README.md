@@ -167,8 +167,7 @@ task. **Note** that **building will fail** if code is not properly formatted.
 ./gradlew spotlessApply
 ```
 
-To publish the built artifacts to local Maven repository, use `publishToMavenLocal` task. It produces artifacts with
-`0.0.0-SNAPSHOT` version placeholder, so they won't conflict with any released versions in your local repository.
+To publish the built artifacts to local Maven repository, use `publishToMavenLocal` task.
 
 ```bash
 ./gradlew publishToMavenLocal
