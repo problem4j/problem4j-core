@@ -2,13 +2,14 @@
 
 1. Update `CHANGELOG.md` - change `[Unreleased]` to `[X.Y.Z] - YYYY-MM-DD` and add a new `[Unreleased]` section on top.
 2. Update `version` property in `gradle.properties` to the new version.
-3. Commit the changes from (1) and (2) with a message `"Release X.Y.Z"` and push to GitHub.
-4. Create an annotated git tag named `vX.Y.Z` with the message `"Release X.Y.Z"` and push it to GitHub. This will
+3. Update versions of dependency samples in `README.md`.
+4. Commit the changes from (1) and (2) with a message `"Release X.Y.Z"` and push to GitHub.
+5. Create an annotated git tag named `vX.Y.Z` with the message `"Release X.Y.Z"` and push it to GitHub. This will
    trigger the release workflow, which will build and publish the artifacts to Sonatype repository. You can use the
    [`./tools/tagrelease`](./tools/tagrelease) script to ensure the tag is correctly formatted and prevent mistakes.
-5. Update `version` property in `gradle.properties` to the next snapshot version, for example `1.4.1-SNAPSHOT`.
-6. Commit the change from (5) with a message `"Update snapshot version"` and push to GitHub.
-7. If the release was made on a maintenance branch, make sure to `merge` or `cherry-pick` the `CHANGELOG.md` entry to 
+6. Update `version` property in `gradle.properties` to the next snapshot version, for example `1.4.1-SNAPSHOT`.
+7. Commit the change from (5) with a message `"Update snapshot version"` and push to GitHub.
+8. If the release was made on a maintenance branch, make sure to `merge` or `cherry-pick` the `CHANGELOG.md` entry to 
    the `main` branch as well.
 
 ## Maven Central

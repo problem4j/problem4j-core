@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog][keepachangelog], and this project adhe
 
 ## [Unreleased]
 
+## [1.4.1] - 2026-02-17
+
 ### Fixed
 
 - Change type from `Object` to `? extends Object` for generics in method arguments to support covariant arguments.
