@@ -46,6 +46,11 @@ tasks.withType<Test>().configureEach {
     systemProperty("user.country", "US")
 }
 
+// buildSrc/src/main/kotlin/internal.common-convention.gradle.kts - "printVersion" task definition
+tasks.withType<PublishToMavenLocal>().configureEach {
+    finalizedBy("printVersion")
+}
+
 // This library targets Java 8 for its main sources to maintain compatibility with older runtime environments used by
 // dependent systems.
 //
