@@ -142,7 +142,7 @@ public abstract class AbstractProblem implements Problem, Serializable {
       int status,
       @Nullable String detail,
       @Nullable URI instance,
-      @Nullable Map<String, Object> extensions) {
+      @Nullable Map<String, ? extends Object> extensions) {
     this.type = type;
     this.title = title;
     this.status = status;

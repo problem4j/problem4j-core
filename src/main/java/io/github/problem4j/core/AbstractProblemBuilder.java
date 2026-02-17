@@ -191,8 +191,8 @@ public abstract class AbstractProblemBuilder implements ProblemBuilder, Serializ
    * @return this builder instance for chaining
    */
   @Override
-  public ProblemBuilder extensions(@Nullable Map<String, @Nullable Object> extensions) {
-    if (extensions != null && !extensions.isEmpty()) {
+  public ProblemBuilder extensions(@Nullable Map<String, ? extends @Nullable Object> extensions) {
+    if (extensions != null) {
       extensions.forEach(
           (key, value) -> {
             if (value != null) {

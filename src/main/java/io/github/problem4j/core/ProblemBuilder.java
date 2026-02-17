@@ -115,7 +115,7 @@ public interface ProblemBuilder {
    * @param extensions map of extension keys and values
    * @return this builder instance for chaining
    */
-  ProblemBuilder extensions(@Nullable Map<String, @Nullable Object> extensions);
+  ProblemBuilder extensions(@Nullable Map<String, ? extends @Nullable Object> extensions);
 
   /**
    * Adds single custom extension from {@link Problem.Extension}.
@@ -178,7 +178,7 @@ public interface ProblemBuilder {
    * @deprecated use {@link #extensions(Map)} instead
    */
   @Deprecated
-  default ProblemBuilder extension(@Nullable Map<String, @Nullable Object> extensions) {
+  default ProblemBuilder extension(@Nullable Map<String, ? extends @Nullable Object> extensions) {
     return extensions(extensions);
   }
 
