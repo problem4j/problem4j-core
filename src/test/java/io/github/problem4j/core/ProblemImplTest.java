@@ -18,6 +18,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+
 package io.github.problem4j.core;
 
 import static io.github.problem4j.core.MapUtils.mapOf;

@@ -35,14 +35,26 @@ nmcp {
 }
 
 spotless {
+    val licenseHeader = "${rootProject.rootDir}/gradle/license-header.java"
+
     java {
         target("**/src/**/*.java")
+        licenseHeaderFile(licenseHeader).updateYearWithLatest(true)
 
         // NOTE: decided not to upgrade Google Java Format, as versions 1.29+ require running it on Java 21
         googleJavaFormat("1.28.0")
         forbidWildcardImports()
         endWithNewline()
         lineEndings = LineEnding.UNIX
+    }
+
+    format("javaMisc") {
+        target("**/src/**/package-info.java", "**/src/**/module-info.java")
+
+        // License headers in these files are not formatted with standard java group, so we need to use custom settings.
+        // The regex is designed find out where the code starts in these files, so the license header can be placed
+        // before it. The code starts with either "package", "import", "module" or "/**" in case of a global JavaDoc.
+        licenseHeaderFile(licenseHeader, "^(package|import|module|/\\*\\*)").updateYearWithLatest(true)
     }
 
     kotlin {
