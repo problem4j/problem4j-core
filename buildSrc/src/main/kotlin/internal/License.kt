@@ -1,7 +1,5 @@
 package internal
 
-import org.gradle.api.Project
-
 /**
  * Represents a single developer entry used in publishing metadata (e.g. POM developers section).
  *
@@ -17,37 +15,3 @@ data class License(
     val distribution: String?,
     val comments: String?,
 )
-
-/**
- * Evaluates a structured list of licenses defined in `gradle.properties`.
- *
- * Licenses are resolved using zero-based indexing and the following property naming convention:
- * ```properties
- * internal.pom.licenses.0.name=MIT License
- * internal.pom.licenses.0.url=https://opensource.org/license/MIT
- *
- * internal.pom.licenses.1.name=Apache-2.0 License
- * ```
- *
- * Evaluation stops at the first missing mandatory `name` property. This allows the list to be
- * extended by simply adding the next index.
- *
- * @return An ordered list of resolved [License] definitions.
- * @receiver Gradle [Project] from which properties are read.
- */
-fun Project.findLicenses(): List<License> {
-  val developers = mutableListOf<License>()
-  var index = 0
-  while (true) {
-    developers.add(
-        License(
-            findProperty("internal.pom.licenses.$index.name") as? String ?: break,
-            findProperty("internal.pom.licenses.$index.url") as? String,
-            findProperty("internal.pom.licenses.$index.distribution") as? String,
-            findProperty("internal.pom.licenses.$index.comments") as? String,
-        )
-    )
-    index++
-  }
-  return developers
-}
