@@ -23,6 +23,7 @@ package io.github.problem4j.core;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import org.jspecify.annotations.Nullable;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -151,9 +152,9 @@ class ProblemMapperTest {
     class ExtensionsException extends RuntimeException {
 
       private final String secret;
-      private final Integer other;
+      private final @Nullable Integer other;
 
-      ExtensionsException(String secret, Integer other) {
+      ExtensionsException(String secret, @Nullable Integer other) {
         super("ignored");
         this.secret = secret;
         this.other = other;

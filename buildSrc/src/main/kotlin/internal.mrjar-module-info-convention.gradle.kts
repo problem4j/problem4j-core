@@ -1,6 +1,5 @@
 plugins {
-    id("internal.common-convention")
-    id("java-library")
+    id("internal.java-convention")
 }
 
 // This convention plugin adds compilation of module-info.java with Java 9 transforms output into a multi-release JAR
@@ -20,7 +19,7 @@ configurations.named(main9SourceSet.runtimeClasspathConfigurationName) {
 }
 
 tasks.named<JavaCompile>("compileMain9Java") {
-    javaCompiler = javaToolchains.compilerFor { languageVersion = JavaLanguageVersion.of(9) }
+    options.release = 9
 }
 
 tasks.named<Jar>("jar") {

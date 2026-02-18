@@ -194,7 +194,7 @@ class ProblemBuilderTest {
 
   @Test
   void givenNullMapExtension_shouldIgnoreIt() {
-    Problem problem = Problem.builder().extensions((Map<String, Object>) null).build();
+    Problem problem = Problem.builder().extensions((Map<String, ?>) null).build();
 
     assertThat(problem.getExtensions()).isEmpty();
   }
