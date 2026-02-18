@@ -18,6 +18,6 @@ echo ""
 echo "===== problem4j-core ===="
 javap \
     -verbose \
-    -classpath build/libs/problem4j-core.jar \
+    -classpath build/libs/problem4j-core-*-SNAPSHOT.jar \
     io.github.problem4j.core.Problem \
     | grep "major version"
