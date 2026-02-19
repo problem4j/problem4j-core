@@ -22,6 +22,7 @@
 package io.github.problem4j.core;
 
 import java.util.HashMap;
+import java.util.Map;
 
 final class MapUtils {
 
@@ -31,7 +32,7 @@ final class MapUtils {
    * @param args an even number of arguments representing key-value pairs
    * @return a HashMap containing the provided key-value pairs
    */
-  static HashMap<String, Object> mapOf(Object... args) {
+  static Map<String, Object> mapOf(Object... args) {
     if (args.length % 2 != 0) {
       throw new IllegalArgumentException("args length must be even");
     }

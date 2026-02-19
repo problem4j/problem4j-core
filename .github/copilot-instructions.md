@@ -27,7 +27,7 @@
     - Run `./gradlew spotlessCheck` to validate code style.
     - Run `./gradlew spotlessApply` to auto-format code.
     - Lint config in `build.gradle.kts`.
-    - For limiting failures and noise, prefer running `./gradlew spotlessApply build` instead of just `./gradlew build`.
+    - For limiting failures and noise, prefer running `./gradlew` instead of just `./gradlew build`.
 - **Clean:**
     - Use `./gradlew clean` to remove build artifacts.
 - **Validation:**

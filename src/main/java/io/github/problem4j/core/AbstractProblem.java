@@ -152,6 +152,8 @@ public abstract class AbstractProblem implements Problem, Serializable {
   }
 
   /**
+   * Gets the URI identifying the type of this problem.
+   *
    * @return the URI identifying the type of this problem
    */
   @Override
@@ -160,6 +162,8 @@ public abstract class AbstractProblem implements Problem, Serializable {
   }
 
   /**
+   * Gets a short, human-readable title describing the problem.
+   *
    * @return a short, human-readable title describing the problem
    */
   @Override
@@ -168,6 +172,8 @@ public abstract class AbstractProblem implements Problem, Serializable {
   }
 
   /**
+   * Gets the HTTP status code generated for this problem.
+   *
    * @return the HTTP status code generated for this problem
    */
   @Override
@@ -176,6 +182,8 @@ public abstract class AbstractProblem implements Problem, Serializable {
   }
 
   /**
+   * Gets a detailed, human-readable explanation specific to this occurrence.
+   *
    * @return a detailed, human-readable explanation specific to this occurrence
    */
   @Override
@@ -184,6 +192,8 @@ public abstract class AbstractProblem implements Problem, Serializable {
   }
 
   /**
+   * Gets a URI identifying the specific occurrence of the problem.
+   *
    * @return a URI identifying the specific occurrence of the problem
    */
   @Override
@@ -192,6 +202,8 @@ public abstract class AbstractProblem implements Problem, Serializable {
   }
 
   /**
+   * Gets an unmodifiable set of custom extension keys present in this problem.
+   *
    * @return an unmodifiable set of custom extension keys present in this problem
    */
   @Override
@@ -350,6 +362,8 @@ public abstract class AbstractProblem implements Problem, Serializable {
     }
 
     /**
+     * Gets the extension key.
+     *
      * @return the extension key
      */
     @Override
@@ -358,6 +372,8 @@ public abstract class AbstractProblem implements Problem, Serializable {
     }
 
     /**
+     * Gets the extension value.
+     *
      * @return the extension value
      */
     @Override

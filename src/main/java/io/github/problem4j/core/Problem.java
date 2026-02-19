@@ -153,31 +153,43 @@ public interface Problem {
   }
 
   /**
+   * Gets the URI identifying the type of this problem.
+   *
    * @return the URI identifying the type of this problem
    */
   URI getType();
 
   /**
+   * Gets a short, human-readable title describing the problem.
+   *
    * @return a short, human-readable title describing the problem
    */
   String getTitle();
 
   /**
+   * Gets the HTTP status code generated for this problem.
+   *
    * @return the HTTP status code generated for this problem
    */
   int getStatus();
 
   /**
+   * Gets a detailed, human-readable explanation specific to this occurrence.
+   *
    * @return a detailed, human-readable explanation specific to this occurrence
    */
   @Nullable String getDetail();
 
   /**
+   * Gets a URI identifying the specific occurrence of the problem.
+   *
    * @return a URI identifying the specific occurrence of the problem
    */
   @Nullable URI getInstance();
 
   /**
+   * Gets an unmodifiable set of custom extension keys present in this problem.
+   *
    * @return an unmodifiable set of custom extension keys present in this problem
    */
   Set<String> getExtensions();
@@ -232,12 +244,16 @@ public interface Problem {
   interface Extension extends Map.Entry<String, @Nullable Object> {
 
     /**
+     * Gets the extension key.
+     *
      * @return the extension key
      */
     @Override
     String getKey();
 
     /**
+     * Gets the extension value.
+     *
      * @return the extension value
      */
     @Override
