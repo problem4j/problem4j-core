@@ -39,6 +39,16 @@ class ProblemStatusTest {
     assertThat(optionalStatus).isEmpty();
   }
 
+  @Test
+  void givenNonNullIntegerStatusCode_shouldReturnMatchingStatus() {
+    Integer statusCode = 200;
+
+    Optional<ProblemStatus> optionalStatus = ProblemStatus.findValue(statusCode);
+
+    assertThat(optionalStatus).isPresent();
+    assertThat(optionalStatus.get()).isEqualTo(ProblemStatus.OK);
+  }
+
   @ParameterizedTest
   @ValueSource(ints = {103, 413, 414, 416, 422})
   void givenAmbiguousStatusCode_shouldPrioritizeNonDeprecatedOne(int value)

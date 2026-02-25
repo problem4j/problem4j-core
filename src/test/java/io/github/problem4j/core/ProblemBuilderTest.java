@@ -21,6 +21,7 @@
 
 package io.github.problem4j.core;
 
+import static io.github.problem4j.core.Problem.extension;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -29,14 +30,13 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import org.junit.jupiter.api.Test;
 
 /**
  * Some of the tests in this class may appear trivial or unnecessary. They are intentionally
- * included to explore and validate the behavior of various code coverage analysis tools. These
- * tests help ensure that the coverage reports correctly reflect different execution paths, edge
- * cases, and instrumentation scenarios.
+ * included to explore and validate the behavior of various code coverage analysis tools.
  */
 class ProblemBuilderTest {
 
@@ -159,9 +159,7 @@ class ProblemBuilderTest {
   @Test
   void givenNullValueExtensionViaVarargs_shouldNotIncludeIt() {
     Problem problem =
-        Problem.builder()
-            .extensions(Problem.extension("key1", null), Problem.extension("key2", null))
-            .build();
+        Problem.builder().extensions(extension("key1", null), extension("key2", null)).build();
 
     assertThat(problem.getExtensions()).isEmpty();
     assertThat(problem.getExtensionMembers()).isEqualTo(Map.of());
@@ -177,8 +175,7 @@ class ProblemBuilderTest {
   void givenNullValueExtensionViaObject_shouldNotIncludeIt() {
     Problem problem =
         Problem.builder()
-            .extensions(
-                Arrays.asList(Problem.extension("key1", null), Problem.extension("key2", null)))
+            .extensions(Arrays.asList(extension("key1", null), extension("key2", null)))
             .build();
 
     assertThat(problem.getExtensions()).isEmpty();
@@ -222,9 +219,7 @@ class ProblemBuilderTest {
   @Test
   void givenVarargWithNullElement_shouldIgnoreNullElement() {
     Problem problem =
-        Problem.builder()
-            .extensions(Problem.extension("a", 1), null, Problem.extension("b", 2))
-            .build();
+        Problem.builder().extensions(extension("a", 1), null, extension("b", 2)).build();
 
     assertThat(problem.getExtensions()).containsExactlyInAnyOrder("a", "b");
     assertThat(problem.hasExtension("a")).isTrue();
@@ -243,8 +238,7 @@ class ProblemBuilderTest {
   void givenCollectionWithNullElement_shouldIgnoreNullElement() {
     Problem problem =
         Problem.builder()
-            .extensions(
-                Arrays.asList(Problem.extension("x", "1"), null, Problem.extension("y", "2")))
+            .extensions(Arrays.asList(extension("x", "1"), null, extension("y", "2")))
             .build();
 
     assertThat(problem.getExtensions()).containsExactlyInAnyOrder("x", "y");
@@ -292,7 +286,7 @@ class ProblemBuilderTest {
   @Test
   void givenAssigningTheSameExtensionLater_shouldOverwriteEarlierValues() {
     Problem problem =
-        Problem.builder().extension("k", "v1").extension(Problem.extension("k", "v2")).build();
+        Problem.builder().extension("k", "v1").extension(extension("k", "v2")).build();
 
     assertThat(problem.getExtensionValue("k")).isEqualTo("v2");
     assertThat(problem.getExtensions()).containsExactly("k");
@@ -383,9 +377,7 @@ class ProblemBuilderTest {
 
   @Test
   void givenOnlyNumberExtensions_whenToString_thenContainsNumbers() {
-    ProblemBuilder builder = Problem.builder();
-    builder.extension("ext1", 123);
-    builder.extension("ext2", 456.78);
+    ProblemBuilder builder = Problem.builder().extension("ext1", 123).extension("ext2", 456.78);
     String result = builder.toString();
     assertThat(result).contains("ext1=123");
     assertThat(result).contains("ext2=456.78");
@@ -393,9 +385,8 @@ class ProblemBuilderTest {
 
   @Test
   void givenOnlyBooleanExtensions_whenToString_thenContainsBooleans() {
-    ProblemBuilder builder = Problem.builder();
-    builder.extension("flag1", true);
-    builder.extension("flag2", false);
+    ProblemBuilder builder = Problem.builder().extension("flag1", true).extension("flag2", false);
+
     String result = builder.toString();
     assertThat(result).contains("flag1=true");
     assertThat(result).contains("flag2=false");
@@ -407,5 +398,40 @@ class ProblemBuilderTest {
     builder.extension("obj", new DummyObject("biz\tbar"));
     String result = builder.toString();
     assertThat(result).contains("obj=DummyObject{value=biz\tbar}");
+  }
+
+  @SuppressWarnings("deprecation")
+  @Test
+  void givenDeprecatedExtensionMap_whenBuilding_thenExtensionsAreSet() {
+    Map<String, Object> map = Map.of("a", "1", "b", "2");
+
+    Problem problem = Problem.builder().extension(map).build();
+
+    assertThat(problem.getExtensionMembers()).isEqualTo(map);
+  }
+
+  @SuppressWarnings("deprecation")
+  @Test
+  void givenDeprecatedExtensionVarargs_whenBuilding_thenExtensionsAreSet() {
+    Problem problem = Problem.builder().extension(extension("a", "1"), extension("b", "2")).build();
+
+    assertThat(problem.getExtensions()).containsExactlyInAnyOrder("a", "b");
+  }
+
+  @SuppressWarnings("deprecation")
+  @Test
+  void givenDeprecatedExtensionCollection_whenBuilding_thenExtensionsAreSet() {
+    List<Problem.Extension> exts = Arrays.asList(extension("x", "1"), extension("y", "2"));
+
+    Problem problem = Problem.builder().extension(exts).build();
+
+    assertThat(problem.getExtensions()).containsExactlyInAnyOrder("x", "y");
+  }
+
+  @Test
+  void givenNullExtensionObject_whenBuilding_thenIgnored() {
+    Problem problem = Problem.builder().extension((Problem.Extension) null).status(200).build();
+
+    assertThat(problem.getExtensions()).isEmpty();
   }
 }

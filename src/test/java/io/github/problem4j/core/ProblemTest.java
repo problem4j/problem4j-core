@@ -42,6 +42,22 @@ class ProblemTest {
   }
 
   @Test
+  void givenStatusAndDetail_shouldSetFields() {
+    Problem problem = Problem.of(400, "bad input");
+
+    assertThat(problem.getStatus()).isEqualTo(400);
+    assertThat(problem.getDetail()).isEqualTo("bad input");
+    assertThat(problem.getTitle()).isEqualTo(ProblemStatus.BAD_REQUEST.getTitle());
+  }
+
+  @Test
+  void givenTypeWithEmptyUriString_whenIsTypeNonBlank_thenReturnsFalse() {
+    Problem problem = Problem.builder().type(URI.create("")).status(200).build();
+
+    assertThat(problem.isTypeNonBlank()).isFalse();
+  }
+
+  @Test
   void givenTitleAndStatus_shouldSetFields() {
     Problem problem = Problem.of("Test", 400);
 
