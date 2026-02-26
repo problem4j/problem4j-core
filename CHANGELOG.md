@@ -6,6 +6,14 @@ The format is based on [Keep a Changelog][keepachangelog], and this project adhe
 
 ## [Unreleased]
 
+## [1.4.2] - 2026-02-26
+
+### Fixed
+
+- Make `ProblemBuilder` remove extension member if `null` values is passed, instead of silently ignoring it and keeping
+  the previous value.
+- Cleanup `default` methods in `ProblemBuilder` interface.
+
 ## [1.4.1] - 2026-02-17
 
 ### Fixed
