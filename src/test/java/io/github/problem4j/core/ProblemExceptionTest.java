@@ -29,9 +29,7 @@ import org.junit.jupiter.api.Test;
 
 /**
  * Some of the tests in this class may appear trivial or unnecessary. They are intentionally
- * included to explore and validate the behavior of various code coverage analysis tools. These
- * tests help ensure that the coverage reports correctly reflect different execution paths, edge
- * cases, and instrumentation scenarios.
+ * included to explore and validate the behavior of various code coverage analysis tools.
  */
 class ProblemExceptionTest {
 
@@ -220,5 +218,79 @@ class ProblemExceptionTest {
         new ProblemException("this is a message", problem, cause, false, true);
 
     assertSame(problem, exception.getProblem());
+  }
+
+  @Test
+  void givenCtorWithNullMessage_whenCreatingProblemException_thenMessageIsDerivedFromProblem() {
+    Problem problem = Problem.builder().title("Bad Request").status(400).build();
+
+    ProblemException exception = new ProblemException(null, problem);
+
+    assertEquals("Bad Request (code: 400)", exception.getMessage());
+    assertSame(problem, exception.getProblem());
+  }
+
+  @Test
+  void givenCtorWithEmptyMessage_whenCreatingProblemException_thenMessageIsDerivedFromProblem() {
+    Problem problem = Problem.builder().title("Bad Request").status(400).build();
+
+    ProblemException exception = new ProblemException("", problem);
+
+    assertEquals("Bad Request (code: 400)", exception.getMessage());
+    assertSame(problem, exception.getProblem());
+  }
+
+  @Test
+  void
+      givenCtorWithNullMessageAndCause_whenCreatingProblemException_thenMessageIsDerivedFromProblem() {
+    Problem problem = Problem.builder().title("Bad Request").status(400).build();
+    Throwable cause = new RuntimeException("root");
+
+    ProblemException exception = new ProblemException(null, problem, cause);
+
+    assertEquals("Bad Request (code: 400)", exception.getMessage());
+    assertSame(cause, exception.getCause());
+  }
+
+  @Test
+  void
+      givenCtorWithEmptyMessageAndCause_whenCreatingProblemException_thenMessageIsDerivedFromProblem() {
+    Problem problem = Problem.builder().title("Bad Request").status(400).build();
+    Throwable cause = new RuntimeException("root");
+
+    ProblemException exception = new ProblemException("", problem, cause);
+
+    assertEquals("Bad Request (code: 400)", exception.getMessage());
+    assertSame(cause, exception.getCause());
+  }
+
+  @Test
+  void givenFullCtorWithNullMessage_whenCreatingProblemException_thenMessageIsDerivedFromProblem() {
+    Problem problem = Problem.builder().title("Bad Request").status(400).build();
+    Throwable cause = new RuntimeException("root");
+
+    ProblemException exception = new ProblemException(null, problem, cause, true, true);
+
+    assertEquals("Bad Request (code: 400)", exception.getMessage());
+  }
+
+  @Test
+  void
+      givenFullCtorWithEmptyMessage_whenCreatingProblemException_thenMessageIsDerivedFromProblem() {
+    Problem problem = Problem.builder().title("Bad Request").status(400).build();
+    Throwable cause = new RuntimeException("root");
+
+    ProblemException exception = new ProblemException("", problem, cause, true, true);
+
+    assertEquals("Bad Request (code: 400)", exception.getMessage());
+  }
+
+  @Test
+  void givenProblemWithEmptyTitleAndStatus_whenCreatingException_thenOnlyStatusInMessage() {
+    Problem problem = Problem.builder().title("").status(500).build();
+
+    ProblemException exception = new ProblemException(problem);
+
+    assertEquals("(code: 500)", exception.getMessage());
   }
 }

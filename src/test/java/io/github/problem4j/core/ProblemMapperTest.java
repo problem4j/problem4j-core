@@ -316,4 +316,311 @@ class ProblemMapperTest {
   void isMappingCandidate_returnsFalse_forNull() {
     assertThat(mapper.isMappingCandidate(null)).isFalse();
   }
+
+  @Test
+  void givenNullThrowable_whenToProblemBuilder_thenReturnsEmptyBuilder() {
+    Problem problem = mapper.toProblemBuilder(null).build();
+
+    assertThat(problem.getStatus()).isZero();
+    assertThat(problem.getTitle()).isEqualTo(Problem.UNKNOWN_TITLE);
+  }
+
+  @Test
+  void givenUnannotatedThrowable_whenToProblemBuilder_thenReturnsEmptyBuilder() {
+    Problem problem = mapper.toProblemBuilder(new RuntimeException("plain")).build();
+
+    assertThat(problem.getStatus()).isZero();
+    assertThat(problem.getTitle()).isEqualTo(Problem.UNKNOWN_TITLE);
+  }
+
+  @Test
+  void givenNullThrowable_whenToProblemBuilderWithContext_thenReturnsEmptyBuilder() {
+    Problem problem = mapper.toProblemBuilder(null, ProblemContext.create()).build();
+
+    assertThat(problem.getStatus()).isZero();
+  }
+
+  @Test
+  void givenInvalidTypeUri_whenMapping_thenTypeIsIgnored() {
+
+    @ProblemMapping(type = "ht tp://invalid uri", title = "Title", status = 400)
+    class InvalidTypeException extends RuntimeException {
+      InvalidTypeException() {
+        super("err");
+      }
+    }
+
+    Problem problem = mapper.toProblemBuilder(new InvalidTypeException()).build();
+
+    assertThat(problem.getType()).isEqualTo(Problem.BLANK_TYPE);
+    assertThat(problem.getTitle()).isEqualTo("Title");
+  }
+
+  @Test
+  void givenInvalidInstanceUri_whenMapping_thenInstanceIsIgnored() {
+
+    @ProblemMapping(
+        type = "https://example.org/err",
+        title = "Title",
+        status = 400,
+        instance = "ht tp://invalid uri")
+    class InvalidInstanceException extends RuntimeException {
+      InvalidInstanceException() {
+        super("err");
+      }
+    }
+
+    Problem problem = mapper.toProblemBuilder(new InvalidInstanceException()).build();
+
+    assertThat(problem.getInstance()).isNull();
+  }
+
+  @Test
+  void givenTypeResolvingToEmpty_whenMapping_thenTypeIsNotSet() {
+
+    @ProblemMapping(type = "{missing}", title = "Title", status = 400)
+    class EmptyTypeException extends RuntimeException {
+      EmptyTypeException() {
+        super("err");
+      }
+    }
+
+    Problem problem = mapper.toProblemBuilder(new EmptyTypeException()).build();
+
+    assertThat(problem.getType()).isEqualTo(Problem.BLANK_TYPE);
+  }
+
+  @Test
+  void givenTitleResolvingToEmpty_whenMapping_thenTitleFallsBackToDefault() {
+
+    @ProblemMapping(type = "https://example.org/err", title = "{missing}", status = 400)
+    class EmptyTitleException extends RuntimeException {
+      EmptyTitleException() {
+        super("err");
+      }
+    }
+
+    Problem problem = mapper.toProblemBuilder(new EmptyTitleException()).build();
+
+    assertThat(problem.getTitle()).isEqualTo(ProblemStatus.BAD_REQUEST.getTitle());
+  }
+
+  @Test
+  void givenDetailResolvingToEmpty_whenMapping_thenDetailIsNotSet() {
+
+    @ProblemMapping(
+        type = "https://example.org/err",
+        title = "Title",
+        status = 400,
+        detail = "{missing}")
+    class EmptyDetailException extends RuntimeException {
+      EmptyDetailException() {
+        super("err");
+      }
+    }
+
+    Problem problem = mapper.toProblemBuilder(new EmptyDetailException()).build();
+
+    assertThat(problem.getDetail()).isNull();
+  }
+
+  @Test
+  void givenInstanceResolvingToEmpty_whenMapping_thenInstanceIsNotSet() {
+
+    @ProblemMapping(
+        type = "https://example.org/err",
+        title = "Title",
+        status = 400,
+        instance = "{missing}")
+    class EmptyInstanceException extends RuntimeException {
+      EmptyInstanceException() {
+        super("err");
+      }
+    }
+
+    Problem problem = mapper.toProblemBuilder(new EmptyInstanceException()).build();
+
+    assertThat(problem.getInstance()).isNull();
+  }
+
+  @Test
+  void givenExtensionWithBlankName_whenMapping_thenBlankNameIsSkipped() {
+
+    @ProblemMapping(
+        type = "https://example.org/err",
+        title = "Title",
+        status = 400,
+        extensions = {"  ", "  \t  "})
+    class BlankExtException extends RuntimeException {
+      BlankExtException() {
+        super("err");
+      }
+    }
+
+    Problem problem = mapper.toProblemBuilder(new BlankExtException()).build();
+
+    assertThat(problem.getExtensions()).isEmpty();
+  }
+
+  @Test
+  void givenExtensionWithEmptyStringValue_whenMapping_thenExtensionIsOmitted() {
+
+    @ProblemMapping(
+        type = "https://example.org/err",
+        title = "Title",
+        status = 400,
+        extensions = {"emptyField"})
+    class EmptyExtException extends RuntimeException {
+
+      private final String emptyField;
+
+      EmptyExtException() {
+        super("err");
+        this.emptyField = "";
+      }
+    }
+
+    Problem problem = mapper.toProblemBuilder(new EmptyExtException()).build();
+
+    assertThat(problem.getExtensions()).isEmpty();
+  }
+
+  @Test
+  void givenContextWithMissingKey_whenInterpolating_thenResolvesToEmptyString() {
+
+    @ProblemMapping(
+        type = "https://example.org/err",
+        title = "Title",
+        status = 400,
+        detail = "trace:{context.missingKey}")
+    class CtxException extends RuntimeException {
+      CtxException() {
+        super("err");
+      }
+    }
+
+    Problem problem = mapper.toProblemBuilder(new CtxException(), ProblemContext.create()).build();
+
+    assertThat(problem.getDetail()).isEqualTo("trace:");
+  }
+
+  @Test
+  void givenContextKeyWithNullContext_whenInterpolating_thenResolvesToEmptyString() {
+
+    @ProblemMapping(
+        type = "https://example.org/err",
+        title = "Title",
+        status = 400,
+        detail = "trace:{context.traceId}")
+    class CtxException extends RuntimeException {
+      CtxException() {
+        super("err");
+      }
+    }
+
+    Problem problem = mapper.toProblemBuilder(new CtxException()).build();
+
+    assertThat(problem.getDetail()).isEqualTo("trace:");
+  }
+
+  @Test
+  void givenNullMessage_whenInterpolating_thenMessageResolvesToEmpty() {
+
+    @ProblemMapping(
+        type = "https://example.org/err",
+        title = "Title",
+        status = 400,
+        detail = "msg:{message}")
+    class NullMsgException extends RuntimeException {
+      NullMsgException() {
+        super((String) null);
+      }
+    }
+
+    Problem problem = mapper.toProblemBuilder(new NullMsgException()).build();
+
+    assertThat(problem.getDetail()).isEqualTo("msg:");
+  }
+
+  @Test
+  void givenZeroStatus_whenMapping_thenStatusIsNotSet() {
+
+    @ProblemMapping(type = "https://example.org/err", title = "Title", status = 0)
+    class ZeroStatusException extends RuntimeException {
+      ZeroStatusException() {
+        super("err");
+      }
+    }
+
+    Problem problem = mapper.toProblemBuilder(new ZeroStatusException()).build();
+
+    assertThat(problem.getStatus()).isZero();
+  }
+
+  @Test
+  void givenExtensionFieldInSuperclass_whenMapping_thenFieldIsResolved() {
+
+    class BaseException extends RuntimeException {
+
+      protected final String code;
+
+      BaseException(String code, String message) {
+        super(message);
+        this.code = code;
+      }
+    }
+
+    @ProblemMapping(
+        type = "https://example.org/err",
+        title = "Inherited",
+        status = 400,
+        extensions = {"code"})
+    class ChildException extends BaseException {
+      ChildException(String code, String message) {
+        super(code, message);
+      }
+    }
+
+    Problem problem = mapper.toProblemBuilder(new ChildException("ERR-1", "fail")).build();
+
+    assertThat(problem.getExtensionValue("code")).isEqualTo("ERR-1");
+  }
+
+  @Test
+  void givenExtensionFieldThatDoesNotExist_whenMapping_thenExtensionIsOmitted() {
+
+    @ProblemMapping(
+        type = "https://example.org/err",
+        title = "No field",
+        status = 400,
+        extensions = {"nonexistent"})
+    class NoFieldException extends RuntimeException {
+      NoFieldException() {
+        super("err");
+      }
+    }
+
+    Problem problem = mapper.toProblemBuilder(new NoFieldException()).build();
+
+    assertThat(problem.getExtensions()).isEmpty();
+  }
+
+  @Test
+  void givenEmptyPlaceholder_whenInterpolating_thenResolvesToEmpty() {
+
+    @ProblemMapping(
+        type = "https://example.org/err",
+        title = "Title",
+        status = 400,
+        detail = "before{}after")
+    class EmptyPlaceholderException extends RuntimeException {
+      EmptyPlaceholderException() {
+        super("err");
+      }
+    }
+
+    Problem problem = mapper.toProblemBuilder(new EmptyPlaceholderException()).build();
+
+    assertThat(problem.getDetail()).isEqualTo("before{}after");
+  }
 }

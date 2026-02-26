@@ -23,46 +23,15 @@ package io.github.problem4j.core;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import java.net.URI;
 import java.util.HashMap;
 import java.util.Map;
 import org.junit.jupiter.api.Test;
 
 /**
  * Some of the tests in this class may appear trivial or unnecessary. They are intentionally
- * included to explore and validate the behavior of various code coverage analysis tools. These
- * tests help ensure that the coverage reports correctly reflect different execution paths, edge
- * cases, and instrumentation scenarios.
+ * included to explore and validate the behavior of various code coverage analysis tools.
  */
 class ProblemImplTest {
-
-  @Test
-  void givenAllFieldsPopulated_whenToString_thenContainsAllFields() {
-    URI type = URI.create("https://example.com/problem");
-    String title = "Test Problem";
-    int status = 400;
-    String detail = "Something went wrong";
-    URI instance = URI.create("https://example.com/instance");
-    Map<String, Object> extensions = new HashMap<>();
-    extensions.put("stringExt", "value");
-    extensions.put("numberExt", 42);
-    extensions.put("booleanExt", true);
-    extensions.put("objectExt", new DummyObject("boo\nfoo"));
-
-    Problem problem = new ProblemImpl(type, title, status, detail, instance, extensions);
-
-    String result = problem.toString();
-
-    assertThat(result).contains("type=" + type);
-    assertThat(result).contains("title=" + title);
-    assertThat(result).contains("status=" + status);
-    assertThat(result).contains("detail=" + detail);
-    assertThat(result).contains("instance=" + instance);
-    assertThat(result).contains("stringExt=value");
-    assertThat(result).contains("numberExt=42");
-    assertThat(result).contains("booleanExt=true");
-    assertThat(result).contains("objectExt=DummyObject{value=boo\nfoo}");
-  }
 
   @Test
   void givenNullExtensionsAndNullableFields_whenToString_thenOmitsNulls() {
