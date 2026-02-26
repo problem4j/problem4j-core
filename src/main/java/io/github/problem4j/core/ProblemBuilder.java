@@ -111,7 +111,8 @@ public interface ProblemBuilder {
   ProblemBuilder extension(@Nullable String name, @Nullable Object value);
 
   /**
-   * Adds multiple custom extensions from a map.
+   * Adds multiple custom extensions from a map. If the value of any provided extension is {@code
+   * null} and an extension with the same key already exists, it will be removed.
    *
    * @param extensions map of extension keys and values
    * @return this builder instance for chaining
@@ -124,7 +125,9 @@ public interface ProblemBuilder {
   }
 
   /**
-   * Adds single custom extension from {@link Problem.Extension}.
+   * Adds single custom extension from {@link Problem.Extension}. If the value of the provided
+   * extension is {@code null} and an extension with the same key already exists, it will be
+   * removed.
    *
    * @param extension array of extensions
    * @return this builder instance for chaining
@@ -137,7 +140,9 @@ public interface ProblemBuilder {
   }
 
   /**
-   * Adds multiple custom extensions from varargs of {@link Problem.Extension}.
+   * Adds multiple custom extensions from varargs of {@link Problem.Extension}. If the value of any
+   * provided extension is {@code null} and an extension with the same key already exists, it will
+   * be removed.
    *
    * @param extensions array of extensions
    * @return this builder instance for chaining
@@ -154,7 +159,9 @@ public interface ProblemBuilder {
   }
 
   /**
-   * Adds multiple custom extensions from a collection of {@link Problem.Extension}.
+   * Adds multiple custom extensions from a collection of {@link Problem.Extension}. If the value of
+   * any provided extension is {@code null} and an extension with the same key already exists, it
+   * will be removed.
    *
    * @param extensions collection of extensions
    * @return this builder instance for chaining

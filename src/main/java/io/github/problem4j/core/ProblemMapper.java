@@ -56,7 +56,7 @@ public interface ProblemMapper {
    * <p>Note that because default implementation is thread-safe and stateless, since {@code v1.3.3}
    * this method returns a singleton instance.
    *
-   * @return a new {@link ProblemMapper} instance
+   * @return default implementation of {@link ProblemMapper}
    */
   static ProblemMapper create() {
     return ProblemMapperImpl.INSTANCE;

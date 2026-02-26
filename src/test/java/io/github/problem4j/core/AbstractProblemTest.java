@@ -148,6 +148,7 @@ class AbstractProblemTest {
     assertThat(problem.getTitle()).isEqualTo(Problem.UNKNOWN_TITLE);
   }
 
+  @SuppressWarnings("deprecation")
   @Test
   void givenExtension_whenSetValue_thenValueIsUpdated() {
     Problem.Extension ext = new AbstractProblem.AbstractExtension("key", "original") {};
