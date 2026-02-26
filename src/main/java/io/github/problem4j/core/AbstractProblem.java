@@ -386,7 +386,11 @@ public abstract class AbstractProblem implements Problem, Serializable {
      *
      * @param value new value
      * @return the new value
+     * @deprecated This method exists only to satisfy the {@link Map.Entry} contract inherited by
+     *     {@link Extension} and will be removed in a future major version and the object will be
+     *     truly immutable.
      */
+    @Deprecated
     @Override
     public @Nullable Object setValue(@Nullable Object value) {
       this.value = value;

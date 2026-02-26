@@ -21,7 +21,6 @@
 
 package io.github.problem4j.core;
 
-import static io.github.problem4j.core.MapUtils.mapOf;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.net.URI;
@@ -129,8 +128,8 @@ class ProblemImplTest {
 
   @Test
   void givenTwoEqualProblems_shouldBeEqual() {
-    Problem problem1 = new ProblemImpl("title", 404, "detail", mapOf("key", "value"));
-    Problem problem2 = new ProblemImpl("title", 404, "detail", mapOf("key", "value"));
+    Problem problem1 = new ProblemImpl("title", 404, "detail", Map.of("key", "value"));
+    Problem problem2 = new ProblemImpl("title", 404, "detail", Map.of("key", "value"));
 
     assertThat(problem1).isEqualTo(problem2);
   }
@@ -140,22 +139,22 @@ class ProblemImplTest {
     Object problem;
     Object other;
 
-    problem = other = new ProblemImpl("title", 404, "detail", mapOf("key", "value"));
+    problem = other = new ProblemImpl("title", 404, "detail", Map.of("key", "value"));
 
     assertThat(problem).isEqualTo(other);
   }
 
   @Test
   void givenTwoDifferentProblems_shouldNotBeEqual() {
-    Problem problem1 = new ProblemImpl("title1", 404, "detail1", mapOf("key", "value1"));
-    Problem problem2 = new ProblemImpl("title2", 500, "detail2", mapOf("key", "value2"));
+    Problem problem1 = new ProblemImpl("title1", 404, "detail1", Map.of("key", "value1"));
+    Problem problem2 = new ProblemImpl("title2", 500, "detail2", Map.of("key", "value2"));
 
     assertThat(problem1).isNotEqualTo(problem2);
   }
 
   @Test
   void givenProblemAndDifferentObject_shouldNotBeEqual() {
-    Object problem = new ProblemImpl("title1", 404, "detail1", mapOf("key", "value"));
+    Object problem = new ProblemImpl("title1", 404, "detail1", Map.of("key", "value"));
     Object differentObject = "always wanted to be a problem";
 
     assertThat(problem).isNotEqualTo(differentObject);
@@ -163,16 +162,16 @@ class ProblemImplTest {
 
   @Test
   void givenTwoEqualProblems_shouldHaveSameHashCode() {
-    Problem problem1 = new ProblemImpl("title", 404, "detail", mapOf("key", "value"));
-    Problem problem2 = new ProblemImpl("title", 404, "detail", mapOf("key", "value"));
+    Problem problem1 = new ProblemImpl("title", 404, "detail", Map.of("key", "value"));
+    Problem problem2 = new ProblemImpl("title", 404, "detail", Map.of("key", "value"));
 
     assertThat(problem1.hashCode()).isEqualTo(problem2.hashCode());
   }
 
   @Test
   void givenTwoDifferentProblems_shouldHaveDifferentHashCodes() {
-    Problem problem1 = new ProblemImpl("title1", 404, "detail1", mapOf("key", "value1"));
-    Problem problem2 = new ProblemImpl("title2", 500, "detail2", mapOf("key", "value2"));
+    Problem problem1 = new ProblemImpl("title1", 404, "detail1", Map.of("key", "value1"));
+    Problem problem2 = new ProblemImpl("title2", 500, "detail2", Map.of("key", "value2"));
 
     assertThat(problem1.hashCode()).isNotEqualTo(problem2.hashCode());
   }

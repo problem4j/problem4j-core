@@ -21,7 +21,6 @@
 
 package io.github.problem4j.core;
 
-import static io.github.problem4j.core.MapUtils.mapOf;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -154,7 +153,7 @@ class ProblemBuilderTest {
     assertThat(problem.getExtensions()).isEmpty();
     assertThat(problem.hasExtension("key")).isFalse();
     assertThat(problem.getExtensionValue("key")).isNull();
-    assertThat(problem.getExtensionMembers()).isEqualTo(mapOf());
+    assertThat(problem.getExtensionMembers()).isEqualTo(Map.of());
   }
 
   @Test
@@ -165,7 +164,7 @@ class ProblemBuilderTest {
             .build();
 
     assertThat(problem.getExtensions()).isEmpty();
-    assertThat(problem.getExtensionMembers()).isEqualTo(mapOf());
+    assertThat(problem.getExtensionMembers()).isEqualTo(Map.of());
 
     assertThat(problem.hasExtension("key1")).isFalse();
     assertThat(problem.getExtensionValue("key1")).isNull();
@@ -183,7 +182,7 @@ class ProblemBuilderTest {
             .build();
 
     assertThat(problem.getExtensions()).isEmpty();
-    assertThat(problem.getExtensionMembers()).isEqualTo(mapOf());
+    assertThat(problem.getExtensionMembers()).isEqualTo(Map.of());
 
     assertThat(problem.hasExtension("key1")).isFalse();
     assertThat(problem.getExtensionValue("key1")).isNull();
@@ -210,7 +209,7 @@ class ProblemBuilderTest {
     assertThat(problem.getExtensions()).containsExactly("a");
     assertThat(problem.hasExtension("a")).isTrue();
     assertThat(problem.getExtensionValue("a")).isEqualTo("b");
-    assertThat(problem.getExtensionMembers()).isEqualTo(mapOf("a", "b"));
+    assertThat(problem.getExtensionMembers()).isEqualTo(Map.of("a", "b"));
   }
 
   @Test
@@ -230,7 +229,7 @@ class ProblemBuilderTest {
     assertThat(problem.getExtensions()).containsExactlyInAnyOrder("a", "b");
     assertThat(problem.hasExtension("a")).isTrue();
     assertThat(problem.hasExtension("b")).isTrue();
-    assertThat(problem.getExtensionMembers()).isEqualTo(mapOf("a", 1, "b", 2));
+    assertThat(problem.getExtensionMembers()).isEqualTo(Map.of("a", 1, "b", 2));
   }
 
   @Test
@@ -251,7 +250,7 @@ class ProblemBuilderTest {
     assertThat(problem.getExtensions()).containsExactlyInAnyOrder("x", "y");
     assertThat(problem.hasExtension("x")).isTrue();
     assertThat(problem.hasExtension("y")).isTrue();
-    assertThat(problem.getExtensionMembers()).isEqualTo(mapOf("x", "1", "y", "2"));
+    assertThat(problem.getExtensionMembers()).isEqualTo(Map.of("x", "1", "y", "2"));
   }
 
   @Test
@@ -297,7 +296,52 @@ class ProblemBuilderTest {
 
     assertThat(problem.getExtensionValue("k")).isEqualTo("v2");
     assertThat(problem.getExtensions()).containsExactly("k");
-    assertThat(problem.getExtensionMembers()).isEqualTo(mapOf("k", "v2"));
+    assertThat(problem.getExtensionMembers()).isEqualTo(Map.of("k", "v2"));
+  }
+
+  @Test
+  void givenExtensionSetThenUnsetWithNull_shouldRemoveExtension() {
+    Problem problem = Problem.builder().extension("name", "Mark").extension("name", null).build();
+
+    assertThat(problem.getExtensions()).isEmpty();
+    assertThat(problem.hasExtension("name")).isFalse();
+    assertThat(problem.getExtensionValue("name")).isNull();
+    assertThat(problem.getExtensionMembers()).isEqualTo(Map.of());
+  }
+
+  @Test
+  void givenExtensionSetThenUnsetViaMap_shouldRemoveExtension() {
+    Map<String, Object> removals = new HashMap<>();
+    removals.put("name", null);
+
+    Problem problem = Problem.builder().extension("name", "Mark").extensions(removals).build();
+
+    assertThat(problem.getExtensions()).isEmpty();
+    assertThat(problem.hasExtension("name")).isFalse();
+  }
+
+  @Test
+  void givenExtensionSetThenUnsetViaVarargs_shouldRemoveExtension() {
+    Problem problem =
+        Problem.builder()
+            .extension("name", "Mark")
+            .extensions(Problem.extension("name", null))
+            .build();
+
+    assertThat(problem.getExtensions()).isEmpty();
+    assertThat(problem.hasExtension("name")).isFalse();
+  }
+
+  @Test
+  void givenExtensionSetThenUnsetViaCollection_shouldRemoveExtension() {
+    Problem problem =
+        Problem.builder()
+            .extension("name", "Mark")
+            .extensions(Collections.singletonList(Problem.extension("name", null)))
+            .build();
+
+    assertThat(problem.getExtensions()).isEmpty();
+    assertThat(problem.hasExtension("name")).isFalse();
   }
 
   @Test

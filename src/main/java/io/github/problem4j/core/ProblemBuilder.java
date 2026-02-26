@@ -101,10 +101,11 @@ public interface ProblemBuilder {
   ProblemBuilder instance(@Nullable String instance);
 
   /**
-   * Adds a single custom extension.
+   * Adds or removes a single custom extension. If {@code value} is {@code null} and an extension
+   * with the given {@code name} already exists, it will be removed.
    *
    * @param name the extension key
-   * @param value the extension value
+   * @param value the extension value, or {@code null} to remove
    * @return this builder instance for chaining
    */
   ProblemBuilder extension(@Nullable String name, @Nullable Object value);
@@ -115,7 +116,12 @@ public interface ProblemBuilder {
    * @param extensions map of extension keys and values
    * @return this builder instance for chaining
    */
-  ProblemBuilder extensions(@Nullable Map<String, ? extends @Nullable Object> extensions);
+  default ProblemBuilder extensions(@Nullable Map<String, ? extends @Nullable Object> extensions) {
+    if (extensions != null) {
+      extensions.forEach(this::extension);
+    }
+    return this;
+  }
 
   /**
    * Adds single custom extension from {@link Problem.Extension}.
@@ -136,7 +142,16 @@ public interface ProblemBuilder {
    * @param extensions array of extensions
    * @return this builder instance for chaining
    */
-  ProblemBuilder extensions(Problem.@Nullable Extension @Nullable ... extensions);
+  default ProblemBuilder extensions(Problem.@Nullable Extension @Nullable ... extensions) {
+    if (extensions != null) {
+      for (Problem.@Nullable Extension e : extensions) {
+        if (e != null) {
+          extension(e);
+        }
+      }
+    }
+    return this;
+  }
 
   /**
    * Adds multiple custom extensions from a collection of {@link Problem.Extension}.
@@ -144,7 +159,13 @@ public interface ProblemBuilder {
    * @param extensions collection of extensions
    * @return this builder instance for chaining
    */
-  ProblemBuilder extensions(@Nullable Collection<? extends Problem.@Nullable Extension> extensions);
+  default ProblemBuilder extensions(
+      @Nullable Collection<? extends Problem.@Nullable Extension> extensions) {
+    if (extensions != null) {
+      extensions.forEach(this::extension);
+    }
+    return this;
+  }
 
   /**
    * Builds an immutable {@link Problem} instance with the configured properties and extensions.
@@ -175,7 +196,7 @@ public interface ProblemBuilder {
    *
    * @param extensions map of extension keys and values
    * @return this builder instance for chaining
-   * @deprecated use {@link #extensions(Map)} instead
+   * @deprecated Use {@link #extensions(Map)} instead.
    */
   @Deprecated
   default ProblemBuilder extension(@Nullable Map<String, ? extends @Nullable Object> extensions) {
@@ -190,7 +211,7 @@ public interface ProblemBuilder {
    *
    * @param extensions array of extensions
    * @return this builder instance for chaining
-   * @deprecated use {@link #extensions(Problem.Extension...)} instead
+   * @deprecated Use {@link #extensions(Problem.Extension...)} instead.
    */
   @Deprecated
   default ProblemBuilder extension(Problem.@Nullable Extension @Nullable ... extensions) {
@@ -205,7 +226,7 @@ public interface ProblemBuilder {
    *
    * @param extensions collection of extensions
    * @return this builder instance for chaining
-   * @deprecated use {@link #extensions(Collection)} instead
+   * @deprecated Use {@link #extensions(Collection)} instead.
    */
   @Deprecated
   default ProblemBuilder extension(

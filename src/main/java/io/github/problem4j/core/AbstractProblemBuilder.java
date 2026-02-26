@@ -24,7 +24,6 @@ package io.github.problem4j.core;
 import java.io.Serializable;
 import java.net.URI;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -170,68 +169,21 @@ public abstract class AbstractProblemBuilder implements ProblemBuilder, Serializ
   }
 
   /**
-   * Adds a single custom extension.
+   * Adds or removes a single custom extension. If {@code value} is {@code null} and an extension
+   * with the given {@code name} already exists, it will be removed.
    *
    * @param name the extension key
-   * @param value the extension value
+   * @param value the extension value, or {@code null} to remove
    * @return this builder instance for chaining
    */
   @Override
   public ProblemBuilder extension(@Nullable String name, @Nullable Object value) {
-    if (name != null && value != null) {
-      extensions.put(name, value);
-    }
-    return this;
-  }
-
-  /**
-   * Adds multiple custom extensions from a map.
-   *
-   * @param extensions map of extension keys and values
-   * @return this builder instance for chaining
-   */
-  @Override
-  public ProblemBuilder extensions(@Nullable Map<String, ? extends @Nullable Object> extensions) {
-    if (extensions != null) {
-      extensions.forEach(
-          (key, value) -> {
-            if (value != null) {
-              this.extensions.put(key, value);
-            }
-          });
-    }
-    return this;
-  }
-
-  /**
-   * Adds multiple custom extensions from varargs of {@link Problem.Extension}.
-   *
-   * @param extensions array of extensions
-   * @return this builder instance for chaining
-   */
-  @Override
-  public ProblemBuilder extensions(Problem.@Nullable Extension @Nullable ... extensions) {
-    if (extensions != null) {
-      for (Problem.@Nullable Extension e : extensions) {
-        if (e != null && e.getValue() != null) {
-          this.extensions.put(e.getKey(), e.getValue());
-        }
+    if (name != null) {
+      if (value != null) {
+        extensions.put(name, value);
+      } else {
+        extensions.remove(name);
       }
-    }
-    return this;
-  }
-
-  /**
-   * Adds multiple custom extensions from a collection of {@link Problem.Extension}.
-   *
-   * @param extensions collection of extensions
-   * @return this builder instance for chaining
-   */
-  @Override
-  public ProblemBuilder extensions(
-      @Nullable Collection<? extends Problem.@Nullable Extension> extensions) {
-    if (extensions != null && !extensions.isEmpty()) {
-      extensions(extensions.toArray(new Problem.Extension[0]));
     }
     return this;
   }
