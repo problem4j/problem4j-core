@@ -1,7 +1,7 @@
 # Problem4J Core
 
 [![Build Status](https://github.com/problem4j/problem4j-core/actions/workflows/gradle-build.yml/badge.svg)](https://github.com/problem4j/problem4j-core/actions/workflows/gradle-build.yml)
-[![Sonatype](https://img.shields.io/maven-central/v/io.github.problem4j/problem4j-core)](https://central.sonatype.com/artifact/io.github.problem4j/problem4j-core)
+[![Sonatype](https://img.shields.io/maven-central/v/io.github.problem4j/problem4j-core)][maven-central]
 [![License](https://img.shields.io/github/license/problem4j/problem4j-core)](https://github.com/problem4j/problem4j-core/blob/main/LICENSE)
 
 This library provides a minimal, framework-agnostic Java model of the [RFC 7807][rfc7807] "Problem Details" object, with
@@ -108,20 +108,22 @@ module org.example.project {
 Add library as dependency to Maven or Gradle. See the actual versions on [Maven Central][maven-central]. **Java 8** or
 higher is required to use this library.
 
+[![Sonatype](https://img.shields.io/maven-central/v/io.github.problem4j/problem4j-core)][maven-central]
+
 1. Maven:
    ```xml
    <dependencies>
        <dependency>
            <groupId>io.github.problem4j</groupId>
            <artifactId>problem4j-core</artifactId>
-           <version>1.4.2</version>
+           <version>{version}</version>
        </dependency>
    </dependencies>
    ```
 2. Gradle (Groovy or Kotlin DSL):
    ```groovy
    dependencies {
-       implementation("io.github.problem4j:problem4j-core:1.4.2")
+       implementation("io.github.problem4j:problem4j-core:{version}")
    }
     ```
 
