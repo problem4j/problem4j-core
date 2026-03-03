@@ -104,7 +104,12 @@ import org.jspecify.annotations.Nullable;
  * @see <a href="https://http.cat/">HTTP Cats</a>
  * @see <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Status">HTTP response
  *     status codes - HTTP | MDN</a>
+ * @deprecated {@link ProblemStatus} will be considered an internal utility of Problem4J Core and
+ *     will be made package-private in a future major release. The decision was made as each HTTP
+ *     framework most likely has its own enum for HTTP status codes, and there's no real value in
+ *     trying to maintain a separate, framework-agnostic enum that mirrors HTTP status codes.
  */
+@Deprecated
 public enum ProblemStatus {
 
   /**
