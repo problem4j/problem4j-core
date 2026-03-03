@@ -72,7 +72,12 @@ public interface ProblemBuilder {
    *
    * @param status the {@link ProblemStatus} representing the HTTP status
    * @return this builder instance for chaining
+   * @deprecated {@link ProblemStatus} is supposed to be used only by Problem4J Core's internals,
+   *     and it will be made package-private in the next major release, so this method will be
+   *     removed. The decision was made to not confuse users of the library as each HTTP framework
+   *     most likely has its own enum for HTTP status codes.
    */
+  @Deprecated
   ProblemBuilder status(@Nullable ProblemStatus status);
 
   /**
