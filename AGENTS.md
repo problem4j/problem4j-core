@@ -12,16 +12,19 @@ Minimal Java library implementing RFC 7807/9457 "Problem Details". Immutable `Pr
 
 ## Project Layout
 
-| Path                | Contents                        |
-|---------------------|---------------------------------|
-| `src/main/java`     | Production source               |
-| `src/test/java`     | Tests (JUnit Jupiter + AssertJ) |
-| `build.gradle.kts`  | Build config & Spotless setup   |
-| `buildSrc`          | Custom Gradle plugins/scripts   |
+| Path               | Contents                        |
+|--------------------|---------------------------------|
+| `src/main/java`    | Production source               |
+| `src/test/java`    | Tests (JUnit Jupiter + AssertJ) |
+| `build.gradle.kts` | Build config & Spotless setup   |
+| `buildSrc`         | Custom Gradle plugins/scripts   |
 
 ## Agent Rules
 
 - Do not use terminal commands (e.g., `cat`, `find`, `ls`) to read or list project files - use IDE/agent tools instead.
+- Run tests once, save output to `build/test-run.log` inside the repo (`> build/test-run.log 2>&1`), then read from that
+  file to extract errors. Never run the same test command multiple times, without changes in sources. Store test output
+  in multiple files if you want to compare before/after changes (ex. `build/test-run-{i}.log`).
 
 ## Coding Rules
 
