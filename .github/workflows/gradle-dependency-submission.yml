@@ -39,9 +39,9 @@ jobs:
           path: |
             ~/.gradle/caches
             ~/.gradle/wrapper
-          key: dependency-submission-${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          key: gradle-dependency-submission-${{ runner.os }}-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
           restore-keys: |
-            dependency-submission-${{ runner.os }}-gradle-
+            gradle-dependency-submission-${{ runner.os }}-
 
       - name: Generate and submit dependency graph
         uses: gradle/actions/dependency-submission@v6
