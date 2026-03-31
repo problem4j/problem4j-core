@@ -35,9 +35,9 @@ jobs:
           path: |
             ~/.gradle/caches
             ~/.gradle/wrapper
-          key: build-${{ runner.os }}-java-${{ matrix.java }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          key: publish-release-${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
           restore-keys: |
-            build-${{ runner.os }}-java-${{ matrix.java }}-gradle-
+            publish-release-${{ runner.os }}-gradle-
 
       - name: Publish Release
         env:
