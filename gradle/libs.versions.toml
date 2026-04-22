@@ -6,7 +6,7 @@ idea-ext = "1.4.1"
 jspecify = "1.0.0"
 junit = "6.0.3"
 nmcp = "1.4.4"
-nullaway = "0.13.2"
+nullaway = "0.13.4"
 spotless = "8.4.0"
 
 [plugins]
