@@ -25,7 +25,7 @@ on:
 
 jobs:
   build:
-    name: Build (Java ${{ inputs.java-version }})
+    name: Build (Java ${{ matrix.java }})
     strategy:
       fail-fast: false
       matrix:
