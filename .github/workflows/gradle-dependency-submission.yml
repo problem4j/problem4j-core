@@ -17,6 +17,7 @@ on:
 
 jobs:
   dependency-submission:
+    name: Dependency Submission
     uses: problem4j/problem4j-workflows/.github/workflows/gradle-dependency-submission.yml@main
     with:
       java-version: 17
