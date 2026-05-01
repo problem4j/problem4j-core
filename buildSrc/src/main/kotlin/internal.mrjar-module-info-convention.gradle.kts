@@ -2,8 +2,8 @@ plugins {
     id("internal.java-convention")
 }
 
-// This convention plugin adds compilation of module-info.java with Java 9 transforms output into a multi-release JAR
-// for supporting modules if used by Java 9+.
+// This convention plugin adds compilation of module-info.java with Java 9, transforming the output into a multi-release
+// JAR for supporting modules if used by Java 9+.
 
 val sourceSets = extensions.getByType<SourceSetContainer>()
 
