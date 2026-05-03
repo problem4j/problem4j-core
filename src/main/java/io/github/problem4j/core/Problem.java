@@ -183,7 +183,7 @@ public interface Problem {
    * @since 1.3.0
    */
   default boolean isTypeNonBlank() {
-    return !getType().equals(BLANK_TYPE) && !getType().toString().isEmpty();
+    return ProblemSupport.isTypeNonBlank(getType());
   }
 
   /**

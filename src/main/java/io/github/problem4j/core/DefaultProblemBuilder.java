@@ -98,7 +98,7 @@ final class DefaultProblemBuilder implements ProblemBuilder, Serializable {
   @Override
   public Problem build() {
     URI type = this.type;
-    if (type == null || isTypeBlank(type)) {
+    if (type == null || ProblemSupport.isTypeBlank(type)) {
       type = Problem.BLANK_TYPE;
     }
     String title = this.title;
@@ -111,7 +111,7 @@ final class DefaultProblemBuilder implements ProblemBuilder, Serializable {
   @Override
   public String toString() {
     List<String> entries = new ArrayList<>();
-    if (type != null && !isTypeBlank(type)) {
+    if (type != null && ProblemSupport.isTypeNonBlank(type)) {
       entries.add("type=" + type);
     }
     if (title != null) {
@@ -128,9 +128,5 @@ final class DefaultProblemBuilder implements ProblemBuilder, Serializable {
         .sorted(Map.Entry.comparingByKey())
         .forEach(entry -> entries.add(entry.getKey() + "=" + entry.getValue()));
     return "ProblemBuilder[" + String.join(", ", entries) + "]";
-  }
-
-  private boolean isTypeBlank(URI type) {
-    return type.equals(Problem.BLANK_TYPE) || type.toString().isEmpty();
   }
 }

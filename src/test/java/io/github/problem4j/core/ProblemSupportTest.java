@@ -18,6 +18,7 @@ package io.github.problem4j.core;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.net.URI;
 import org.junit.jupiter.api.Test;
 
 class ProblemSupportTest {
@@ -288,5 +289,35 @@ class ProblemSupportTest {
     ProblemContext c = ProblemContext.create();
 
     assertThat(ProblemSupport.toString(c)).startsWith("DefaultProblemContext[");
+  }
+
+  @Test
+  void givenBlankType_whenIsTypeBlank_thenTrue() {
+    assertThat(ProblemSupport.isTypeBlank(Problem.BLANK_TYPE)).isTrue();
+  }
+
+  @Test
+  void givenEmptyUriType_whenIsTypeBlank_thenTrue() {
+    assertThat(ProblemSupport.isTypeBlank(URI.create(""))).isTrue();
+  }
+
+  @Test
+  void givenNonBlankType_whenIsTypeBlank_thenFalse() {
+    assertThat(ProblemSupport.isTypeBlank(URI.create("urn:example"))).isFalse();
+  }
+
+  @Test
+  void givenNonBlankType_whenIsTypeNonBlank_thenTrue() {
+    assertThat(ProblemSupport.isTypeNonBlank(URI.create("urn:example"))).isTrue();
+  }
+
+  @Test
+  void givenBlankType_whenIsTypeNonBlank_thenFalse() {
+    assertThat(ProblemSupport.isTypeNonBlank(Problem.BLANK_TYPE)).isFalse();
+  }
+
+  @Test
+  void givenEmptyUriType_whenIsTypeNonBlank_thenFalse() {
+    assertThat(ProblemSupport.isTypeNonBlank(URI.create(""))).isFalse();
   }
 }

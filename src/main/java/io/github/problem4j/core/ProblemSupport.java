@@ -16,14 +16,15 @@
 
 package io.github.problem4j.core;
 
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
 /**
- * Utility class providing canonical implementations of {@code equals}, {@code hashCode}, and {@code
- * toString} for {@link Problem}, {@link Problem.Extension}, and {@link ProblemContext}.
+ * Utility class providing canonical implementations of various operations for {@link Problem},
+ * {@link Problem.Extension}, and {@link ProblemContext}.
  *
  * <p>Custom implementations of these interfaces should delegate to the corresponding methods in
  * this class to satisfy their well-known contracts.
@@ -209,6 +210,30 @@ public final class ProblemSupport {
         .sorted(Map.Entry.comparingByKey())
         .forEach(entry -> entries.add(entry.getKey() + "=" + entry.getValue()));
     return label + "[" + String.join(", ", entries) + "]";
+  }
+
+  /**
+   * Returns {@code true} if {@code type} is considered blank, meaning it equals {@link
+   * Problem#BLANK_TYPE} or its string representation is empty.
+   *
+   * @param type the URI to check
+   * @return {@code true} if the type is blank, {@code false} otherwise
+   * @since 2.0.0
+   */
+  public static boolean isTypeBlank(URI type) {
+    return type.equals(Problem.BLANK_TYPE) || type.toString().isEmpty();
+  }
+
+  /**
+   * Returns {@code true} if {@code type} is considered non-blank, meaning it does not equal {@link
+   * Problem#BLANK_TYPE} and its string representation is not empty.
+   *
+   * @param type the URI to check
+   * @return {@code true} if the type is non-blank, {@code false} otherwise
+   * @since 2.0.0
+   */
+  public static boolean isTypeNonBlank(URI type) {
+    return !type.equals(Problem.BLANK_TYPE) && !type.toString().isEmpty();
   }
 
   private ProblemSupport() {}
