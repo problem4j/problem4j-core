@@ -42,6 +42,10 @@ import org.jspecify.annotations.Nullable;
  * exception class is not annotated with {@link ProblemMapping}, and may throw {@link
  * ProblemMappingException} if an error occurs during problem creation.
  *
+ * <p>An empty builder is indistinguishable from a builder produced by an annotation with all blank
+ * fields; callers should use {@link #isMappingCandidate(Throwable)} to determine whether an
+ * exception is eligible for mapping before calling {@code toProblemBuilder}.
+ *
  * @since 1.3.0
  */
 public interface ProblemMapper {

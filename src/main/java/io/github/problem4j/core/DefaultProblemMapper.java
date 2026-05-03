@@ -94,6 +94,10 @@ public class DefaultProblemMapper implements ProblemMapper {
    * annotation. Such builder can be further extended or executed to create {@link Problem}
    * response.
    *
+   * <p>This method is {@code final} and always delegates to {@link #toProblemBuilder(Throwable,
+   * ProblemContext)} with a {@code null} context. Subclasses should override {@link
+   * #toProblemBuilder(Throwable, ProblemContext)} to customize mapping behavior.
+   *
    * @param t {@link Throwable} to convert (may be {@code null})
    * @return a {@link ProblemBuilder} instance
    * @throws ProblemMappingException when something goes wrong while building the Problem
@@ -368,8 +372,8 @@ public class DefaultProblemMapper implements ProblemMapper {
         replacement = t.getMessage() == null ? "" : String.valueOf(t.getMessage());
       } else if (key.startsWith(CONTEXT_LABEL_PREFIX)) {
         String contextKey = key.substring(CONTEXT_LABEL_PREFIX.length());
-        replacement =
-            (context == null || !context.containsKey(contextKey)) ? "" : context.get(contextKey);
+        String contextValue = context != null ? context.get(contextKey) : null;
+        replacement = contextValue != null ? contextValue : "";
       } else {
         Object v = resolvePlaceholderSource(t, key);
         replacement = (v == null) ? "" : String.valueOf(v);

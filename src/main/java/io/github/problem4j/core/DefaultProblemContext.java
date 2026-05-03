@@ -38,6 +38,11 @@ final class DefaultProblemContext implements ProblemContext, Serializable {
   }
 
   @Override
+  public boolean containsKey(String key) {
+    return context.containsKey(key);
+  }
+
+  @Override
   public ProblemContext put(String key, @Nullable String value) {
     if (value == null) {
       context.remove(key);
