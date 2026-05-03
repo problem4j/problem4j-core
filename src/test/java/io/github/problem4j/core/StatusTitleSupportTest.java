@@ -44,7 +44,7 @@ class StatusTitleSupportTest {
 
   @Test
   void givenStatusTitleResolver_whenCallGetPriority_thenReturnsDefault() {
-    StatusTitleResolver resolver = _ -> Optional.empty();
+    StatusTitleResolver resolver = status -> Optional.empty();
 
     assertThat(resolver.getPriority()).isZero();
   }
