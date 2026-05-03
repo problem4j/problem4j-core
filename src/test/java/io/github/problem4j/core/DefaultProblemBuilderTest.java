@@ -1,22 +1,17 @@
 /*
- * Copyright (c) 2025-2026 The Problem4J Authors
+ * Copyright 2025-2026 The Problem4J Authors
  *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, subject to the following conditions:
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
  *
- * The above copyright notice and this permission notice shall be included in all
- * copies or substantial portions of the Software.
+ *     http://www.apache.org/licenses/LICENSE-2.0
  *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- * SOFTWARE.
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 
 package io.github.problem4j.core;
@@ -27,21 +22,20 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.net.URI;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import org.junit.jupiter.api.Test;
 
 /**
  * Some of the tests in this class may appear trivial or unnecessary. They are intentionally
  * included to explore and validate the behavior of various code coverage analysis tools.
  */
-class AbstractProblemBuilderTest {
+class DefaultProblemBuilderTest {
 
-  private AbstractProblemBuilder newInstance() {
-    return new AbstractProblemBuilder() {};
+  private DefaultProblemBuilder newInstance() {
+    return new DefaultProblemBuilder();
   }
 
   @Test
@@ -77,42 +71,18 @@ class AbstractProblemBuilderTest {
   }
 
   @Test
-  void givenNullProblemStatus_shouldNotSetTitleOrStatus() {
-    Problem problem = newInstance().status(null).build();
-
-    assertThat(problem.getStatus()).isZero();
-    assertThat(problem.getTitle()).isEqualTo(Problem.UNKNOWN_TITLE);
-  }
-
-  @Test
-  void givenProblemStatus_shouldSetNumericStatusAndTitle() {
-    Problem problem = newInstance().status(ProblemStatus.BAD_REQUEST).build();
-
-    assertThat(problem.getStatus()).isEqualTo(ProblemStatus.BAD_REQUEST.getStatus());
-    assertThat(problem.getTitle()).isEqualTo(ProblemStatus.BAD_REQUEST.getTitle());
-  }
-
-  @Test
-  void givenProblemStatus_shouldPreferExplicitStatusValueWhenSetEarlier() {
-    Problem problem = newInstance().status(405).status(ProblemStatus.I_AM_A_TEAPOT).build();
-
-    assertThat(problem.getStatus()).isEqualTo(ProblemStatus.I_AM_A_TEAPOT.getStatus());
-    assertThat(problem.getTitle()).isEqualTo(ProblemStatus.I_AM_A_TEAPOT.getTitle());
-  }
-
-  @Test
   void givenExplicitTitle_thenStatusProblemStatus_shouldNotOverrideTitle() {
-    Problem problem = newInstance().title("Custom Title").status(ProblemStatus.BAD_REQUEST).build();
+    Problem problem = newInstance().title("Custom Title").status(400).build();
 
-    assertThat(problem.getStatus()).isEqualTo(ProblemStatus.BAD_REQUEST.getStatus());
+    assertThat(problem.getStatus()).isEqualTo(400);
     assertThat(problem.getTitle()).isEqualTo("Custom Title");
   }
 
   @Test
   void givenStatusProblemStatus_thenExplicitTitle_shouldOverrideDerivedTitle() {
-    Problem problem = newInstance().status(ProblemStatus.NOT_FOUND).title("My Title").build();
+    Problem problem = newInstance().status(404).title("My Title").build();
 
-    assertThat(problem.getStatus()).isEqualTo(ProblemStatus.NOT_FOUND.getStatus());
+    assertThat(problem.getStatus()).isEqualTo(404);
     assertThat(problem.getTitle()).isEqualTo("My Title");
   }
 
@@ -143,20 +113,13 @@ class AbstractProblemBuilderTest {
   }
 
   @Test
-  void givenNullNameExtension_shouldIgnoreIt() {
-    Problem problem = newInstance().extension(null, "value").build();
-
-    assertThat(problem.getExtensions()).isEmpty();
-  }
-
-  @Test
   void givenNullValueExtension_shouldNotIncludeIt() {
     Problem problem = newInstance().extension("key", null).build();
 
     assertThat(problem.getExtensions()).isEmpty();
-    assertThat(problem.hasExtension("key")).isFalse();
-    assertThat(problem.getExtensionValue("key")).isNull();
-    assertThat(problem.getExtensionMembers()).isEqualTo(Map.of());
+    assertThat(problem.getExtensions().containsKey("key")).isFalse();
+    assertThat(problem.getExtensions().get("key")).isNull();
+    assertThat(problem.getExtensions()).isEqualTo(Map.of());
   }
 
   @Test
@@ -165,13 +128,13 @@ class AbstractProblemBuilderTest {
         newInstance().extensions(extension("key1", null), extension("key2", null)).build();
 
     assertThat(problem.getExtensions()).isEmpty();
-    assertThat(problem.getExtensionMembers()).isEqualTo(Map.of());
+    assertThat(problem.getExtensions()).isEqualTo(Map.of());
 
-    assertThat(problem.hasExtension("key1")).isFalse();
-    assertThat(problem.getExtensionValue("key1")).isNull();
+    assertThat(problem.getExtensions().containsKey("key1")).isFalse();
+    assertThat(problem.getExtensions().get("key1")).isNull();
 
-    assertThat(problem.hasExtension("key2")).isFalse();
-    assertThat(problem.getExtensionValue("key2")).isNull();
+    assertThat(problem.getExtensions().containsKey("key2")).isFalse();
+    assertThat(problem.getExtensions().get("key2")).isNull();
   }
 
   @Test
@@ -182,20 +145,13 @@ class AbstractProblemBuilderTest {
             .build();
 
     assertThat(problem.getExtensions()).isEmpty();
-    assertThat(problem.getExtensionMembers()).isEqualTo(Map.of());
+    assertThat(problem.getExtensions()).isEqualTo(Map.of());
 
-    assertThat(problem.hasExtension("key1")).isFalse();
-    assertThat(problem.getExtensionValue("key1")).isNull();
+    assertThat(problem.getExtensions().containsKey("key1")).isFalse();
+    assertThat(problem.getExtensions().get("key1")).isNull();
 
-    assertThat(problem.hasExtension("key2")).isFalse();
-    assertThat(problem.getExtensionValue("key2")).isNull();
-  }
-
-  @Test
-  void givenNullMapExtension_shouldIgnoreIt() {
-    Problem problem = newInstance().extensions((Map<String, ?>) null).build();
-
-    assertThat(problem.getExtensions()).isEmpty();
+    assertThat(problem.getExtensions().containsKey("key2")).isFalse();
+    assertThat(problem.getExtensions().get("key2")).isNull();
   }
 
   @Test
@@ -206,55 +162,18 @@ class AbstractProblemBuilderTest {
 
     Problem problem = newInstance().extensions(map).build();
 
-    assertThat(problem.getExtensions()).containsExactly("a");
-    assertThat(problem.hasExtension("a")).isTrue();
-    assertThat(problem.getExtensionValue("a")).isEqualTo("b");
-    assertThat(problem.getExtensionMembers()).isEqualTo(Map.of("a", "b"));
-  }
-
-  @Test
-  void givenNullVarargArray_shouldIgnoreIt() {
-    Problem problem = newInstance().extensions((Problem.Extension[]) null).build();
-
-    assertThat(problem.getExtensions()).isEmpty();
-  }
-
-  @Test
-  void givenVarargWithNullElement_shouldIgnoreNullElement() {
-    Problem problem = newInstance().extensions(extension("a", 1), null, extension("b", 2)).build();
-
-    assertThat(problem.getExtensions()).containsExactlyInAnyOrder("a", "b");
-    assertThat(problem.hasExtension("a")).isTrue();
-    assertThat(problem.hasExtension("b")).isTrue();
-    assertThat(problem.getExtensionMembers()).isEqualTo(Map.of("a", 1, "b", 2));
-  }
-
-  @Test
-  void givenNullCollection_shouldIgnoreIt() {
-    Problem problem = newInstance().extensions((Collection<Problem.Extension>) null).build();
-
-    assertThat(problem.getExtensions()).isEmpty();
-  }
-
-  @Test
-  void givenCollectionWithNullElement_shouldIgnoreNullElement() {
-    Problem problem =
-        newInstance()
-            .extensions(Arrays.asList(extension("x", "1"), null, extension("y", "2")))
-            .build();
-
-    assertThat(problem.getExtensions()).containsExactlyInAnyOrder("x", "y");
-    assertThat(problem.hasExtension("x")).isTrue();
-    assertThat(problem.hasExtension("y")).isTrue();
-    assertThat(problem.getExtensionMembers()).isEqualTo(Map.of("x", "1", "y", "2"));
+    assertThat(problem.getExtensions().keySet()).containsExactly("a");
+    assertThat(problem.getExtensions().containsKey("a")).isTrue();
+    assertThat(problem.getExtensions().get("a")).isEqualTo("b");
+    assertThat(problem.getExtensions()).isEqualTo(Map.of("a", "b"));
   }
 
   @Test
   void givenNumericStatus_shouldDeriveTitleWhenKnown() {
-    Problem problem = newInstance().status(ProblemStatus.MULTI_STATUS.getStatus()).build();
+    Problem problem = newInstance().status(207).build();
 
-    assertThat(problem.getStatus()).isEqualTo(ProblemStatus.MULTI_STATUS.getStatus());
-    assertThat(problem.getTitle()).isEqualTo(ProblemStatus.MULTI_STATUS.getTitle());
+    assertThat(problem.getStatus()).isEqualTo(207);
+    assertThat(problem.getTitle()).isEqualTo("Multi-Status");
   }
 
   @Test
@@ -262,7 +181,7 @@ class AbstractProblemBuilderTest {
     Problem problem = newInstance().status(999).build();
 
     assertThat(problem.getStatus()).isEqualTo(999);
-    assertThat(problem.getTitle()).isEqualTo(Problem.UNKNOWN_TITLE);
+    assertThat(problem.getTitle()).isEqualTo("Unknown Error");
   }
 
   @Test
@@ -282,16 +201,16 @@ class AbstractProblemBuilderTest {
     Problem problem = newInstance().extensions(m).build();
 
     assertThat(problem.getExtensions()).isEmpty();
-    assertThat(problem.getExtensionMembers()).isEqualTo(Collections.emptyMap());
+    assertThat(problem.getExtensions()).isEqualTo(Collections.emptyMap());
   }
 
   @Test
   void givenAssigningTheSameExtensionLater_shouldOverwriteEarlierValues() {
     Problem problem = newInstance().extension("k", "v1").extension(extension("k", "v2")).build();
 
-    assertThat(problem.getExtensionValue("k")).isEqualTo("v2");
-    assertThat(problem.getExtensions()).containsExactly("k");
-    assertThat(problem.getExtensionMembers()).isEqualTo(Map.of("k", "v2"));
+    assertThat(problem.getExtensions().get("k")).isEqualTo("v2");
+    assertThat(problem.getExtensions().keySet()).containsExactly("k");
+    assertThat(problem.getExtensions()).isEqualTo(Map.of("k", "v2"));
   }
 
   @Test
@@ -299,9 +218,9 @@ class AbstractProblemBuilderTest {
     Problem problem = newInstance().extension("name", "Mark").extension("name", null).build();
 
     assertThat(problem.getExtensions()).isEmpty();
-    assertThat(problem.hasExtension("name")).isFalse();
-    assertThat(problem.getExtensionValue("name")).isNull();
-    assertThat(problem.getExtensionMembers()).isEqualTo(Map.of());
+    assertThat(problem.getExtensions().containsKey("name")).isFalse();
+    assertThat(problem.getExtensions().get("name")).isNull();
+    assertThat(problem.getExtensions()).isEqualTo(Map.of());
   }
 
   @Test
@@ -312,7 +231,7 @@ class AbstractProblemBuilderTest {
     Problem problem = newInstance().extension("name", "Mark").extensions(removals).build();
 
     assertThat(problem.getExtensions()).isEmpty();
-    assertThat(problem.hasExtension("name")).isFalse();
+    assertThat(problem.getExtensions().containsKey("name")).isFalse();
   }
 
   @Test
@@ -321,7 +240,7 @@ class AbstractProblemBuilderTest {
         newInstance().extension("name", "Mark").extensions(Problem.extension("name", null)).build();
 
     assertThat(problem.getExtensions()).isEmpty();
-    assertThat(problem.hasExtension("name")).isFalse();
+    assertThat(problem.getExtensions().containsKey("name")).isFalse();
   }
 
   @Test
@@ -333,7 +252,7 @@ class AbstractProblemBuilderTest {
             .build();
 
     assertThat(problem.getExtensions()).isEmpty();
-    assertThat(problem.hasExtension("name")).isFalse();
+    assertThat(problem.getExtensions().containsKey("name")).isFalse();
   }
 
   @Test
@@ -367,10 +286,17 @@ class AbstractProblemBuilderTest {
   }
 
   @Test
+  void givenNoValuesAssigned_whenToString_thenToStringReturnsStatus() {
+    ProblemBuilder builder = newInstance();
+    String result = builder.toString();
+    assertThat(result).isEqualTo("ProblemBuilder[status=0]");
+  }
+
+  @Test
   void givenNullExtensionsAndNullableFields_whenToString_thenOmitsNulls() {
     ProblemBuilder builder = newInstance().status(200);
     String result = builder.toString();
-    assertThat(result).isEqualTo("ProblemBuilder{status=200}");
+    assertThat(result).isEqualTo("ProblemBuilder[status=200]");
   }
 
   @Test
@@ -398,38 +324,61 @@ class AbstractProblemBuilderTest {
     assertThat(result).contains("obj=DummyObject{value=biz\tbar}");
   }
 
-  @SuppressWarnings("deprecation")
   @Test
-  void givenDeprecatedExtensionMap_whenBuilding_thenExtensionsAreSet() {
-    Map<String, Object> map = Map.of("a", "1", "b", "2");
-
-    Problem problem = newInstance().extension(map).build();
-
-    assertThat(problem.getExtensionMembers()).isEqualTo(map);
-  }
-
-  @SuppressWarnings("deprecation")
-  @Test
-  void givenDeprecatedExtensionVarargs_whenBuilding_thenExtensionsAreSet() {
-    Problem problem = newInstance().extension(extension("a", "1"), extension("b", "2")).build();
-
-    assertThat(problem.getExtensions()).containsExactlyInAnyOrder("a", "b");
-  }
-
-  @SuppressWarnings("deprecation")
-  @Test
-  void givenDeprecatedExtensionCollection_whenBuilding_thenExtensionsAreSet() {
-    List<Problem.Extension> exts = Arrays.asList(extension("x", "1"), extension("y", "2"));
-
-    Problem problem = newInstance().extension(exts).build();
-
-    assertThat(problem.getExtensions()).containsExactlyInAnyOrder("x", "y");
+  void givenTypeSetToBlankType_whenToString_thenTypeOmitted() {
+    ProblemBuilder builder = newInstance().type(Problem.BLANK_TYPE).status(200);
+    String result = builder.toString();
+    assertThat(result).doesNotContain("type=");
+    assertThat(result).contains("status=200");
   }
 
   @Test
-  void givenNullExtensionObject_whenBuilding_thenIgnored() {
-    Problem problem = newInstance().extension((Problem.Extension) null).status(200).build();
+  void givenCustomResolver_whenStatusIsKnown_thenUsesResolvedTitle() {
+    StatusTitleResolver resolver =
+        status -> status == 200 ? Optional.of("Custom OK") : Optional.empty();
 
-    assertThat(problem.getExtensions()).isEmpty();
+    Problem problem = new DefaultProblemBuilder(resolver).status(200).build();
+
+    assertThat(problem.getTitle()).isEqualTo("Custom OK");
+  }
+
+  @Test
+  void givenCustomResolver_whenStatusNotResolved_thenUsesUnknownTitle() {
+    StatusTitleResolver resolver = status -> Optional.empty();
+
+    Problem problem = new DefaultProblemBuilder(resolver).status(200).build();
+
+    assertThat(problem.getTitle()).isEqualTo(Problem.UNKNOWN_TITLE);
+  }
+
+  @Test
+  void givenCustomResolverAndExplicitTitle_whenBuild_thenExplicitTitleTakesPrecedence() {
+    StatusTitleResolver resolver = status -> Optional.of("Should Not Be Used");
+
+    Problem problem =
+        new DefaultProblemBuilder(resolver).status(200).title("Explicit Title").build();
+
+    assertThat(problem.getTitle()).isEqualTo("Explicit Title");
+  }
+
+  @Test
+  void givenBuilderWithState_whenSerialized_thenDeserializedCanBuild() throws Exception {
+    ProblemBuilder original =
+        new DefaultProblemBuilder(new DefaultStatusTitleResolver())
+            .type("https://example.com/problem")
+            .status(400)
+            .detail("Something went wrong")
+            .instance("https://example.com/instance")
+            .extension("key", "value");
+
+    ProblemBuilder deserialized = Serialization.roundTrip(original);
+    Problem result = deserialized.build();
+
+    assertThat(deserialized).isNotSameAs(original);
+    assertThat(result.getType()).isEqualTo(URI.create("https://example.com/problem"));
+    assertThat(result.getStatus()).isEqualTo(400);
+    assertThat(result.getDetail()).isEqualTo("Something went wrong");
+    assertThat(result.getInstance()).isEqualTo(URI.create("https://example.com/instance"));
+    assertThat(result.getExtensions().get("key")).isEqualTo("value");
   }
 }

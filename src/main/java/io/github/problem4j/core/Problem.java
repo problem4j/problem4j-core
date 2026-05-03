@@ -1,34 +1,29 @@
 /*
- * Copyright (c) 2025-2026 The Problem4J Authors
+ * Copyright 2025-2026 The Problem4J Authors
  *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, subject to the following conditions:
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
  *
- * The above copyright notice and this permission notice shall be included in all
- * copies or substantial portions of the Software.
+ *     http://www.apache.org/licenses/LICENSE-2.0
  *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- * SOFTWARE.
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 
 package io.github.problem4j.core;
 
 import java.net.URI;
+import java.util.Collections;
 import java.util.Map;
-import java.util.Set;
 import org.jspecify.annotations.Nullable;
 
 /**
  * Represents a problem detail according to the <a href="https://tools.ietf.org/html/rfc7807">RFC
- * 7807</a> (aka. <a href="https://tools.ietf.org/html/rfc9457">RFC 9457</a>) specification.
+ * 7807</a> (and <a href="https://tools.ietf.org/html/rfc9457">RFC 9457</a>) specification.
  *
  * <p>Instances of {@link Problem} are intended to be immutable. They provide standard fields such
  * as:
@@ -42,28 +37,45 @@ import org.jspecify.annotations.Nullable;
  * </ul>
  *
  * In addition, custom extensions can be added to provide extra context.
+ *
+ * <p>Use {@link ProblemSupport#equals(Problem, Problem)}, {@link ProblemSupport#hashCode(Problem)},
+ * and {@link ProblemSupport#toString(Problem)} as the canonical reference implementations of these
+ * methods.
+ *
+ * @since 1.3.0
  */
 public interface Problem {
 
-  /** Default type URI for generic problems. */
+  /**
+   * Default type URI for generic problems.
+   *
+   * @since 1.3.0
+   */
   URI BLANK_TYPE = URI.create("about:blank");
 
   /**
-   * Fallback to resolution of {@code title} field while calling {@link ProblemBuilder#build()}
-   * method.
+   * Fallback {@code title} used when no title can be resolved during {@link
+   * ProblemBuilder#build()}.
+   *
+   * @since 1.4.0
    */
   String UNKNOWN_TITLE = "Unknown Error";
 
-  /** MIME content type for problem instances. */
+  /**
+   * MIME content type for problem instances.
+   *
+   * @since 1.3.0
+   */
   String CONTENT_TYPE = "application/problem+json";
 
   /**
    * Creates a new builder for constructing {@link Problem} instances.
    *
    * @return a new {@link ProblemBuilder}
+   * @since 1.3.0
    */
   static ProblemBuilder builder() {
-    return new ProblemBuilderImpl();
+    return new DefaultProblemBuilder();
   }
 
   /**
@@ -71,6 +83,7 @@ public interface Problem {
    *
    * @param status the HTTP status code applicable to this problem
    * @return a new {@link Problem} instance
+   * @since 1.4.0
    */
   static Problem of(int status) {
     return builder().status(status).build();
@@ -82,6 +95,7 @@ public interface Problem {
    * @param status the HTTP status code applicable to this problem
    * @param detail a human-readable explanation specific to this occurrence of the problem
    * @return a new {@link Problem} instance
+   * @since 1.4.0
    */
   static Problem of(int status, @Nullable String detail) {
     return builder().status(status).detail(detail).build();
@@ -93,6 +107,7 @@ public interface Problem {
    * @param title a short, human-readable summary of the problem
    * @param status the HTTP status code applicable to this problem
    * @return a new {@link Problem} instance
+   * @since 1.4.0
    */
   static Problem of(String title, int status) {
     return builder().title(title).status(status).build();
@@ -105,6 +120,7 @@ public interface Problem {
    * @param status the HTTP status code applicable to this problem
    * @param detail a human-readable explanation specific to this occurrence of the problem
    * @return a new {@link Problem} instance
+   * @since 1.4.0
    */
   static Problem of(String title, int status, @Nullable String detail) {
     return builder().title(title).status(status).detail(detail).build();
@@ -117,6 +133,7 @@ public interface Problem {
    * @param title a short, human-readable summary of the problem
    * @param status the HTTP status code applicable to this problem
    * @return a new {@link Problem} instance
+   * @since 1.4.0
    */
   static Problem of(URI type, String title, int status) {
     return builder().type(type).title(title).status(status).build();
@@ -130,6 +147,7 @@ public interface Problem {
    * @param status the HTTP status code applicable to this problem
    * @param detail a human-readable explanation specific to this occurrence of the problem
    * @return a new {@link Problem} instance
+   * @since 1.4.0
    */
   static Problem of(URI type, String title, int status, @Nullable String detail) {
     return builder().type(type).title(title).status(status).detail(detail).build();
@@ -138,31 +156,41 @@ public interface Problem {
   /**
    * Creates a named extension for use in a {@link Problem}.
    *
-   * @param key the extension key, must not be {@code null}
+   * @param name the extension name
    * @param value the extension value
    * @return a new {@link Problem.Extension} instance
-   * @throws IllegalArgumentException if the {@code key} is {@code null}
+   * @since 1.3.0
    */
-  static Extension extension(@Nullable String key, @Nullable Object value) {
-    // with JSpecify, the nullability check might not be necessary, kept to not break existing
-    // behavior, may be revisited in future major versions
-    if (key == null) {
-      throw new IllegalArgumentException("key cannot be null");
-    }
-    return new ProblemImpl.ExtensionImpl(key, value);
+  static Extension extension(String name, @Nullable Object value) {
+    return new DefaultProblem.DefaultExtension(name, value);
   }
 
   /**
    * Gets the URI identifying the type of this problem.
    *
    * @return the URI identifying the type of this problem
+   * @since 1.3.0
    */
-  URI getType();
+  default URI getType() {
+    return BLANK_TYPE;
+  }
+
+  /**
+   * A convenience method to verify if {@code type} field was assigned, as {@link #BLANK_TYPE} also
+   * means that type is unassigned.
+   *
+   * @return {@code true} if {@code type} is assigned to a non-blank value, {@code false} otherwise
+   * @since 1.3.0
+   */
+  default boolean isTypeNonBlank() {
+    return !getType().equals(BLANK_TYPE) && !getType().toString().isEmpty();
+  }
 
   /**
    * Gets a short, human-readable title describing the problem.
    *
    * @return a short, human-readable title describing the problem
+   * @since 1.3.0
    */
   String getTitle();
 
@@ -170,6 +198,7 @@ public interface Problem {
    * Gets the HTTP status code generated for this problem.
    *
    * @return the HTTP status code generated for this problem
+   * @since 1.3.0
    */
   int getStatus();
 
@@ -177,99 +206,71 @@ public interface Problem {
    * Gets a detailed, human-readable explanation specific to this occurrence.
    *
    * @return a detailed, human-readable explanation specific to this occurrence
+   * @since 1.3.0
    */
-  @Nullable String getDetail();
+  default @Nullable String getDetail() {
+    return null;
+  }
 
   /**
    * Gets a URI identifying the specific occurrence of the problem.
    *
    * @return a URI identifying the specific occurrence of the problem
+   * @since 1.3.0
    */
-  @Nullable URI getInstance();
+  default @Nullable URI getInstance() {
+    return null;
+  }
 
   /**
-   * Gets an unmodifiable set of custom extension keys present in this problem.
-   *
-   * @return an unmodifiable set of custom extension keys present in this problem
-   */
-  Set<String> getExtensions();
-
-  /**
-   * Gets the value associated with a named extension.
-   *
-   * @param name the extension key
-   * @return the value of the extension, or {@code null} if not present
-   */
-  @Nullable Object getExtensionValue(String name);
-
-  /**
-   * Checks whether a given extension key is present.
-   *
-   * @param extension the extension key
-   * @return {@code true} if the extension exists, {@code false} otherwise
-   */
-  boolean hasExtension(String extension);
-
-  /**
-   * Returns a map of all extension members.
-   *
-   * <p>This method provides a complete view of all extension key-value pairs, which is useful when
-   * callers need to handle extensions in bulk rather than querying them individually. It
-   * complements {@link #getExtensionValue(String)} and {@link #hasExtension(String)} by exposing
-   * the full extension payload at once.
+   * Returns an unmodifiable map of all custom extension members.
    *
    * @return an unmodifiable map of extension members
+   * @since 2.0.0
    */
-  Map<String, Object> getExtensionMembers();
+  default Map<String, Object> getExtensions() {
+    return Collections.emptyMap();
+  }
 
   /**
    * Converts this problem instance into a {@link Problem} builder, pre-populated with its values.
    * Useful for creating a modified copy.
    *
    * @return a builder with the current problem's values
+   * @since 1.3.0
    */
-  ProblemBuilder toBuilder();
-
-  /**
-   * A convenience method to verify if {@code type} field was assigned, as {@link #BLANK_TYPE} also
-   * mean that type is unassigned.
-   *
-   * @return {@code true} if {@code type} is assigned to a non-blank value, {@code false} otherwise
-   */
-  default boolean isTypeNonBlank() {
-    return !getType().equals(BLANK_TYPE) && !getType().toString().isEmpty();
+  default ProblemBuilder toBuilder() {
+    return new DefaultProblemBuilder(this);
   }
 
-  /** Represents a single key-value extension in a {@link Problem}. */
-  interface Extension extends Map.Entry<String, @Nullable Object> {
+  /**
+   * Represents a single key-value extension in a {@link Problem}.
+   *
+   * <p><b>Well-known contracts:</b>
+   *
+   * <p>Use {@link ProblemSupport#equals(Problem.Extension, Problem.Extension)}, {@link
+   * ProblemSupport#hashCode(Problem.Extension)}, and {@link
+   * ProblemSupport#toString(Problem.Extension)} as the canonical reference implementations of these
+   * methods.
+   *
+   * @since 1.3.0
+   */
+  interface Extension {
 
     /**
-     * Gets the extension key.
+     * Gets the extension name.
      *
-     * @return the extension key
+     * @return the extension name
+     * @since 2.0.0
      */
-    @Override
-    String getKey();
+    String getName();
 
     /**
      * Gets the extension value.
      *
      * @return the extension value
+     * @since 1.3.0
      */
-    @Override
     @Nullable Object getValue();
-
-    /**
-     * Sets the extension value.
-     *
-     * @param value new value
-     * @return the new value
-     * @deprecated This method exists only to satisfy the {@link Map.Entry} contract inherited by
-     *     {@link Extension} and will be removed in a future major version and the object will be
-     *     truly immutable.
-     */
-    @Deprecated
-    @Override
-    @Nullable Object setValue(@Nullable Object value);
   }
 }

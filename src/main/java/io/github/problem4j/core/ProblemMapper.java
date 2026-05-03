@@ -1,22 +1,17 @@
 /*
- * Copyright (c) 2025-2026 The Problem4J Authors
+ * Copyright 2025-2026 The Problem4J Authors
  *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, subject to the following conditions:
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
  *
- * The above copyright notice and this permission notice shall be included in all
- * copies or substantial portions of the Software.
+ *     http://www.apache.org/licenses/LICENSE-2.0
  *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- * SOFTWARE.
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 
 package io.github.problem4j.core;
@@ -43,24 +38,13 @@ import org.jspecify.annotations.Nullable;
  * }
  * }</pre>
  *
- * <p>Implementations should return {@code null} if the exception class is not annotated with {@link
- * ProblemMapping}, and may throw {@link ProblemMappingException} if an error occurs during problem
- * creation.
+ * <p>Implementations return an empty {@link ProblemBuilder} if {@code t} is {@code null} or the
+ * exception class is not annotated with {@link ProblemMapping}, and may throw {@link
+ * ProblemMappingException} if an error occurs during problem creation.
+ *
+ * @since 1.3.0
  */
 public interface ProblemMapper {
-
-  /**
-   * Creates a default {@link ProblemMapper} instance. The returned mapper provides the standard
-   * mapping behavior defined by this library.
-   *
-   * <p>Note that because default implementation is thread-safe and stateless, since {@code v1.3.3}
-   * this method returns a singleton instance.
-   *
-   * @return default implementation of {@link ProblemMapper}
-   */
-  static ProblemMapper create() {
-    return ProblemMapperImpl.INSTANCE;
-  }
 
   /**
    * Convert {@link Throwable} -&gt; {@link ProblemBuilder} according to its {@link ProblemMapping}
@@ -70,8 +54,11 @@ public interface ProblemMapper {
    * @param t {@link Throwable} to convert (may be {@code null})
    * @return a {@link ProblemBuilder} instance
    * @throws ProblemMappingException when something goes wrong while building the Problem
+   * @since 1.3.0
    */
-  ProblemBuilder toProblemBuilder(@Nullable Throwable t);
+  default ProblemBuilder toProblemBuilder(@Nullable Throwable t) {
+    return toProblemBuilder(t, null);
+  }
 
   /**
    * Convert {@link Throwable} -&gt; {@link ProblemBuilder} according to its {@link ProblemMapping}
@@ -82,6 +69,7 @@ public interface ProblemMapper {
    * @param context optional {@link ProblemContext} (may be {@code null})
    * @return a {@link ProblemBuilder} instance
    * @throws ProblemMappingException when something goes wrong while building the {@link Problem}
+   * @since 1.3.0
    */
   ProblemBuilder toProblemBuilder(@Nullable Throwable t, @Nullable ProblemContext context);
 
@@ -91,6 +79,9 @@ public interface ProblemMapper {
    * @param t {@link Throwable} to check (can be {@code null})
    * @return {@code true} if the exception is annotated with {@link ProblemMapping}, {@code false}
    *     otherwise
+   * @since 1.3.0
    */
-  boolean isMappingCandidate(@Nullable Throwable t);
+  default boolean isMappingCandidate(@Nullable Throwable t) {
+    return t != null && t.getClass().isAnnotationPresent(ProblemMapping.class);
+  }
 }

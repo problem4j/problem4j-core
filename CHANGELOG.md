@@ -6,6 +6,33 @@ The format is based on [Keep a Changelog][keepachangelog], and this project adhe
 
 ## [Unreleased]
 
+### Added
+
+- Add `DefaultProblemMapper` to replace `AbstractProblemMapper` and `ProblemMapper.create()`.
+- Add `StatusTitleResolver` SPI to allow users to provide custom resolution of `status` code into `title`. To be used
+  with HTTP status enums depending on the user's framework.
+- Add `ProblemSupport` for common utilities.
+
+### Changed
+
+- Make all methods in `Problem`, `ProblemBuilder` and `ProblemContext` interfaces non-`default`.
+- Make `Problem.Extension` not extend `Map.Entry` and instead be a simple data class with `name` and `value` properties.
+- Reorganize interface `default` methods.
+
+### Removed
+
+- Remove deprecated methods from `ProblemBuilder`.
+- Minify number of methods in `Problem` - plain `getExtensions()` returning `Map<String, Object>` is enough.
+- Remove deprecated `ProblemStatus` enum from public API. The resolution of `status` code into `title` is still
+  supported and available for extension via `StatusTitleResolver` SPI.
+- Remove `AbstractProblem` class - use `Problem` objects created via `Problem.builder()` or static factory methods.
+  Custom implementations of `Problem` can be created by implementing the `Problem` interface.
+- Remove `AbstractProblemBuilder` class - use `Problem.builder()` static method to get default builder implementation.
+  Custom implementations of `ProblemBuilder` can be created by implementing the `ProblemBuilder` interface.
+- Remove `AbstractProblemContext` class - use `ProblemContext` objects created via `ProblemContext.create()` static
+  method. Custom implementations of `ProblemContext` can be created by implementing the `ProblemContext` interface.
+- Remove `AbstractProblemMapper` class - use `DefaultProblemMapper` instead.
+
 ## [1.4.3] - 2026-03-14
 
 ### Changed

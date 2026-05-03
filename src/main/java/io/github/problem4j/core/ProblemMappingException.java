@@ -1,22 +1,17 @@
 /*
- * Copyright (c) 2025-2026 The Problem4J Authors
+ * Copyright 2025-2026 The Problem4J Authors
  *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, subject to the following conditions:
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
  *
- * The above copyright notice and this permission notice shall be included in all
- * copies or substantial portions of the Software.
+ *     http://www.apache.org/licenses/LICENSE-2.0
  *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- * SOFTWARE.
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 
 package io.github.problem4j.core;
@@ -27,10 +22,18 @@ import org.jspecify.annotations.Nullable;
  * Thrown when processing an annotated exception into a {@link Problem} fails.
  * {@code @RestControllerAdvice} or any other handlers can catch this and return a safe {@code 500}.
  * No other exception is supposed to be thrown from {@link ProblemMapper}.
+ *
+ * @since 1.3.0
  */
 public class ProblemMappingException extends RuntimeException {
 
-  /** Creates a new exception with no detail message and no cause. */
+  private static final long serialVersionUID = 1L;
+
+  /**
+   * Creates a new exception with no detail message and no cause.
+   *
+   * @since 1.3.0
+   */
   public ProblemMappingException() {
     super();
   }
@@ -38,7 +41,8 @@ public class ProblemMappingException extends RuntimeException {
   /**
    * Creates a new exception with the specified detail message.
    *
-   * @param message human-readable explanation of the failure
+   * @param message human-readable explanation of the failure (may be {@code null})
+   * @since 1.3.0
    */
   public ProblemMappingException(@Nullable String message) {
     super(message);
@@ -48,6 +52,7 @@ public class ProblemMappingException extends RuntimeException {
    * Creates a new exception wrapping the given cause.
    *
    * @param cause underlying cause (may be {@code null})
+   * @since 1.3.0
    */
   public ProblemMappingException(@Nullable Throwable cause) {
     super(cause);
@@ -56,8 +61,9 @@ public class ProblemMappingException extends RuntimeException {
   /**
    * Creates a new exception with the specified detail message and cause.
    *
-   * @param message human-readable explanation of the failure
+   * @param message human-readable explanation of the failure (may be {@code null})
    * @param cause underlying cause (may be {@code null})
+   * @since 1.3.0
    */
   public ProblemMappingException(@Nullable String message, @Nullable Throwable cause) {
     super(message, cause);
@@ -67,10 +73,11 @@ public class ProblemMappingException extends RuntimeException {
    * Advanced constructor allowing full control over suppression and stack trace writability.
    * Typically used only internally or in tests.
    *
-   * @param message detail message
+   * @param message detail message (may be {@code null})
    * @param cause underlying cause (may be {@code null})
    * @param enableSuppression whether suppression is enabled or disabled
    * @param writableStackTrace whether the stack trace should be writable
+   * @since 1.3.0
    */
   protected ProblemMappingException(
       @Nullable String message,

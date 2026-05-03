@@ -1,22 +1,17 @@
 /*
- * Copyright (c) 2025-2026 The Problem4J Authors
+ * Copyright 2025-2026 The Problem4J Authors
  *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, subject to the following conditions:
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
  *
- * The above copyright notice and this permission notice shall be included in all
- * copies or substantial portions of the Software.
+ *     http://www.apache.org/licenses/LICENSE-2.0
  *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- * SOFTWARE.
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 
 package io.github.problem4j.core;
@@ -61,16 +56,38 @@ import org.jspecify.annotations.Nullable;
  * <p>This design allows dynamic, context-aware {@link Problem} generation, supports subclass
  * inheritance, and ensures that null or empty values do not appear in the output, making Problems
  * concise and meaningful.
+ *
+ * @since 2.0.0
  */
-public abstract class AbstractProblemMapper implements ProblemMapper {
+public class DefaultProblemMapper implements ProblemMapper {
 
+  /**
+   * Pattern used to match interpolation placeholders of the form {@code {key}}.
+   *
+   * @since 2.0.0
+   */
   protected static final Pattern PLACEHOLDER = Pattern.compile("\\{([^}]+)}");
 
+  /**
+   * Placeholder key that resolves to the throwable's {@link Throwable#getMessage()}.
+   *
+   * @since 2.0.0
+   */
   protected static final String MESSAGE_LABEL = "message";
+
+  /**
+   * Prefix for placeholder keys that resolve values from a {@link ProblemContext}.
+   *
+   * @since 2.0.0
+   */
   protected static final String CONTEXT_LABEL_PREFIX = "context.";
 
-  /** Creates a new instance of problem mapper. */
-  public AbstractProblemMapper() {}
+  /**
+   * Creates a new instance of problem mapper.
+   *
+   * @since 2.0.0
+   */
+  public DefaultProblemMapper() {}
 
   /**
    * Convert {@link Throwable} -&gt; {@link ProblemBuilder} according to its {@link ProblemMapping}
@@ -80,6 +97,7 @@ public abstract class AbstractProblemMapper implements ProblemMapper {
    * @param t {@link Throwable} to convert (may be {@code null})
    * @return a {@link ProblemBuilder} instance
    * @throws ProblemMappingException when something goes wrong while building the Problem
+   * @since 2.0.0
    */
   @Override
   public final ProblemBuilder toProblemBuilder(@Nullable Throwable t) {
@@ -94,6 +112,7 @@ public abstract class AbstractProblemMapper implements ProblemMapper {
    * @param context optional {@link ProblemContext} (may be {@code null})
    * @return a {@link ProblemBuilder} instance
    * @throws ProblemMappingException when something goes wrong while building the Problem
+   * @since 2.0.0
    */
   @Override
   public ProblemBuilder toProblemBuilder(@Nullable Throwable t, @Nullable ProblemContext context) {
@@ -110,7 +129,7 @@ public abstract class AbstractProblemMapper implements ProblemMapper {
     try {
       applyTypeOnBuilder(builder, mapping, t, context);
       applyTitleOnBuilder(builder, mapping, t, context);
-      applyStatusOnBuilder(mapping, builder);
+      applyStatusOnBuilder(builder, mapping);
       applyDetailOnBuilder(builder, mapping, t, context);
       applyInstanceOnBuilder(builder, mapping, t, context);
       applyExtensionsOnBuilder(builder, mapping, t);
@@ -125,22 +144,11 @@ public abstract class AbstractProblemMapper implements ProblemMapper {
   }
 
   /**
-   * Checks whether the given exception class is annotated with {@link ProblemMapping}.
-   *
-   * @param t {@link Throwable} to check (may be {@code null})
-   * @return {@code true} if the exception class has a {@link ProblemMapping} annotation, {@code
-   *     false} otherwise
-   */
-  @Override
-  public boolean isMappingCandidate(@Nullable Throwable t) {
-    return t != null && t.getClass().isAnnotationPresent(ProblemMapping.class);
-  }
-
-  /**
    * Returns the {@link ProblemMapping} annotation from the class if present, otherwise null.
    *
    * @param clazz the class to inspect
    * @return the {@link ProblemMapping} annotation if present, otherwise null
+   * @since 2.0.0
    */
   protected @Nullable ProblemMapping findAnnotation(Class<?> clazz) {
     return clazz.getAnnotation(ProblemMapping.class);
@@ -154,6 +162,7 @@ public abstract class AbstractProblemMapper implements ProblemMapper {
    * @param mapping the {@link ProblemMapping} annotation containing the type value
    * @param t the {@link Throwable} to extract values from
    * @param context the problem context for additional data
+   * @since 2.0.0
    */
   protected void applyTypeOnBuilder(
       ProblemBuilder builder,
@@ -178,6 +187,7 @@ public abstract class AbstractProblemMapper implements ProblemMapper {
    *
    * @param mapping the {@link ProblemMapping} annotation containing the type value
    * @return the raw type string, or empty string if not present or blank
+   * @since 2.0.0
    */
   protected String getRawType(ProblemMapping mapping) {
     return !mapping.type().isEmpty() ? mapping.type().trim() : "";
@@ -190,6 +200,7 @@ public abstract class AbstractProblemMapper implements ProblemMapper {
    * @param mapping the {@link ProblemMapping} annotation containing the title value
    * @param t the {@link Throwable} to extract values from
    * @param context the problem context for additional data
+   * @since 2.0.0
    */
   protected void applyTitleOnBuilder(
       ProblemBuilder builder,
@@ -210,6 +221,7 @@ public abstract class AbstractProblemMapper implements ProblemMapper {
    *
    * @param mapping the {@link ProblemMapping} annotation containing the title value
    * @return the raw title string, or empty string if not present or blank
+   * @since 2.0.0
    */
   protected String getRawTitle(ProblemMapping mapping) {
     return !mapping.title().isEmpty() ? mapping.title().trim() : "";
@@ -218,10 +230,11 @@ public abstract class AbstractProblemMapper implements ProblemMapper {
   /**
    * Sets the status when greater than zero.
    *
-   * @param mapping the {@link ProblemMapping} annotation containing the status value
    * @param builder the {@link ProblemBuilder} to set the status on
+   * @param mapping the {@link ProblemMapping} annotation containing the status value
+   * @since 2.0.0
    */
-  protected void applyStatusOnBuilder(ProblemMapping mapping, ProblemBuilder builder) {
+  protected void applyStatusOnBuilder(ProblemBuilder builder, ProblemMapping mapping) {
     if (mapping.status() > 0) {
       builder.status(mapping.status());
     }
@@ -234,6 +247,7 @@ public abstract class AbstractProblemMapper implements ProblemMapper {
    * @param mapping the {@link ProblemMapping} annotation containing the detail value
    * @param t the {@link Throwable} to extract values from
    * @param context the problem context for additional data
+   * @since 2.0.0
    */
   protected void applyDetailOnBuilder(
       ProblemBuilder builder,
@@ -254,6 +268,7 @@ public abstract class AbstractProblemMapper implements ProblemMapper {
    *
    * @param mapping the {@link ProblemMapping} annotation containing the detail value
    * @return the raw detail string, or empty string if not present or blank
+   * @since 2.0.0
    */
   protected String getRawDetail(ProblemMapping mapping) {
     return !mapping.detail().isEmpty() ? mapping.detail().trim() : "";
@@ -266,6 +281,7 @@ public abstract class AbstractProblemMapper implements ProblemMapper {
    * @param mapping the {@link ProblemMapping} annotation containing the instance value
    * @param t the {@link Throwable} to extract values from
    * @param context the problem context for additional data
+   * @since 2.0.0
    */
   protected void applyInstanceOnBuilder(
       ProblemBuilder builder,
@@ -279,7 +295,7 @@ public abstract class AbstractProblemMapper implements ProblemMapper {
         try {
           builder.instance(instanceInterpolated);
         } catch (IllegalArgumentException e) {
-          // ignored - if type is invalid let not fail
+          // ignored - if instance is invalid, let not fail
         }
       }
     }
@@ -290,6 +306,7 @@ public abstract class AbstractProblemMapper implements ProblemMapper {
    *
    * @param mapping the {@link ProblemMapping} annotation containing the instance value
    * @return the raw instance string, or empty string if not present or blank
+   * @since 2.0.0
    */
   protected String getRawInstance(ProblemMapping mapping) {
     return !mapping.instance().isEmpty() ? mapping.instance().trim() : "";
@@ -301,15 +318,16 @@ public abstract class AbstractProblemMapper implements ProblemMapper {
    * @param builder the {@link ProblemBuilder} to add extensions to
    * @param mapping the {@link ProblemMapping} annotation containing extension field names
    * @param t the {@link Throwable} to extract extension values from
+   * @since 2.0.0
    */
   protected void applyExtensionsOnBuilder(
       ProblemBuilder builder, ProblemMapping mapping, Throwable t) {
     String[] extensions = mapping.extensions();
-    for (String name : extensions) {
-      if (name.trim().isEmpty()) {
+    for (String extension : extensions) {
+      String name = extension.trim();
+      if (name.isEmpty()) {
         continue;
       }
-      name = name.trim();
       Object value = resolvePlaceholderSource(t, name);
       if (value != null && !(value instanceof String && ((String) value).isEmpty())) {
         builder.extension(name, value);
@@ -321,10 +339,10 @@ public abstract class AbstractProblemMapper implements ProblemMapper {
    * Interpolates placeholders of the form {@code "{placeholderValue}"}. Supported keys:
    *
    * <ul>
-   *   <li>{@code message} - throwable message
-   *   <li>{@code {context.*}} -&gt; value from {@link ProblemContext} included in evaluation via
+   *   <li>{@code message} -&gt; throwable message
+   *   <li>{@code context.*} -&gt; value from {@link ProblemContext} included in evaluation via
    *       {@link ProblemMapper}
-   *   <li>Any other token - value of a matching field in the throwable class hierarchy
+   *   <li>Any other token -&gt; value of a matching field in the throwable class hierarchy
    * </ul>
    *
    * <p>Missing values resolve to an empty string.
@@ -333,6 +351,7 @@ public abstract class AbstractProblemMapper implements ProblemMapper {
    * @param t the throwable to extract values from
    * @param context the problem context for additional data
    * @return the interpolated string with placeholders replaced by actual values
+   * @since 2.0.0
    */
   protected String interpolate(String template, Throwable t, @Nullable ProblemContext context) {
     Matcher m = PLACEHOLDER.matcher(template);
@@ -353,14 +372,14 @@ public abstract class AbstractProblemMapper implements ProblemMapper {
             (context == null || !context.containsKey(contextKey)) ? "" : context.get(contextKey);
       } else {
         Object v = resolvePlaceholderSource(t, key);
-        replacement = v == null ? "" : String.valueOf(v);
+        replacement = (v == null) ? "" : String.valueOf(v);
       }
 
       sb.append(replacement);
       lastEnd = m.end();
     }
 
-    sb.append(template, lastEnd, template.length()); // append the tail
+    sb.append(template, lastEnd, template.length());
     return sb.toString();
   }
 
@@ -370,6 +389,7 @@ public abstract class AbstractProblemMapper implements ProblemMapper {
    * @param t the throwable to inspect
    * @param name the field name to look for
    * @return the field value if found, otherwise null
+   * @since 2.0.0
    */
   protected @Nullable Object resolvePlaceholderSource(Throwable t, String name) {
     if (name.isEmpty()) {

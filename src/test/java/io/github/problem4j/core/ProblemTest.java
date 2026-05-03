@@ -1,33 +1,27 @@
 /*
- * Copyright (c) 2025-2026 The Problem4J Authors
+ * Copyright 2025-2026 The Problem4J Authors
  *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, subject to the following conditions:
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
  *
- * The above copyright notice and this permission notice shall be included in all
- * copies or substantial portions of the Software.
+ *     http://www.apache.org/licenses/LICENSE-2.0
  *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- * SOFTWARE.
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 
 package io.github.problem4j.core;
 
+import static java.util.function.Function.identity;
+import static java.util.stream.Collectors.toMap;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.net.URI;
 import java.util.Arrays;
-import java.util.function.Function;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.Test;
 
@@ -35,10 +29,10 @@ class ProblemTest {
 
   @Test
   void givenIntStatus_shouldSetStatus() {
-    Problem problem = Problem.of(ProblemStatus.MULTI_STATUS.getStatus());
+    Problem problem = Problem.of(207);
 
-    assertThat(problem.getTitle()).isEqualTo(ProblemStatus.MULTI_STATUS.getTitle());
-    assertThat(problem.getStatus()).isEqualTo(ProblemStatus.MULTI_STATUS.getStatus());
+    assertThat(problem.getTitle()).isEqualTo("Multi-Status");
+    assertThat(problem.getStatus()).isEqualTo(207);
   }
 
   @Test
@@ -47,7 +41,7 @@ class ProblemTest {
 
     assertThat(problem.getStatus()).isEqualTo(400);
     assertThat(problem.getDetail()).isEqualTo("bad input");
-    assertThat(problem.getTitle()).isEqualTo(ProblemStatus.BAD_REQUEST.getTitle());
+    assertThat(problem.getTitle()).isEqualTo("Bad Request");
   }
 
   @Test
@@ -115,7 +109,7 @@ class ProblemTest {
                         Problem.extension("extCode5", "extValue5"),
                         Problem.extension("extCode6", "extValue6"),
                         Problem.extension("extCode7", "extValue7"))
-                    .collect(Collectors.toMap(Problem.Extension::getKey, Function.identity())))
+                    .collect(toMap(Problem.Extension::getName, identity())))
             .build();
 
     ProblemBuilder builder = problem.toBuilder();
@@ -126,17 +120,10 @@ class ProblemTest {
   }
 
   @Test
-  void givenProblemExtensionWithNullKey_shouldThrowIllegalArgumentException() {
-    assertThatThrownBy(() -> Problem.extension(null, "v"))
-        .isInstanceOf(IllegalArgumentException.class)
-        .hasMessage("key cannot be null");
-  }
-
-  @Test
   void givenProblemExtensionWithKey_shouldCreateExtension() {
     Problem.Extension ext = Problem.extension("code", 123);
 
-    assertThat(ext.getKey()).isEqualTo("code");
+    assertThat(ext.getName()).isEqualTo("code");
     assertThat(ext.getValue()).isEqualTo(123);
   }
 }

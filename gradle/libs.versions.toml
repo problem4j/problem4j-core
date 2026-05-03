@@ -1,5 +1,6 @@
 [versions]
 assertj = "3.27.7"
+mockito = "5.23.0"
 errorprone = "2.49.0"
 errorprone-plugin = "5.1.0"
 idea-ext = "1.4.1"
@@ -21,6 +22,7 @@ junit-bom = { module = "org.junit:junit-bom", version.ref = "junit" }
 
 # direct versions
 assertj-core = { module = "org.assertj:assertj-core", version.ref = "assertj" }
+mockito-core = { module = "org.mockito:mockito-core", version.ref = "mockito" }
 errorprone-core = { module = "com.google.errorprone:error_prone_core", version.ref = "errorprone" }
 jspecify = { module = "org.jspecify:jspecify", version.ref = "jspecify" }
 nullaway = { module = "com.uber.nullaway:nullaway", version.ref = "nullaway" }

@@ -16,19 +16,23 @@
 
 package io.github.problem4j.core;
 
-/**
- * Simple object used for testing situations where extension is not a primitive nor simple object.
- */
-class DummyObject {
+import static java.util.Comparator.comparingInt;
+import static java.util.ServiceLoader.load;
+import static java.util.stream.StreamSupport.stream;
 
-  private final String value;
+final class StatusTitleSupport {
 
-  DummyObject(String value) {
-    this.value = value;
+  private static final StatusTitleResolver RESOLVER = loadResolver();
+
+  static StatusTitleResolver getResolver() {
+    return RESOLVER;
   }
 
-  @Override
-  public String toString() {
-    return "DummyObject{value=" + value + "}";
+  static StatusTitleResolver loadResolver() {
+    return stream(load(StatusTitleResolver.class).spliterator(), false)
+        .min(comparingInt(StatusTitleResolver::getPriority))
+        .orElseGet(DefaultStatusTitleResolver::new);
   }
+
+  private StatusTitleSupport() {}
 }

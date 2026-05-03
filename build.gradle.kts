@@ -21,6 +21,7 @@ dependencies {
     testRuntimeOnly(libs.junit.platform.launcher)
 
     testImplementation(libs.assertj.core)
+    testImplementation(libs.mockito.core)
 
     errorprone(libs.errorprone.core)
     errorprone(libs.nullaway)
@@ -29,7 +30,7 @@ dependencies {
 // see buildSrc/src/main/kotlin/internal.publishing-convention.gradle.kts
 internalPublishing {
     displayName = "Problem4J Core"
-    description = "Core library implementing Problem model according to RFC7807 (aka RFC9457)."
+    description = "Core library implementing Problem model according to RFC7807 (and RFC9457)."
 }
 
 nmcp {

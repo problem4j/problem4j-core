@@ -1,28 +1,22 @@
 /*
- * Copyright (c) 2025-2026 The Problem4J Authors
+ * Copyright 2025-2026 The Problem4J Authors
  *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, subject to the following conditions:
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
  *
- * The above copyright notice and this permission notice shall be included in all
- * copies or substantial portions of the Software.
+ *     http://www.apache.org/licenses/LICENSE-2.0
  *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- * SOFTWARE.
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 
 package io.github.problem4j.core;
 
 import java.net.URI;
-import java.util.Collection;
 import java.util.Map;
 import org.jspecify.annotations.Nullable;
 
@@ -31,31 +25,38 @@ import org.jspecify.annotations.Nullable;
  *
  * <p>Provides a fluent API to set standard fields and custom extensions before creating an
  * immutable {@link Problem}.
+ *
+ * @since 1.3.0
  */
 public interface ProblemBuilder {
 
   /**
    * Sets the problem type URI.
    *
-   * @param type the URI identifying the problem type
+   * @param type the URI identifying the problem type (may be {@code null})
    * @return this builder instance for chaining
+   * @since 1.3.0
    */
   ProblemBuilder type(@Nullable URI type);
 
   /**
    * Sets the problem type from a string representation of a URI.
    *
-   * @param type string URI identifying the problem type
+   * @param type string URI identifying the problem type (may be {@code null})
    * @return this builder instance for chaining
    * @throws IllegalArgumentException if the string is not a valid URI
+   * @since 1.3.0
    */
-  ProblemBuilder type(@Nullable String type);
+  default ProblemBuilder type(@Nullable String type) {
+    return type != null ? type(URI.create(type)) : type((URI) null);
+  }
 
   /**
    * Sets the short, human-readable title for the problem.
    *
-   * @param title the problem title
+   * @param title the problem title (may be {@code null})
    * @return this builder instance for chaining
+   * @since 1.3.0
    */
   ProblemBuilder title(@Nullable String title);
 
@@ -64,46 +65,39 @@ public interface ProblemBuilder {
    *
    * @param status HTTP status code
    * @return this builder instance for chaining
+   * @since 1.3.0
    */
   ProblemBuilder status(int status);
 
   /**
-   * Sets the HTTP status code using a {@link ProblemStatus} enum.
-   *
-   * @param status the {@link ProblemStatus} representing the HTTP status
-   * @return this builder instance for chaining
-   * @deprecated {@link ProblemStatus} will be considered an internal utility of Problem4J Core and
-   *     will be made package-private in a future major release. The decision was made as each HTTP
-   *     framework most likely has its own enum for HTTP status codes, and there's no real value in
-   *     trying to maintain a separate, framework-agnostic enum that mirrors HTTP status codes.
-   */
-  @Deprecated
-  ProblemBuilder status(@Nullable ProblemStatus status);
-
-  /**
    * Sets a detailed, human-readable description of this problem instance.
    *
-   * @param detail the detail message
+   * @param detail the detail message (may be {@code null})
    * @return this builder instance for chaining
+   * @since 1.3.0
    */
   ProblemBuilder detail(@Nullable String detail);
 
   /**
    * Sets the URI identifying this specific occurrence of the problem.
    *
-   * @param instance the instance URI
+   * @param instance URI identifying the problem occurrence (may be {@code null})
    * @return this builder instance for chaining
+   * @since 1.3.0
    */
   ProblemBuilder instance(@Nullable URI instance);
 
   /**
    * Sets the instance URI from a string representation.
    *
-   * @param instance string URI identifying the problem occurrence
+   * @param instance string URI identifying the problem occurrence (may be {@code null})
    * @return this builder instance for chaining
    * @throws IllegalArgumentException if the string is not a valid URI
+   * @since 1.3.0
    */
-  ProblemBuilder instance(@Nullable String instance);
+  default ProblemBuilder instance(@Nullable String instance) {
+    return instance != null ? instance(URI.create(instance)) : instance((URI) null);
+  }
 
   /**
    * Adds or removes a single custom extension. If {@code value} is {@code null} and an extension
@@ -112,8 +106,9 @@ public interface ProblemBuilder {
    * @param name the extension key
    * @param value the extension value, or {@code null} to remove
    * @return this builder instance for chaining
+   * @since 1.3.0
    */
-  ProblemBuilder extension(@Nullable String name, @Nullable Object value);
+  ProblemBuilder extension(String name, @Nullable Object value);
 
   /**
    * Adds multiple custom extensions from a map. If the value of any provided extension is {@code
@@ -121,27 +116,24 @@ public interface ProblemBuilder {
    *
    * @param extensions map of extension keys and values
    * @return this builder instance for chaining
+   * @since 1.3.3
    */
-  default ProblemBuilder extensions(@Nullable Map<String, ? extends @Nullable Object> extensions) {
-    if (extensions != null) {
-      extensions.forEach(this::extension);
-    }
+  default ProblemBuilder extensions(Map<String, ? extends @Nullable Object> extensions) {
+    extensions.forEach(this::extension);
     return this;
   }
 
   /**
-   * Adds single custom extension from {@link Problem.Extension}. If the value of the provided
+   * Adds a single custom extension from {@link Problem.Extension}. If the value of the provided
    * extension is {@code null} and an extension with the same key already exists, it will be
    * removed.
    *
-   * @param extension array of extensions
+   * @param extension extension to add
    * @return this builder instance for chaining
+   * @since 1.3.3
    */
-  default ProblemBuilder extension(Problem.@Nullable Extension extension) {
-    if (extension != null) {
-      return extension(extension.getKey(), extension.getValue());
-    }
-    return this;
+  default ProblemBuilder extension(Problem.Extension extension) {
+    return extension(extension.getName(), extension.getValue());
   }
 
   /**
@@ -149,16 +141,13 @@ public interface ProblemBuilder {
    * provided extension is {@code null} and an extension with the same key already exists, it will
    * be removed.
    *
-   * @param extensions array of extensions
+   * @param extensions vararg of extensions to add
    * @return this builder instance for chaining
+   * @since 1.3.3
    */
-  default ProblemBuilder extensions(Problem.@Nullable Extension @Nullable ... extensions) {
-    if (extensions != null) {
-      for (Problem.@Nullable Extension e : extensions) {
-        if (e != null) {
-          extension(e);
-        }
-      }
+  default ProblemBuilder extensions(Problem.Extension... extensions) {
+    for (Problem.Extension e : extensions) {
+      extension(e);
     }
     return this;
   }
@@ -168,14 +157,12 @@ public interface ProblemBuilder {
    * any provided extension is {@code null} and an extension with the same key already exists, it
    * will be removed.
    *
-   * @param extensions collection of extensions
+   * @param extensions collection of extensions to add
    * @return this builder instance for chaining
+   * @since 2.0.0
    */
-  default ProblemBuilder extensions(
-      @Nullable Collection<? extends Problem.@Nullable Extension> extensions) {
-    if (extensions != null) {
-      extensions.forEach(this::extension);
-    }
+  default ProblemBuilder extensions(Iterable<? extends Problem.Extension> extensions) {
+    extensions.forEach(this::extension);
     return this;
   }
 
@@ -187,62 +174,15 @@ public interface ProblemBuilder {
    * <ul>
    *   <li>If no type was provided, the resulting {@link Problem} will use {@link
    *       Problem#BLANK_TYPE}.
-   *   <li>If no title was provided, but the numeric status corresponds to a known {@link
-   *       ProblemStatus}, the builder will use the matching {@link ProblemStatus#getTitle()} as the
-   *       problem title.
-   *   <li>The numeric status defaults to <code>0</code> when not set; a title will not be derived
-   *       from status when it is <code>0</code> or when it does not map to any known {@link
-   *       ProblemStatus}.
+   *   <li>If no title was provided, but the numeric status corresponds to a known HTTP status, the
+   *       builder will resolve it using {@link StatusTitleResolver}. It can be customized via SPI
+   *       implementation.
+   *   <li>The numeric status defaults to <code>0</code> when not set;
    *   <li>Any extensions configured on the builder will be present on the created {@link Problem}.
    * </ul>
    *
    * @return a new {@link Problem} instance
+   * @since 1.3.0
    */
   Problem build();
-
-  /**
-   * Adds multiple custom extensions from a map.
-   *
-   * <p><b>Deprecated</b> due to confusing name as singular "extension" suggests adding a single
-   * extension, while the method actually adds multiple extensions from the provided map.
-   *
-   * @param extensions map of extension keys and values
-   * @return this builder instance for chaining
-   * @deprecated Use {@link #extensions(Map)} instead.
-   */
-  @Deprecated
-  default ProblemBuilder extension(@Nullable Map<String, ? extends @Nullable Object> extensions) {
-    return extensions(extensions);
-  }
-
-  /**
-   * Adds multiple custom extensions from varargs of {@link Problem.Extension}.
-   *
-   * <p><b>Deprecated</b> due to confusing name as singular "extension" suggests adding a single
-   * extension, while the method actually adds multiple extensions from the provided vararg.
-   *
-   * @param extensions array of extensions
-   * @return this builder instance for chaining
-   * @deprecated Use {@link #extensions(Problem.Extension...)} instead.
-   */
-  @Deprecated
-  default ProblemBuilder extension(Problem.@Nullable Extension @Nullable ... extensions) {
-    return extensions(extensions);
-  }
-
-  /**
-   * Adds multiple custom extensions from a collection of {@link Problem.Extension}.
-   *
-   * <p><b>Deprecated</b> due to confusing name as singular "extension" suggests adding a single
-   * extension, while the method actually adds multiple extensions from the provided collection.
-   *
-   * @param extensions collection of extensions
-   * @return this builder instance for chaining
-   * @deprecated Use {@link #extensions(Collection)} instead.
-   */
-  @Deprecated
-  default ProblemBuilder extension(
-      @Nullable Collection<? extends Problem.@Nullable Extension> extensions) {
-    return extensions(extensions);
-  }
 }
