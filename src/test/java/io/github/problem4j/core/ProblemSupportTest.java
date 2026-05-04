@@ -292,6 +292,65 @@ class ProblemSupportTest {
   }
 
   @Test
+  void givenProblemWithAllFields_whenToExceptionMessage_thenTitleDetailAndStatusFormatted() {
+    Problem problem =
+        Problem.builder().title("Validation Error").detail("Body is invalid").status(400).build();
+
+    assertThat(ProblemSupport.toExceptionMessage(problem))
+        .isEqualTo("Validation Error: Body is invalid (status: 400)");
+  }
+
+  @Test
+  void givenProblemWithTitleOnly_whenToExceptionMessage_thenTitleOnly() {
+    Problem problem = Problem.builder().title("Not Found").build();
+
+    assertThat(ProblemSupport.toExceptionMessage(problem)).isEqualTo("Not Found");
+  }
+
+  @Test
+  void givenProblemWithTitleAndStatus_whenToExceptionMessage_thenTitleAndStatus() {
+    Problem problem = Problem.builder().title("Unauthorized").status(401).build();
+
+    assertThat(ProblemSupport.toExceptionMessage(problem)).isEqualTo("Unauthorized (status: 401)");
+  }
+
+  @Test
+  void givenProblemWithTitleAndDetail_whenToExceptionMessage_thenTitleColonDetail() {
+    Problem problem = Problem.builder().title("Error").detail("Something went wrong").build();
+
+    assertThat(ProblemSupport.toExceptionMessage(problem)).isEqualTo("Error: Something went wrong");
+  }
+
+  @Test
+  void givenProblemWithStatusOnly_whenToExceptionMessage_thenStatusOnly() {
+    Problem problem = Problem.builder().status(500).build();
+
+    assertThat(ProblemSupport.toExceptionMessage(problem))
+        .isEqualTo("Internal Server Error (status: 500)");
+  }
+
+  @Test
+  void givenProblemWithEmptyFields_whenToExceptionMessage_thenNull() {
+    Problem problem = Problem.builder().title("").detail("").build();
+
+    assertThat(ProblemSupport.toExceptionMessage(problem)).isNull();
+  }
+
+  @Test
+  void givenProblemWithZeroStatus_whenToExceptionMessage_thenStatusNotIncluded() {
+    Problem problem = Problem.builder().title("Error").detail("Oops").status(0).build();
+
+    assertThat(ProblemSupport.toExceptionMessage(problem)).isEqualTo("Error: Oops");
+  }
+
+  @Test
+  void givenProblemWithEmptyTitleAndStatus_whenToExceptionMessage_thenOnlyStatusInMessage() {
+    Problem problem = Problem.builder().title("").status(500).build();
+
+    assertThat(ProblemSupport.toExceptionMessage(problem)).isEqualTo("(status: 500)");
+  }
+
+  @Test
   void givenBlankType_whenIsTypeBlank_thenTrue() {
     assertThat(ProblemSupport.isTypeBlank(Problem.BLANK_TYPE)).isTrue();
   }

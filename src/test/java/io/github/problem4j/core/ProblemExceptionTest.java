@@ -42,7 +42,7 @@ class ProblemExceptionTest {
     ProblemException exception = new ProblemException(problem);
 
     assertEquals(
-        "Validation Error: The request body is invalid (code: 400)", exception.getMessage());
+        "Validation Error: The request body is invalid (status: 400)", exception.getMessage());
   }
 
   @Test
@@ -65,7 +65,7 @@ class ProblemExceptionTest {
 
     ProblemException exception = new ProblemException(problem);
 
-    assertEquals("Unauthorized (code: 401)", exception.getMessage());
+    assertEquals("Unauthorized (status: 401)", exception.getMessage());
   }
 
   @Test
@@ -74,7 +74,7 @@ class ProblemExceptionTest {
 
     ProblemException exception = new ProblemException(problem);
 
-    assertEquals("Unauthorized: Token has expired (code: 401)", exception.getMessage());
+    assertEquals("Unauthorized: Token has expired (status: 401)", exception.getMessage());
   }
 
   @Test
@@ -101,7 +101,7 @@ class ProblemExceptionTest {
 
     ProblemException exception = new ProblemException(problem);
 
-    assertEquals("Internal Server Error (code: 500)", exception.getMessage());
+    assertEquals("Internal Server Error (status: 500)", exception.getMessage());
   }
 
   @Test
@@ -129,7 +129,7 @@ class ProblemExceptionTest {
 
     ProblemException exception = new ProblemException(problem);
 
-    assertEquals("Custom Error (code: -1)", exception.getMessage());
+    assertEquals("Custom Error (status: -1)", exception.getMessage());
   }
 
   @Test
@@ -138,7 +138,7 @@ class ProblemExceptionTest {
 
     ProblemException exception = new ProblemException(problem);
 
-    assertEquals("Unknown Error: Custom protocol error (code: 999)", exception.getMessage());
+    assertEquals("Unknown Error: Custom protocol error (status: 999)", exception.getMessage());
   }
 
   @Test
@@ -162,7 +162,7 @@ class ProblemExceptionTest {
     ProblemException exception = new ProblemException(problem);
 
     assertEquals(
-        "Validation Error: Required Fields Missing: Fields 'name' & 'email' are required (check docs) (code: 422)",
+        "Validation Error: Required Fields Missing: Fields 'name' & 'email' are required (check docs) (status: 422)",
         exception.getMessage());
   }
 
@@ -221,7 +221,7 @@ class ProblemExceptionTest {
 
     ProblemException exception = new ProblemException(null, problem);
 
-    assertEquals("Bad Request (code: 400)", exception.getMessage());
+    assertEquals("Bad Request (status: 400)", exception.getMessage());
     assertSame(problem, exception.getProblem());
   }
 
@@ -231,7 +231,7 @@ class ProblemExceptionTest {
 
     ProblemException exception = new ProblemException("", problem);
 
-    assertEquals("Bad Request (code: 400)", exception.getMessage());
+    assertEquals("Bad Request (status: 400)", exception.getMessage());
     assertSame(problem, exception.getProblem());
   }
 
@@ -243,7 +243,7 @@ class ProblemExceptionTest {
 
     ProblemException exception = new ProblemException(null, problem, cause);
 
-    assertEquals("Bad Request (code: 400)", exception.getMessage());
+    assertEquals("Bad Request (status: 400)", exception.getMessage());
     assertSame(cause, exception.getCause());
   }
 
@@ -255,7 +255,7 @@ class ProblemExceptionTest {
 
     ProblemException exception = new ProblemException("", problem, cause);
 
-    assertEquals("Bad Request (code: 400)", exception.getMessage());
+    assertEquals("Bad Request (status: 400)", exception.getMessage());
     assertSame(cause, exception.getCause());
   }
 
@@ -266,7 +266,7 @@ class ProblemExceptionTest {
 
     ProblemException exception = new ProblemException(null, problem, cause, true, true);
 
-    assertEquals("Bad Request (code: 400)", exception.getMessage());
+    assertEquals("Bad Request (status: 400)", exception.getMessage());
   }
 
   @Test
@@ -277,7 +277,7 @@ class ProblemExceptionTest {
 
     ProblemException exception = new ProblemException("", problem, cause, true, true);
 
-    assertEquals("Bad Request (code: 400)", exception.getMessage());
+    assertEquals("Bad Request (status: 400)", exception.getMessage());
   }
 
   @Test
@@ -286,6 +286,6 @@ class ProblemExceptionTest {
 
     ProblemException exception = new ProblemException(problem);
 
-    assertEquals("(code: 500)", exception.getMessage());
+    assertEquals("(status: 500)", exception.getMessage());
   }
 }

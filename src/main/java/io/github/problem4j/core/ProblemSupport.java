@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import org.jspecify.annotations.Nullable;
 
 /**
  * Utility class providing canonical implementations of various operations for {@link Problem},
@@ -234,6 +235,45 @@ public final class ProblemSupport {
    */
   public static boolean isTypeNonBlank(URI type) {
     return !type.equals(Problem.BLANK_TYPE) && !type.toString().isEmpty();
+  }
+
+  /**
+   * Produces a string message for an exception based on the problem's title, detail, and status.
+   *
+   * <p>Format:
+   *
+   * <ul>
+   *   <li>{@code "{title}"}
+   *   <li>{@code "{title} (status: {status})"}
+   *   <li>{@code "{title}: {detail}"}
+   *   <li>{@code "{title}: {detail} (status: {status})"}
+   * </ul>
+   *
+   * If no information is available, returns {@code null}.
+   *
+   * @param problem the problem instance
+   * @return a formatted exception message or {@code null} if empty
+   * @since 2.0.0
+   */
+  public static @Nullable String toExceptionMessage(Problem problem) {
+    StringBuilder builder = new StringBuilder();
+    builder.append(problem.getTitle());
+    if (problem.getDetail() != null) {
+      if (builder.length() > 0) {
+        builder.append(": ");
+      }
+      builder.append(problem.getDetail());
+    }
+    if (problem.getStatus() != 0) {
+      if (builder.length() > 0) {
+        builder.append(" ");
+      }
+      builder.append("(status: ").append(problem.getStatus()).append(")");
+    }
+    if (builder.length() == 0) {
+      return null;
+    }
+    return builder.toString();
   }
 
   private ProblemSupport() {}

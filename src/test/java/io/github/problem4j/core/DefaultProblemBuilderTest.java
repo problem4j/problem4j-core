@@ -17,6 +17,7 @@
 package io.github.problem4j.core;
 
 import static io.github.problem4j.core.Problem.extension;
+import static java.util.Collections.emptyMap;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -201,7 +202,7 @@ class DefaultProblemBuilderTest {
     Problem problem = newInstance().extensions(m).build();
 
     assertThat(problem.getExtensions()).isEmpty();
-    assertThat(problem.getExtensions()).isEqualTo(Collections.emptyMap());
+    assertThat(problem.getExtensions()).isEqualTo(emptyMap());
   }
 
   @Test

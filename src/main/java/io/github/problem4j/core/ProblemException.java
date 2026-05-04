@@ -16,6 +16,8 @@
 
 package io.github.problem4j.core;
 
+import static io.github.problem4j.core.ProblemSupport.toExceptionMessage;
+
 import org.jspecify.annotations.Nullable;
 
 /**
@@ -44,7 +46,7 @@ public class ProblemException extends RuntimeException {
    * @since 1.3.0
    */
   public ProblemException(Problem problem) {
-    super(produceExceptionMessage(problem));
+    super(toExceptionMessage(problem));
     this.problem = problem;
   }
 
@@ -56,7 +58,7 @@ public class ProblemException extends RuntimeException {
    * @since 1.3.0
    */
   public ProblemException(@Nullable String message, Problem problem) {
-    super(message != null && !message.isEmpty() ? message : produceExceptionMessage(problem));
+    super(isNonEmpty(message) ? message : toExceptionMessage(problem));
     this.problem = problem;
   }
 
@@ -72,7 +74,7 @@ public class ProblemException extends RuntimeException {
    * @since 1.3.0
    */
   public ProblemException(Problem problem, @Nullable Throwable cause) {
-    super(produceExceptionMessage(problem), cause);
+    super(toExceptionMessage(problem), cause);
     this.problem = problem;
   }
 
@@ -87,8 +89,7 @@ public class ProblemException extends RuntimeException {
    * @since 1.3.0
    */
   public ProblemException(@Nullable String message, Problem problem, @Nullable Throwable cause) {
-    super(
-        message != null && !message.isEmpty() ? message : produceExceptionMessage(problem), cause);
+    super(isNonEmpty(message) ? message : toExceptionMessage(problem), cause);
     this.problem = problem;
   }
 
@@ -114,53 +115,11 @@ public class ProblemException extends RuntimeException {
       boolean enableSuppression,
       boolean writableStackTrace) {
     super(
-        message != null && !message.isEmpty() ? message : produceExceptionMessage(problem),
+        isNonEmpty(message) ? message : toExceptionMessage(problem),
         cause,
         enableSuppression,
         writableStackTrace);
     this.problem = problem;
-  }
-
-  /**
-   * Produces a string message for the exception based on the problem's title, detail, and status.
-   *
-   * <p>Format:
-   *
-   * <ul>
-   *   <li>Title
-   *   <li>Title (code: STATUS)
-   *   <li>Title: Detail
-   *   <li>Title: Detail (code: STATUS)
-   * </ul>
-   *
-   * If no information is available, returns {@code null}.
-   *
-   * @param problem the problem instance
-   * @return a formatted exception message or {@code null} if empty
-   */
-  private static @Nullable String produceExceptionMessage(Problem problem) {
-    StringBuilder builder = new StringBuilder();
-    builder.append(problem.getTitle());
-
-    if (problem.getDetail() != null) {
-      if (builder.length() > 0) {
-        builder.append(": ");
-      }
-      builder.append(problem.getDetail());
-    }
-
-    if (problem.getStatus() != 0) {
-      if (builder.length() > 0) {
-        builder.append(" ");
-      }
-      builder.append("(code: ").append(problem.getStatus()).append(")");
-    }
-
-    if (builder.length() == 0) {
-      return null;
-    }
-
-    return builder.toString();
   }
 
   /**
@@ -171,5 +130,9 @@ public class ProblemException extends RuntimeException {
    */
   public Problem getProblem() {
     return problem;
+  }
+
+  private static boolean isNonEmpty(@Nullable String message) {
+    return message != null && !message.isEmpty();
   }
 }

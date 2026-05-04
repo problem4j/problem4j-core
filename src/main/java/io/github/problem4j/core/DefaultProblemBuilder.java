@@ -16,6 +16,9 @@
 
 package io.github.problem4j.core;
 
+import static io.github.problem4j.core.ProblemSupport.isTypeBlank;
+import static io.github.problem4j.core.ProblemSupport.isTypeNonBlank;
+
 import java.io.Serializable;
 import java.net.URI;
 import java.util.ArrayList;
@@ -28,7 +31,7 @@ final class DefaultProblemBuilder implements ProblemBuilder, Serializable {
 
   private static final long serialVersionUID = 1L;
 
-  private final StatusTitleResolver titleResolver;
+  private final StatusTitleResolver statusTitleResolver;
 
   private @Nullable URI type = null;
   private @Nullable String title = null;
@@ -51,8 +54,8 @@ final class DefaultProblemBuilder implements ProblemBuilder, Serializable {
     this.extensions.putAll(problem.getExtensions());
   }
 
-  DefaultProblemBuilder(StatusTitleResolver titleResolver) {
-    this.titleResolver = titleResolver;
+  DefaultProblemBuilder(StatusTitleResolver statusTitleResolver) {
+    this.statusTitleResolver = statusTitleResolver;
   }
 
   @Override
@@ -98,12 +101,12 @@ final class DefaultProblemBuilder implements ProblemBuilder, Serializable {
   @Override
   public Problem build() {
     URI type = this.type;
-    if (type == null || ProblemSupport.isTypeBlank(type)) {
+    if (type == null || isTypeBlank(type)) {
       type = Problem.BLANK_TYPE;
     }
     String title = this.title;
     if (title == null) {
-      title = titleResolver.resolve(status).orElse(Problem.UNKNOWN_TITLE);
+      title = statusTitleResolver.resolve(status).orElse(Problem.UNKNOWN_TITLE);
     }
     return new DefaultProblem(type, title, status, detail, instance, extensions);
   }
@@ -111,7 +114,7 @@ final class DefaultProblemBuilder implements ProblemBuilder, Serializable {
   @Override
   public String toString() {
     List<String> entries = new ArrayList<>();
-    if (type != null && ProblemSupport.isTypeNonBlank(type)) {
+    if (type != null && isTypeNonBlank(type)) {
       entries.add("type=" + type);
     }
     if (title != null) {

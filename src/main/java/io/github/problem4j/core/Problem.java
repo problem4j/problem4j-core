@@ -16,8 +16,9 @@
 
 package io.github.problem4j.core;
 
+import static java.util.Collections.emptyMap;
+
 import java.net.URI;
-import java.util.Collections;
 import java.util.Map;
 import org.jspecify.annotations.Nullable;
 
@@ -229,7 +230,7 @@ public interface Problem {
    * @since 2.0.0
    */
   default Map<String, Object> getExtensions() {
-    return Collections.emptyMap();
+    return emptyMap();
   }
 
   /**
