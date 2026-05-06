@@ -23,12 +23,6 @@ import org.jspecify.annotations.Nullable;
  * Context passed for problem processing. Used by {@link ProblemMapper}. Provides access to values
  * used for message interpolation or metadata enrichment.
  *
- * <p><b>Well-known contracts:</b>
- *
- * <p>Use {@link ProblemSupport#equals(ProblemContext, ProblemContext)}, {@link
- * ProblemSupport#hashCode(ProblemContext)}, and {@link ProblemSupport#toString(ProblemContext)} as
- * the canonical reference implementations of these methods.
- *
  * @since 1.3.0
  */
 public interface ProblemContext {

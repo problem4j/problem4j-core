@@ -16,9 +16,10 @@
 
 package io.github.problem4j.core;
 
+import static java.util.Collections.unmodifiableMap;
+
 import java.io.Serializable;
 import java.net.URI;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import org.jspecify.annotations.Nullable;
@@ -76,7 +77,7 @@ final class DefaultProblem implements Problem, Serializable {
 
   @Override
   public Map<String, Object> getExtensions() {
-    return Collections.unmodifiableMap(extensions);
+    return unmodifiableMap(extensions);
   }
 
   @Override
@@ -87,8 +88,7 @@ final class DefaultProblem implements Problem, Serializable {
     if (!(obj instanceof Problem)) {
       return false;
     }
-    Problem other = (Problem) obj;
-    return ProblemSupport.equals(this, other);
+    return ProblemSupport.equals(this, (Problem) obj);
   }
 
   @Override
@@ -129,8 +129,7 @@ final class DefaultProblem implements Problem, Serializable {
       if (!(obj instanceof Problem.Extension)) {
         return false;
       }
-      Problem.Extension other = (Problem.Extension) obj;
-      return ProblemSupport.equals(this, other);
+      return ProblemSupport.equals(this, (Problem.Extension) obj);
     }
 
     @Override

@@ -18,12 +18,12 @@ package io.github.problem4j.core;
 
 import static io.github.problem4j.core.Problem.extension;
 import static java.util.Collections.emptyMap;
+import static java.util.Collections.singletonList;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.net.URI;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -249,7 +249,7 @@ class DefaultProblemBuilderTest {
     Problem problem =
         newInstance()
             .extension("name", "Mark")
-            .extensions(Collections.singletonList(Problem.extension("name", null)))
+            .extensions(singletonList(Problem.extension("name", null)))
             .build();
 
     assertThat(problem.getExtensions()).isEmpty();

@@ -39,10 +39,6 @@ import org.jspecify.annotations.Nullable;
  *
  * In addition, custom extensions can be added to provide extra context.
  *
- * <p>Use {@link ProblemSupport#equals(Problem, Problem)}, {@link ProblemSupport#hashCode(Problem)},
- * and {@link ProblemSupport#toString(Problem)} as the canonical reference implementations of these
- * methods.
- *
  * @since 1.3.0
  */
 public interface Problem {
@@ -246,13 +242,6 @@ public interface Problem {
 
   /**
    * Represents a single key-value extension in a {@link Problem}.
-   *
-   * <p><b>Well-known contracts:</b>
-   *
-   * <p>Use {@link ProblemSupport#equals(Problem.Extension, Problem.Extension)}, {@link
-   * ProblemSupport#hashCode(Problem.Extension)}, and {@link
-   * ProblemSupport#toString(Problem.Extension)} as the canonical reference implementations of these
-   * methods.
    *
    * @since 1.3.0
    */

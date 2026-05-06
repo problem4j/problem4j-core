@@ -16,8 +16,9 @@
 
 package io.github.problem4j.core;
 
+import static java.util.Collections.unmodifiableMap;
+
 import java.io.Serializable;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import org.jspecify.annotations.Nullable;
@@ -54,7 +55,7 @@ final class DefaultProblemContext implements ProblemContext, Serializable {
 
   @Override
   public Map<String, String> toMap() {
-    return Collections.unmodifiableMap(new HashMap<>(context));
+    return unmodifiableMap(new HashMap<>(context));
   }
 
   @Override
@@ -65,8 +66,7 @@ final class DefaultProblemContext implements ProblemContext, Serializable {
     if (!(obj instanceof ProblemContext)) {
       return false;
     }
-    ProblemContext other = (ProblemContext) obj;
-    return ProblemSupport.equals(this, other);
+    return ProblemSupport.equals(this, (ProblemContext) obj);
   }
 
   @Override
