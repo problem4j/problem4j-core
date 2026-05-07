@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog][keepachangelog], and this project adhe
 
 ## [Unreleased]
 
+## [2.0.0] - 2026-05-07
+
 ### Added
 
 - Add `DefaultProblemMapper` to replace `AbstractProblemMapper` and `ProblemMapper.create()`.
