@@ -26,7 +26,7 @@ import org.jspecify.annotations.Nullable;
 
 final class DefaultProblem implements Problem, Serializable {
 
-  private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 2L;
 
   private final URI type;
   private final String title;

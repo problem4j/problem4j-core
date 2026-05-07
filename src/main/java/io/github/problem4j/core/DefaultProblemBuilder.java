@@ -29,7 +29,7 @@ import org.jspecify.annotations.Nullable;
 
 final class DefaultProblemBuilder implements ProblemBuilder, Serializable {
 
-  private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 2L;
 
   private final StatusTitleResolver statusTitleResolver;
 

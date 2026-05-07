@@ -31,7 +31,7 @@ import org.jspecify.annotations.Nullable;
  */
 public class ProblemException extends RuntimeException {
 
-  private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 2L;
 
   /** The underlying {@link Problem} instance associated with this exception. */
   private final Problem problem;

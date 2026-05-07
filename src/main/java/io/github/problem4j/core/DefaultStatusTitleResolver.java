@@ -84,7 +84,7 @@ import java.util.Optional;
  */
 final class DefaultStatusTitleResolver implements StatusTitleResolver, Serializable {
 
-  private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 2L;
 
   private static final Map<Integer, String> TITLES = new HashMap<>();
 

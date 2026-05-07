@@ -23,7 +23,7 @@ import java.util.Optional;
 
 public class DummyStatusTitleResolver implements StatusTitleResolver, Serializable {
 
-  @Serial private static final long serialVersionUID = 1L;
+  @Serial private static final long serialVersionUID = 2L;
 
   static final int STATUS_THIS_IS_FINE = 218;
   static final int STATUS_SITE_IS_FROZEN = 530;

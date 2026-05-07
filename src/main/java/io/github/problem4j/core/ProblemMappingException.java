@@ -27,7 +27,7 @@ import org.jspecify.annotations.Nullable;
  */
 public class ProblemMappingException extends RuntimeException {
 
-  private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 2L;
 
   /**
    * Creates a new exception with no detail message and no cause.
