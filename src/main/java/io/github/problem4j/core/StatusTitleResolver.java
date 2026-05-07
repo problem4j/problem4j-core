@@ -41,7 +41,7 @@ public interface StatusTitleResolver {
   Optional<String> resolve(int status);
 
   /**
-   * Priority of this resolver — lower values take precedence over higher ones. Defaults to {@code
+   * Priority of this resolver - lower values take precedence over higher ones. Defaults to {@code
    * 0}.
    *
    * @return the priority of this resolver

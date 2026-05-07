@@ -62,11 +62,19 @@ import org.jspecify.annotations.Nullable;
 public class DefaultProblemMapper implements ProblemMapper {
 
   /**
+   * Regular expression to match placeholders in the format {@code {key}}. Captures the key for
+   * interpolation.
+   *
+   * @since 2.0.0
+   */
+  protected static final String PLACEHOLDER_REGEX = "\\{([^}]+)}";
+
+  /**
    * Pattern used to match interpolation placeholders of the form {@code {key}}.
    *
    * @since 2.0.0
    */
-  protected static final Pattern PLACEHOLDER = Pattern.compile("\\{([^}]+)}");
+  protected static final Pattern PLACEHOLDER = Pattern.compile(PLACEHOLDER_REGEX);
 
   /**
    * Placeholder key that resolves to the throwable's {@link Throwable#getMessage()}.
