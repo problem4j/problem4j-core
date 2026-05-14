@@ -80,7 +80,7 @@ public interface ProblemMapper {
   /**
    * Checks whether the given exception class is annotated with {@link ProblemMapping}.
    *
-   * @param t {@link Throwable} to check (can be {@code null})
+   * @param t {@link Throwable} to check (may be {@code null})
    * @return {@code true} if the exception is annotated with {@link ProblemMapping}, {@code false}
    *     otherwise
    * @since 1.3.0

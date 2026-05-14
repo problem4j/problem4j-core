@@ -107,7 +107,7 @@ public @interface ProblemMapping {
    *   <li>{@code {fieldName}} -&gt; value of any field in the exception class hierarchy
    * </ul>
    *
-   * <p>If empty, a default type (e.g., {@code about:blank}) may be applied by the processor. Null
+   * <p>If empty, a default type (e.g., {@code about:blank}) can be applied by the processor. Null
    * or empty placeholders are ignored.
    *
    * @return interpolated type URI for the problem
