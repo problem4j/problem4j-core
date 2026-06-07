@@ -17,7 +17,7 @@ Minimal Java library implementing RFC 7807/9457 "Problem Details". Immutable `Pr
 | `src/main/java`    | Production source               |
 | `src/test/java`    | Tests (JUnit Jupiter + AssertJ) |
 | `build.gradle.kts` | Build config & Spotless setup   |
-| `buildSrc`         | Custom Gradle plugins/scripts   |
+| `build-logic`      | Custom Gradle plugins/scripts   |
 
 ## Agent Rules
 

@@ -10,12 +10,12 @@ import org.gradle.api.provider.Property
  * This extension is intended to be used from build scripts to configure artifact-level metadata in
  * a lazy, configuration-cache-friendly way.
  *
- * All properties are modeled using Gradle [org.gradle.api.provider.Property] to:
+ * All properties are modeled using Gradle [Property] to:
  * - support lazy evaluation
  * - enable convention values
  * - remain compatible with configuration cache
  *
- * @constructor Injected by Gradle via [org.gradle.api.model.ObjectFactory].
+ * @constructor Injected by Gradle via [ObjectFactory].
  */
 abstract class InternalPublishingExtension @Inject constructor(objects: ObjectFactory) {
 
