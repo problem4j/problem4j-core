@@ -2,8 +2,7 @@ import org.gradle.api.tasks.testing.logging.TestExceptionFormat
 import org.gradle.api.tasks.testing.logging.TestLogEvent
 
 plugins {
-    id("internal.common-convention")
-    id("java")
+    id("java-library")
 }
 
 // The project is built using a JDK 25 toolchain, but the main sources are compiled with --release 8.
@@ -19,7 +18,11 @@ plugins {
 // Tests are NOT compiled with --release 8, so they may use newer Java APIs (e.g. JUnit 6).
 
 java {
-    toolchain.languageVersion = JavaLanguageVersion.of(25)
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(25)
+    }
+    withSourcesJar()
+    withJavadocJar()
 }
 
 tasks.withType<JavaCompile>().configureEach {
@@ -27,7 +30,7 @@ tasks.withType<JavaCompile>().configureEach {
     options.encoding = "UTF-8"
 }
 
-tasks.named<JavaCompile>("compileJava") {
+tasks.named<JavaCompile>("compileJava").configure {
     options.release = 8
 }
 
@@ -61,4 +64,22 @@ tasks.withType<Jar>().configureEach {
         into("META-INF/")
         rename { "LICENSE.txt" }
     }
+}
+
+// Usage:
+//   ./gradlew printVersion
+tasks.register<DefaultTask>("printVersion") {
+    description = "Prints the current project version to the console."
+    group = "help"
+
+    val projectName = project.name
+    val projectVersion = project.version.toString()
+
+    doLast {
+        println("$projectName version: $projectVersion")
+    }
+}
+
+tasks.withType<PublishToMavenLocal>().configureEach {
+    finalizedBy("printVersion")
 }

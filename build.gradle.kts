@@ -27,7 +27,7 @@ dependencies {
     errorprone(libs.nullaway)
 }
 
-// see buildSrc/src/main/kotlin/internal.publishing-convention.gradle.kts
+// see build-logic/src/main/kotlin/internal.publishing-convention.gradle.kts
 internalPublishing {
     displayName = "Problem4J Core"
     description = "Core library implementing Problem model according to RFC7807 (and RFC9457)"
@@ -50,7 +50,7 @@ spotless {
         target("**/src/**/*.java")
         licenseHeaderFile(licenseHeader).updateYearWithLatest(updateLicenseYear)
 
-        // NOTE: decided not to upgrade Google Java Format, as versions 1.29+ require running it on Java 21
+        // NOTE: decided not to upgrade Google Java Format, as versions 1.29+ require running Gradle on Java 21
         googleJavaFormat("1.28.0")
         forbidWildcardImports()
         endWithNewline()
@@ -77,13 +77,14 @@ spotless {
     kotlin {
         target("**/src/**/*.kt")
 
-        ktfmt("0.62").metaStyle()
+        ktfmt("0.63").metaStyle()
         endWithNewline()
         lineEndings = LineEnding.UNIX
     }
 
     kotlinGradle {
-        target("*.gradle.kts", "buildSrc/*.gradle.kts", "buildSrc/src/**/*.gradle.kts")
+        target("**/*.gradle.kts")
+        targetExclude("**/build/**")
 
         ktlint("1.8.0").editorConfigOverride(mapOf("max_line_length" to "120"))
         endWithNewline()

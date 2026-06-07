@@ -1,5 +1,5 @@
 plugins {
-    id("internal.java-convention")
+    id("java")
 }
 
 // This convention plugin adds compilation of module-info.java with Java 9, transforming the output into a multi-release
