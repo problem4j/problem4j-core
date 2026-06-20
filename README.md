@@ -1,8 +1,9 @@
 # Problem4J Core
 
+[![Codecov](https://codecov.io/gh/problem4j/problem4j-core/branch/release-v1.4.x/graph/badge.svg?token=C2VE2C1WSW)](https://codecov.io/gh/problem4j/problem4j-core)
 [![Build Status](https://github.com/problem4j/problem4j-core/actions/workflows/gradle-build.yml/badge.svg)](https://github.com/problem4j/problem4j-core/actions/workflows/gradle-build.yml)
 [![Sonatype](https://img.shields.io/maven-central/v/io.github.problem4j/problem4j-core)][maven-central]
-[![License](https://img.shields.io/github/license/problem4j/problem4j-core)](https://github.com/problem4j/problem4j-core/blob/main/LICENSE)
+[![License](https://img.shields.io/badge/license-Apache%202.0-green)](https://github.com/problem4j/problem4j-core/blob/main/LICENSE)
 
 This library provides a minimal, framework-agnostic Java model of the [RFC 7807][rfc7807] "Problem Details" object, with
 an immutable `Problem` class and a fluent `ProblemBuilder` for convenient construction.
@@ -23,24 +24,24 @@ It is intended to be used as a **foundation** for other libraries or application
 
 ## Features
 
-- ✅ Immutable `Problem` data model.
-- ✅ Dedicated unchecked `ProblemException` to be used in error handling.
-- ✅ Builder pattern for fluent construction.
-- ✅ Static `Problem.of(...)` factory methods for in-place creation convenience (since `v1.4.0`).
-- ✅ `@ProblemMapping` annotation and `ProblemMapper` to allow declarative approach in converting exception instances
-  into `Problem` objects.
-- ✅ Serializable and easy to log or format.
-- ✅ HTTP-agnostic (no external dependencies).
-- ✅ Follows [RFC 7807][rfc7807] semantics:
+- Immutable `Problem` data model.
+- Dedicated unchecked `ProblemException` to be used in error handling.
+- Builder pattern for fluent construction.
+- Static `Problem.of(...)` factory methods for in-place creation convenience.
+- `@ProblemMapping` annotation and `ProblemMapper` to allow declarative approach in converting exception instances into
+  `Problem` objects.
+- Serializable and easy to log or format.
+- HTTP-agnostic (no external dependencies).
+- Follows [RFC 7807][rfc7807] semantics:
     - `type` (URI),
     - `title` (short summary),
     - `status` (numeric code),
     - `detail` (detailed description),
     - `instance` (URI to the specific occurrence),
     - custom field extensions.
-- ✅ Integrated with JSpecify annotations for nullability and Kotlin interop (since `v1.4.0`).
-- ✅ Supports Java version 8+, but due to producing multi-release JAR, can support **Java Platform Module System** if
-  using Java version 9+ (since `v1.4.0`).
+- Integrated with JSpecify annotations for nullability and Kotlin interop.
+- Supports Java version 8+, but due to producing multi-release JAR, can support **Java Platform Module System** if using
+  Java version 9+.
 
 ## Example
 
@@ -148,7 +149,7 @@ dependency.
 <details>
 <summary><b>Expand...</b></summary>
 
-Gradle **9.x+** requires **Java 17** or higher to run. For building the project, Gradle automatically picks up **Java 
+Gradle **9.x+** requires **Java 17** or higher to run. For building the project, Gradle automatically picks up **Java
 25** via **toolchains** and the `foojay-resolver-convention` plugin. This Java version is needed because the project
 uses **ErrorProne** and **NullAway** for static nullness analysis.
 
@@ -172,8 +173,8 @@ To **execute tests** use `test` task. Tests do not change `options.release` so n
 
 ---
 
-To **format the code** according to the style defined in [`build.gradle.kts`](./build.gradle.kts) rules use `spotlessApply`
-task. **Note** that **building will fail** if code is not properly formatted.
+To **format the code** according to the style defined in [`build.gradle.kts`](./build.gradle.kts) rules use 
+`spotlessApply` task. **Note** that **building will fail** if code is not properly formatted.
 
 ```bash
 ./gradlew spotlessApply
