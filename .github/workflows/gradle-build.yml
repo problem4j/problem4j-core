@@ -34,4 +34,5 @@ jobs:
       java-version: ${{ matrix.java }}
       codecov-enabled: ${{ matrix.java == 25 }}
       codecov-files: "build/reports/jacoco/test/jacocoTestReport.xml"
-    secrets: inherit
+    secrets:
+      CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
