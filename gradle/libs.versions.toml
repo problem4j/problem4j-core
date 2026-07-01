@@ -6,7 +6,7 @@ errorprone-plugin = "5.1.0"
 idea-ext = "1.4.1"
 jspecify = "1.0.0"
 junit = "6.1.1"
-nmcp = "1.6.0"
+nmcp = "1.6.1"
 nullaway = "0.13.4"
 spotless = "8.8.0"
 
