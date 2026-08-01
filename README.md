@@ -1,9 +1,11 @@
-# Problem4J Core
+<h1 align="center">Problem4J Core</h1>
 
-[![Codecov](https://codecov.io/gh/problem4j/problem4j-core/graph/badge.svg?token=C2VE2C1WSW)](https://codecov.io/gh/problem4j/problem4j-core)
-[![Build Status](https://github.com/problem4j/problem4j-core/actions/workflows/gradle-build.yml/badge.svg)](https://github.com/problem4j/problem4j-core/actions/workflows/gradle-build.yml)
-[![Sonatype](https://img.shields.io/maven-central/v/io.github.problem4j/problem4j-core)][maven-central]
-[![License](https://img.shields.io/badge/license-Apache%202.0-green)](https://github.com/problem4j/problem4j-core/blob/main/LICENSE)
+<p align="center">
+  <a href="https://codecov.io/gh/problem4j/problem4j-core"><img src="https://codecov.io/gh/problem4j/problem4j-core/graph/badge.svg?token=C2VE2C1WSW" alt="Codecov"></a>
+  <a href="https://github.com/problem4j/problem4j-core/actions/workflows/gradle-build.yml"><img src="https://github.com/problem4j/problem4j-core/actions/workflows/gradle-build.yml/badge.svg" alt="Build Status"></a>
+  <a href="https://central.sonatype.com/artifact/io.github.problem4j/problem4j-core"><img src="https://img.shields.io/maven-central/v/io.github.problem4j/problem4j-core" alt="Sonatype"></a>
+  <a href="https://github.com/problem4j/problem4j-core/blob/main/LICENSE"><img src="https://img.shields.io/badge/license-Apache%202.0-green" alt="License"></a>
+</p>
 
 This library provides a minimal, framework-agnostic Java model of the [RFC 7807][rfc7807] "Problem Details" object, with
 an immutable `Problem` class and a fluent `ProblemBuilder` for convenient construction.
@@ -180,8 +182,8 @@ To **format the code** according to the style defined in [`build.gradle.kts`](./
 ```
 
 **Note** that if the year has changed, add `-Pspotless.license-year-enabled` flag to update the year in license headers.
-The [publishing GitHub Action](.github/workflows/gradle-publish-release.yml) will fail if the year is not updated, but
-for local development and builds you can choose to skip it and update the year later.
+The [publishing GitHub Action](.github/workflows/gradle-publish-release.yml) will fail if the year is not updated, but for local
+development and builds you can choose to skip it and update the year later.
 
 ```bash
 ./gradlew spotlessApply -Pspotless.license-year-enabled
@@ -205,8 +207,6 @@ repositories {
 ```
 
 </details>
-
-[maven-central]: https://central.sonatype.com/artifact/io.github.problem4j/problem4j-core
 
 [problem4j-core]: https://github.com/problem4j/problem4j-core
 
