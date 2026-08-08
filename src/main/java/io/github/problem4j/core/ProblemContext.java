@@ -92,8 +92,11 @@ public interface ProblemContext {
    * @since 2.0.0
    */
   default ProblemContext putAll(Map<String, ? extends @Nullable String> entries) {
-    entries.forEach(this::put);
-    return this;
+    ProblemContext context = this;
+    for (Map.Entry<String, ? extends @Nullable String> entry : entries.entrySet()) {
+      context = context.put(entry.getKey(), entry.getValue());
+    }
+    return context;
   }
 
   /**

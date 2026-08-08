@@ -119,8 +119,11 @@ public interface ProblemBuilder {
    * @since 1.3.3
    */
   default ProblemBuilder extensions(Map<String, ? extends @Nullable Object> extensions) {
-    extensions.forEach(this::extension);
-    return this;
+    ProblemBuilder builder = this;
+    for (Map.Entry<String, ? extends @Nullable Object> entry : extensions.entrySet()) {
+      builder = builder.extension(entry.getKey(), entry.getValue());
+    }
+    return builder;
   }
 
   /**
@@ -146,10 +149,11 @@ public interface ProblemBuilder {
    * @since 1.3.3
    */
   default ProblemBuilder extensions(Problem.Extension... extensions) {
+    ProblemBuilder builder = this;
     for (Problem.Extension e : extensions) {
-      extension(e);
+      builder = builder.extension(e);
     }
-    return this;
+    return builder;
   }
 
   /**
@@ -162,8 +166,11 @@ public interface ProblemBuilder {
    * @since 2.0.0
    */
   default ProblemBuilder extensions(Iterable<? extends Problem.Extension> extensions) {
-    extensions.forEach(this::extension);
-    return this;
+    ProblemBuilder builder = this;
+    for (Problem.Extension extension : extensions) {
+      builder = builder.extension(extension);
+    }
+    return builder;
   }
 
   /**

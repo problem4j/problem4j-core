@@ -6,6 +6,11 @@ The format is based on [Keep a Changelog][keepachangelog], and this project adhe
 
 ## [Unreleased]
 
+### Fixed
+
+- Unify default methods of `ProblemBuilder` interface to always return reference after transformation, even if
+  implementation always returns `this`.
+
 ## [2.0.0] - 2026-05-07
 
 ### Added
