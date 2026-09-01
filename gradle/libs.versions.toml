@@ -2,7 +2,7 @@
 assertj = "3.27.7"
 mockito = "5.23.0"
 errorprone = "2.50.0"
-errorprone-plugin = "5.1.0"
+errorprone-plugin = "5.1.1"
 idea-ext = "1.4.1"
 jspecify = "1.0.1"
 junit = "6.1.2"
