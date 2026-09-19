@@ -13,6 +13,7 @@ The format is based on [Keep a Changelog][keepachangelog], and this project adhe
 - Unify `toString()` in `Problem`, `ProblemContext` and `ProblemBuilder` by using `StringBuilder` instead of `List`.
 - Compute `ProblemSupport.hashCode(ProblemContext)` directly from the snapshot's `hashCode()` instead of wrapping it in
   `Objects.hash(...)`, which allocated an intermediate array.
+- Resolve `Throwable.getMessage()` once per `{message}` placeholder during interpolation in `DefaultProblemMapper`.
 
 ## [2.0.0] - 2026-05-07
 

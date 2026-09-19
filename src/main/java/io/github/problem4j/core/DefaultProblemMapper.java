@@ -367,7 +367,7 @@ public class DefaultProblemMapper implements ProblemMapper {
    */
   protected String interpolate(String template, Throwable t, @Nullable ProblemContext context) {
     Matcher m = PLACEHOLDER.matcher(template);
-    StringBuilder sb = new StringBuilder();
+    StringBuilder sb = new StringBuilder(template.length() + 32);
 
     int lastEnd = 0;
     while (m.find()) {
@@ -377,7 +377,8 @@ public class DefaultProblemMapper implements ProblemMapper {
       String replacement;
 
       if (MESSAGE_LABEL.equals(key)) {
-        replacement = t.getMessage() == null ? "" : String.valueOf(t.getMessage());
+        String message = t.getMessage();
+        replacement = message != null ? message : "";
       } else if (key.startsWith(CONTEXT_LABEL_PREFIX)) {
         String contextKey = key.substring(CONTEXT_LABEL_PREFIX.length());
         String contextValue = context != null ? context.get(contextKey) : null;
