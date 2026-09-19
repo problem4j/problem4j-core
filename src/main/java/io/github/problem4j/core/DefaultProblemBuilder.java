@@ -16,14 +16,13 @@
 
 package io.github.problem4j.core;
 
+import static io.github.problem4j.core.ProblemSupport.appendSortedEntries;
 import static io.github.problem4j.core.ProblemSupport.isTypeBlank;
 import static io.github.problem4j.core.ProblemSupport.isTypeNonBlank;
 
 import java.io.Serializable;
 import java.net.URI;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import org.jspecify.annotations.Nullable;
 
@@ -113,23 +112,24 @@ final class DefaultProblemBuilder implements ProblemBuilder, Serializable {
 
   @Override
   public String toString() {
-    List<String> entries = new ArrayList<>();
+    StringBuilder builder = new StringBuilder(128).append("ProblemBuilder[");
     if (type != null && isTypeNonBlank(type)) {
-      entries.add("type=" + type);
+      builder.append("type=").append(type).append(", ");
     }
     if (title != null) {
-      entries.add("title=" + title);
+      builder.append("title=").append(title).append(", ");
     }
-    entries.add("status=" + status);
+    builder.append("status=").append(status);
     if (detail != null) {
-      entries.add("detail=" + detail);
+      builder.append(", detail=").append(detail);
     }
     if (instance != null) {
-      entries.add("instance=" + instance);
+      builder.append(", instance=").append(instance);
     }
-    extensions.entrySet().stream()
-        .sorted(Map.Entry.comparingByKey())
-        .forEach(entry -> entries.add(entry.getKey() + "=" + entry.getValue()));
-    return "ProblemBuilder[" + String.join(", ", entries) + "]";
+    if (!extensions.isEmpty()) {
+      builder.append(", ");
+      appendSortedEntries(builder, extensions);
+    }
+    return builder.append(']').toString();
   }
 }

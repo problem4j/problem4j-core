@@ -17,8 +17,7 @@
 package io.github.problem4j.core;
 
 import java.net.URI;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Arrays;
 import java.util.Map;
 import java.util.Objects;
 import org.jspecify.annotations.Nullable;
@@ -91,22 +90,26 @@ public final class ProblemSupport {
    * @since 2.0.0
    */
   public static String toString(String label, Problem problem) {
-    List<String> entries = new ArrayList<>();
+    StringBuilder builder = new StringBuilder(128).append(label).append('[');
     if (problem.isTypeNonBlank()) {
-      entries.add("type=" + problem.getType());
+      builder.append("type=").append(problem.getType()).append(", ");
     }
-    entries.add("title=" + problem.getTitle());
-    entries.add("status=" + problem.getStatus());
-    if (problem.getDetail() != null) {
-      entries.add("detail=" + problem.getDetail());
+    builder.append("title=").append(problem.getTitle());
+    builder.append(", status=").append(problem.getStatus());
+    String detail = problem.getDetail();
+    if (detail != null) {
+      builder.append(", detail=").append(detail);
     }
-    if (problem.getInstance() != null) {
-      entries.add("instance=" + problem.getInstance());
+    URI instance = problem.getInstance();
+    if (instance != null) {
+      builder.append(", instance=").append(instance);
     }
-    problem.getExtensions().entrySet().stream()
-        .sorted(Map.Entry.comparingByKey())
-        .forEach(entry -> entries.add(entry.getKey() + "=" + entry.getValue()));
-    return label + "[" + String.join(", ", entries) + "]";
+    Map<String, Object> extensions = problem.getExtensions();
+    if (!extensions.isEmpty()) {
+      builder.append(", ");
+      appendSortedEntries(builder, extensions);
+    }
+    return builder.append(']').toString();
   }
 
   /**
@@ -203,14 +206,13 @@ public final class ProblemSupport {
    * @since 2.0.0
    */
   public static String toString(String label, ProblemContext context) {
-    if (context.toMap().isEmpty()) {
+    Map<String, String> map = context.toMap();
+    if (map.isEmpty()) {
       return label + "[EMPTY]";
     }
-    List<String> entries = new ArrayList<>();
-    context.toMap().entrySet().stream()
-        .sorted(Map.Entry.comparingByKey())
-        .forEach(entry -> entries.add(entry.getKey() + "=" + entry.getValue()));
-    return label + "[" + String.join(", ", entries) + "]";
+    StringBuilder builder = new StringBuilder(64).append(label).append('[');
+    appendSortedEntries(builder, map);
+    return builder.append(']').toString();
   }
 
   /**
@@ -274,6 +276,26 @@ public final class ProblemSupport {
       return null;
     }
     return builder.toString();
+  }
+
+  static void appendSortedEntries(StringBuilder builder, Map<String, ?> map) {
+    int size = map.size();
+    if (size == 0) {
+      return;
+    }
+    if (size == 1) {
+      Map.Entry<String, ?> entry = map.entrySet().iterator().next();
+      builder.append(entry.getKey()).append('=').append(entry.getValue());
+      return;
+    }
+    String[] keys = map.keySet().toArray(new String[size]);
+    Arrays.sort(keys);
+    for (int i = 0; i < keys.length; i++) {
+      if (i > 0) {
+        builder.append(", ");
+      }
+      builder.append(keys[i]).append('=').append(map.get(keys[i]));
+    }
   }
 
   private ProblemSupport() {}

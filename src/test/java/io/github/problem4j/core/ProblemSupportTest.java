@@ -19,6 +19,9 @@ package io.github.problem4j.core;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.net.URI;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 import org.junit.jupiter.api.Test;
 
 class ProblemSupportTest {
@@ -378,5 +381,61 @@ class ProblemSupportTest {
   @Test
   void givenEmptyUriType_whenIsTypeNonBlank_thenFalse() {
     assertThat(ProblemSupport.isTypeNonBlank(URI.create(""))).isFalse();
+  }
+
+  @Test
+  void givenEmptyMap_whenAppendSortedEntries_thenBuilderUnchanged() {
+    StringBuilder builder = new StringBuilder("prefix");
+
+    ProblemSupport.appendSortedEntries(builder, Collections.emptyMap());
+
+    assertThat(builder).hasToString("prefix");
+  }
+
+  @Test
+  void givenSingleEntry_whenAppendSortedEntries_thenEntryAppendedWithoutSeparator() {
+    StringBuilder builder = new StringBuilder("prefix");
+
+    ProblemSupport.appendSortedEntries(builder, Collections.singletonMap("k", "v"));
+
+    assertThat(builder).hasToString("prefixk=v");
+  }
+
+  @Test
+  void givenMultipleEntries_whenAppendSortedEntries_thenSortedByKey() {
+    Map<String, Object> map = new HashMap<>();
+    map.put("z", "last");
+    map.put("a", "first");
+    map.put("m", 42);
+    StringBuilder builder = new StringBuilder();
+
+    ProblemSupport.appendSortedEntries(builder, map);
+
+    assertThat(builder).hasToString("a=first, m=42, z=last");
+  }
+
+  @Test
+  void givenNullValue_whenAppendSortedEntries_thenNullRendered() {
+    Map<String, Object> map = new HashMap<>();
+    map.put("b", null);
+    map.put("a", "v");
+    StringBuilder builder = new StringBuilder();
+
+    ProblemSupport.appendSortedEntries(builder, map);
+
+    assertThat(builder).hasToString("a=v, b=null");
+  }
+
+  @Test
+  void givenCaseDifferingKeys_whenAppendSortedEntries_thenNaturalStringOrderUsed() {
+    Map<String, Object> map = new HashMap<>();
+    map.put("b", 1);
+    map.put("B", 2);
+    map.put("a", 3);
+    StringBuilder builder = new StringBuilder();
+
+    ProblemSupport.appendSortedEntries(builder, map);
+
+    assertThat(builder).hasToString("B=2, a=3, b=1");
   }
 }

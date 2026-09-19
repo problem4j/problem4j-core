@@ -10,6 +10,7 @@ The format is based on [Keep a Changelog][keepachangelog], and this project adhe
 
 - Unify default methods of `ProblemBuilder` interface to always return reference after transformation, even if
   implementation always returns `this`.
+- Unify `toString()` in `Problem`, `ProblemContext` and `ProblemBuilder` by using `StringBuilder` instead of `List`.
 
 ## [2.0.0] - 2026-05-07
 
