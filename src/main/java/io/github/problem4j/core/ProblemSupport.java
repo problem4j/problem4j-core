@@ -181,7 +181,7 @@ public final class ProblemSupport {
    * @since 2.0.0
    */
   public static int hashCode(ProblemContext context) {
-    return Objects.hash(context.toMap());
+    return context.toMap().hashCode();
   }
 
   /**
