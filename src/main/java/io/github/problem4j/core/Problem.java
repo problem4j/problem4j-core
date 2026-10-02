@@ -59,11 +59,26 @@ public interface Problem {
   String UNKNOWN_TITLE = "Unknown Error";
 
   /**
+   * MIME content type for JSON problem instances.
+   *
+   * @since 2.0.1
+   */
+  String CONTENT_TYPE_JSON = "application/problem+json";
+
+  /**
+   * MIME content type for XML problem instances.
+   *
+   * @since 2.0.1
+   */
+  String CONTENT_TYPE_XML = "application/problem+xml";
+
+  /**
    * MIME content type for problem instances.
    *
    * @since 1.3.0
+   * @deprecated since 2.0.1; use {@link #CONTENT_TYPE_JSON}
    */
-  String CONTENT_TYPE = "application/problem+json";
+  @Deprecated String CONTENT_TYPE = CONTENT_TYPE_JSON;
 
   /**
    * Creates a new builder for constructing {@link Problem} instances.

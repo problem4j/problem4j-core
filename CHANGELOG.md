@@ -14,6 +14,7 @@ The format is based on [Keep a Changelog][keepachangelog], and this project adhe
 - Compute `ProblemSupport.hashCode(ProblemContext)` directly from the snapshot's `hashCode()` instead of wrapping it in
   `Objects.hash(...)`, which allocated an intermediate array.
 - Resolve `Throwable.getMessage()` once per `{message}` placeholder during interpolation in `DefaultProblemMapper`.
+- Make explicit `Content-Type` consts for both `problem+json` and `problem+xml`.
 
 ## [2.0.0] - 2026-05-07
 
