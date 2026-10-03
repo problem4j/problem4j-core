@@ -8,7 +8,7 @@ jspecify = "1.0.1"
 junit = "6.1.3"
 nmcp = "1.6.2"
 nullaway = "0.14.2"
-spotless = "8.10.2"
+spotless = "8.10.3"
 
 [plugins]
 errorprone = { id = "net.ltgt.errorprone", version.ref = "errorprone-plugin" }
