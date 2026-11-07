@@ -1,9 +1,7 @@
 import com.diffplug.spotless.LineEnding
 
 plugins {
-    id("internal.errorprone-convention")
     id("internal.idea-convention")
-    id("internal.jacoco-convention")
     id("internal.java-library-convention")
     id("internal.mrjar-module-info-convention")
     id("internal.publishing-convention")
@@ -27,7 +25,7 @@ dependencies {
 }
 
 // see build-logic/src/main/kotlin/internal.publishing-convention.gradle.kts
-internalPublishing {
+internalBuild {
     displayName = "Problem4J Core"
     description = "Core library implementing Problem model according to RFC7807 (and RFC9457)"
 }
@@ -43,7 +41,6 @@ nmcp {
 
 spotless {
     val licenseHeader = "${rootProject.rootDir}/gradle/license-header.java"
-
     java {
         target("**/src/**/*.java")
         licenseHeaderFile(licenseHeader)
