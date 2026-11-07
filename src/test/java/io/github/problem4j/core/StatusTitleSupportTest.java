@@ -104,8 +104,10 @@ class StatusTitleSupportTest {
 
   @Test
   void givenCustomStatusCode_whenResolvingTitle_thenReturnsCustomTitle() {
-    assertThat(StatusTitleSupport.getResolver().resolve(STATUS_THIS_IS_FINE)).contains("This is Fine");
-    assertThat(StatusTitleSupport.getResolver().resolve(STATUS_SITE_IS_FROZEN)).contains("Site is Frozen");
+    assertThat(StatusTitleSupport.getResolver().resolve(STATUS_THIS_IS_FINE))
+        .contains("This is Fine");
+    assertThat(StatusTitleSupport.getResolver().resolve(STATUS_SITE_IS_FROZEN))
+        .contains("Site is Frozen");
     assertThat(StatusTitleSupport.getResolver().resolve(STATUS_NETWORK_READ_TIMEOUT))
         .contains("Network Read Timeout Error");
   }

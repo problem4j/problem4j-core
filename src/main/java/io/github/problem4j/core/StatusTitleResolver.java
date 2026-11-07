@@ -21,17 +21,18 @@ import java.util.Optional;
 /**
  * Resolves a human-readable title for an HTTP status code.
  *
- * <p>Implementations are discovered via {@link java.util.ServiceLoader}. When multiple implementations are present, the
- * one with the lowest {@link #getPriority()} value takes precedence. If none are registered, a built-in resolver
- * provides titles for HTTP status codes well-known at the time of library release.
+ * <p>Implementations are discovered via {@link java.util.ServiceLoader}. When multiple
+ * implementations are present, the one with the lowest {@link #getPriority()} value takes
+ * precedence. If none are registered, a built-in resolver provides titles for HTTP status codes
+ * well-known at the time of library release.
  *
  * @since 2.0.0
  */
 public interface StatusTitleResolver {
 
   /**
-   * Returns the title for the given HTTP status code, or an empty {@code Optional} if this resolver does not recognize
-   * it.
+   * Returns the title for the given HTTP status code, or an empty {@code Optional} if this resolver
+   * does not recognize it.
    *
    * @param status the HTTP status code
    * @return the resolved title, or empty if not recognized
@@ -40,7 +41,8 @@ public interface StatusTitleResolver {
   Optional<String> resolve(int status);
 
   /**
-   * Priority of this resolver - lower values take precedence over higher ones. Defaults to {@code 0}.
+   * Priority of this resolver - lower values take precedence over higher ones. Defaults to {@code
+   * 0}.
    *
    * @return the priority of this resolver
    * @since 2.0.0

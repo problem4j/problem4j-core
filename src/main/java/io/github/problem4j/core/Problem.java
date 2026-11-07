@@ -23,10 +23,11 @@ import java.util.Map;
 import org.jspecify.annotations.Nullable;
 
 /**
- * Represents a problem detail according to the <a href="https://tools.ietf.org/html/rfc7807">RFC 7807</a> (and <a
- * href="https://tools.ietf.org/html/rfc9457">RFC 9457</a>) specification.
+ * Represents a problem detail according to the <a href="https://tools.ietf.org/html/rfc7807">RFC
+ * 7807</a> (and <a href="https://tools.ietf.org/html/rfc9457">RFC 9457</a>) specification.
  *
- * <p>Instances of {@link Problem} are intended to be immutable. They provide standard fields such as:
+ * <p>Instances of {@link Problem} are intended to be immutable. They provide standard fields such
+ * as:
  *
  * <ul>
  *   <li>{@code type} - a URI identifying the type of the problem
@@ -50,7 +51,8 @@ public interface Problem {
   URI BLANK_TYPE = URI.create("about:blank");
 
   /**
-   * Fallback {@code title} used when no title can be resolved during {@link ProblemBuilder#build()}.
+   * Fallback {@code title} used when no title can be resolved during {@link
+   * ProblemBuilder#build()}.
    *
    * @since 1.4.0
    */
@@ -186,8 +188,8 @@ public interface Problem {
   }
 
   /**
-   * A convenience method to verify if {@code type} field was assigned, as {@link #BLANK_TYPE} also means that type is
-   * unassigned.
+   * A convenience method to verify if {@code type} field was assigned, as {@link #BLANK_TYPE} also
+   * means that type is unassigned.
    *
    * @return {@code true} if {@code type} is assigned to a non-blank value, {@code false} otherwise
    * @since 1.3.0
@@ -243,8 +245,8 @@ public interface Problem {
   }
 
   /**
-   * Converts this problem instance into a {@link Problem} builder, pre-populated with its values. Useful for creating a
-   * modified copy.
+   * Converts this problem instance into a {@link Problem} builder, pre-populated with its values.
+   * Useful for creating a modified copy.
    *
    * @return a builder with the current problem's values
    * @since 1.3.0

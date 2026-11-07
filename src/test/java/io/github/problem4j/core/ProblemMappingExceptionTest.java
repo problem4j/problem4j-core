@@ -21,8 +21,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.jupiter.api.Test;
 
 /**
- * Some of the tests in this class may appear trivial or unnecessary. They are intentionally included to explore and
- * validate the behavior of various code coverage analysis tools.
+ * Some of the tests in this class may appear trivial or unnecessary. They are intentionally
+ * included to explore and validate the behavior of various code coverage analysis tools.
  */
 class ProblemMappingExceptionTest {
 
@@ -62,7 +62,8 @@ class ProblemMappingExceptionTest {
   @Test
   void givenFullConstructor_whenCreatingException_thenAllFieldsAreSet() {
     RuntimeException cause = new RuntimeException("root");
-    ProblemMappingException ex = new TestProblemMappingException("mapping failed", cause, true, false);
+    ProblemMappingException ex =
+        new TestProblemMappingException("mapping failed", cause, true, false);
 
     assertThat(ex.getMessage()).isEqualTo("mapping failed");
     assertThat(ex.getCause()).isSameAs(cause);

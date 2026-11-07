@@ -23,8 +23,9 @@ import org.jspecify.annotations.Nullable;
 /**
  * Runtime exception that wraps a {@link Problem} instance.
  *
- * <p>Provides a convenient way to throw exceptions associated with problem details according to RFC 7807. The exception
- * message is automatically generated from the problem's title, detail, and status unless explicitly provided.
+ * <p>Provides a convenient way to throw exceptions associated with problem details according to RFC
+ * 7807. The exception message is automatically generated from the problem's title, detail, and
+ * status unless explicitly provided.
  *
  * @since 1.3.0
  */
@@ -38,7 +39,8 @@ public class ProblemException extends RuntimeException {
   /**
    * Constructs a {@link ProblemException} with the given {@link Problem}.
    *
-   * <p>The exception message is automatically generated from the problem's title, detail, and status code.
+   * <p>The exception message is automatically generated from the problem's title, detail, and
+   * status code.
    *
    * @param problem the problem instance to associate with this exception
    * @since 1.3.0
@@ -63,11 +65,12 @@ public class ProblemException extends RuntimeException {
   /**
    * Constructs a {@link ProblemException} with the given {@link Problem} and a cause.
    *
-   * <p>The exception message is automatically generated from the problem's title, detail, and status code.
+   * <p>The exception message is automatically generated from the problem's title, detail, and
+   * status code.
    *
    * @param problem the problem instance to associate with this exception
-   * @param cause the root cause of this exception (a {@code null} value is permitted, and indicates that the cause is
-   *     nonexistent or unknown)
+   * @param cause the root cause of this exception (a {@code null} value is permitted, and indicates
+   *     that the cause is nonexistent or unknown)
    * @since 1.3.0
    */
   public ProblemException(Problem problem, @Nullable Throwable cause) {
@@ -76,12 +79,13 @@ public class ProblemException extends RuntimeException {
   }
 
   /**
-   * Constructs a {@link ProblemException} with a custom message, the given {@link Problem}, and a cause.
+   * Constructs a {@link ProblemException} with a custom message, the given {@link Problem}, and a
+   * cause.
    *
    * @param message custom exception message (may be {@code null})
    * @param problem the problem instance to associate with this exception
-   * @param cause the root cause of this exception (a {@code null} value is permitted, and indicates that the cause is
-   *     nonexistent or unknown)
+   * @param cause the root cause of this exception (a {@code null} value is permitted, and indicates
+   *     that the cause is nonexistent or unknown)
    * @since 1.3.0
    */
   public ProblemException(@Nullable String message, Problem problem, @Nullable Throwable cause) {
@@ -92,13 +96,14 @@ public class ProblemException extends RuntimeException {
   /**
    * Constructs a {@link ProblemException} with full control over exception properties.
    *
-   * <p>This constructor allows specifying a custom message, associated {@link Problem}, a root cause, and advanced
-   * options such as whether suppression is enabled and whether the stack trace should be writable.
+   * <p>This constructor allows specifying a custom message, associated {@link Problem}, a root
+   * cause, and advanced options such as whether suppression is enabled and whether the stack trace
+   * should be writable.
    *
    * @param message custom exception message (may be {@code null})
    * @param problem the problem instance to associate with this exception
-   * @param cause the root cause of this exception (a {@code null} value is permitted, and indicates that the cause is
-   *     nonexistent or unknown)
+   * @param cause the root cause of this exception (a {@code null} value is permitted, and indicates
+   *     that the cause is nonexistent or unknown)
    * @param enableSuppression whether suppression is enabled
    * @param writableStackTrace whether the stack trace should be writable
    * @since 1.3.0
@@ -109,7 +114,11 @@ public class ProblemException extends RuntimeException {
       @Nullable Throwable cause,
       boolean enableSuppression,
       boolean writableStackTrace) {
-    super(isNonEmpty(message) ? message : toExceptionMessage(problem), cause, enableSuppression, writableStackTrace);
+    super(
+        isNonEmpty(message) ? message : toExceptionMessage(problem),
+        cause,
+        enableSuppression,
+        writableStackTrace);
     this.problem = problem;
   }
 

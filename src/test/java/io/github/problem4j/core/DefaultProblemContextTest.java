@@ -56,7 +56,8 @@ class DefaultProblemContextTest {
     Map<String, String> map = context.toMap();
 
     assertThat(map).containsEntry("key1", "val1");
-    assertThatThrownBy(() -> map.put("newKey", "newVal")).isInstanceOf(UnsupportedOperationException.class);
+    assertThatThrownBy(() -> map.put("newKey", "newVal"))
+        .isInstanceOf(UnsupportedOperationException.class);
   }
 
   @Test
@@ -118,7 +119,8 @@ class DefaultProblemContextTest {
 
   @Test
   void givenContextWithMultipleEntries_whenToString_thenSorted() {
-    ProblemContext context = ProblemContext.create().put("z", "last").put("a", "first").put("m", "middle");
+    ProblemContext context =
+        ProblemContext.create().put("z", "last").put("a", "first").put("m", "middle");
 
     String result = context.toString();
 

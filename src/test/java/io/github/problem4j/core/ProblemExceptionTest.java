@@ -23,13 +23,14 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import org.junit.jupiter.api.Test;
 
 /**
- * Some of the tests in this class may appear trivial or unnecessary. They are intentionally included to explore and
- * validate the behavior of various code coverage analysis tools.
+ * Some of the tests in this class may appear trivial or unnecessary. They are intentionally
+ * included to explore and validate the behavior of various code coverage analysis tools.
  */
 class ProblemExceptionTest {
 
   @Test
-  void givenProblemWithAllFields_whenCreatingException_thenMessageWithAllFieldsWithProperFormatting() {
+  void
+      givenProblemWithAllFields_whenCreatingException_thenMessageWithAllFieldsWithProperFormatting() {
     Problem problem =
         Problem.builder()
             .type("https://example.com/error")
@@ -40,12 +41,18 @@ class ProblemExceptionTest {
 
     ProblemException exception = new ProblemException(problem);
 
-    assertEquals("Validation Error: The request body is invalid (status: 400)", exception.getMessage());
+    assertEquals(
+        "Validation Error: The request body is invalid (status: 400)", exception.getMessage());
   }
 
   @Test
-  void givenProblemWithTitleAndDetail_whenCreatingException_thenMessageWithTitleAndDetailWithColon() {
-    Problem problem = Problem.builder().title("Not Found").detail("The requested resource does not exist").build();
+  void
+      givenProblemWithTitleAndDetail_whenCreatingException_thenMessageWithTitleAndDetailWithColon() {
+    Problem problem =
+        Problem.builder()
+            .title("Not Found")
+            .detail("The requested resource does not exist")
+            .build();
 
     ProblemException exception = new ProblemException(problem);
 
@@ -108,7 +115,8 @@ class ProblemExceptionTest {
 
   @Test
   void givenProblemWithZeroStatus_whenCreatingException_thenStatusNotIncludedInMessage() {
-    Problem problem = Problem.builder().title("Error").detail("Something happened").status(0).build();
+    Problem problem =
+        Problem.builder().title("Error").detail("Something happened").status(0).build();
 
     ProblemException exception = new ProblemException(problem);
 
@@ -201,7 +209,8 @@ class ProblemExceptionTest {
     Problem problem = Problem.builder().title("Bad Request").status(400).build();
     Throwable cause = new RuntimeException("root cause");
 
-    ProblemException exception = new ProblemException("this is a message", problem, cause, false, true);
+    ProblemException exception =
+        new ProblemException("this is a message", problem, cause, false, true);
 
     assertSame(problem, exception.getProblem());
   }
@@ -227,7 +236,8 @@ class ProblemExceptionTest {
   }
 
   @Test
-  void givenCtorWithNullMessageAndCause_whenCreatingProblemException_thenMessageIsDerivedFromProblem() {
+  void
+      givenCtorWithNullMessageAndCause_whenCreatingProblemException_thenMessageIsDerivedFromProblem() {
     Problem problem = Problem.builder().title("Bad Request").status(400).build();
     Throwable cause = new RuntimeException("root");
 
@@ -238,7 +248,8 @@ class ProblemExceptionTest {
   }
 
   @Test
-  void givenCtorWithEmptyMessageAndCause_whenCreatingProblemException_thenMessageIsDerivedFromProblem() {
+  void
+      givenCtorWithEmptyMessageAndCause_whenCreatingProblemException_thenMessageIsDerivedFromProblem() {
     Problem problem = Problem.builder().title("Bad Request").status(400).build();
     Throwable cause = new RuntimeException("root");
 
@@ -259,7 +270,8 @@ class ProblemExceptionTest {
   }
 
   @Test
-  void givenFullCtorWithEmptyMessage_whenCreatingProblemException_thenMessageIsDerivedFromProblem() {
+  void
+      givenFullCtorWithEmptyMessage_whenCreatingProblemException_thenMessageIsDerivedFromProblem() {
     Problem problem = Problem.builder().title("Bad Request").status(400).build();
     Throwable cause = new RuntimeException("root");
 

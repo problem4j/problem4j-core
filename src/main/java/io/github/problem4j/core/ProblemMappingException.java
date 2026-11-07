@@ -19,9 +19,9 @@ package io.github.problem4j.core;
 import org.jspecify.annotations.Nullable;
 
 /**
- * Thrown when processing an annotated exception into a {@link Problem} fails. {@code @RestControllerAdvice} or any
- * other handlers can catch this and return a safe {@code 500}. No other exception is supposed to be thrown from {@link
- * ProblemMapper}.
+ * Thrown when processing an annotated exception into a {@link Problem} fails.
+ * {@code @RestControllerAdvice} or any other handlers can catch this and return a safe {@code 500}.
+ * No other exception is supposed to be thrown from {@link ProblemMapper}.
  *
  * @since 1.3.0
  */
@@ -70,8 +70,8 @@ public class ProblemMappingException extends RuntimeException {
   }
 
   /**
-   * Advanced constructor allowing full control over suppression and stack trace writability. Typically used only
-   * internally or in tests.
+   * Advanced constructor allowing full control over suppression and stack trace writability.
+   * Typically used only internally or in tests.
    *
    * @param message detail message (may be {@code null})
    * @param cause underlying cause (may be {@code null})
@@ -80,7 +80,10 @@ public class ProblemMappingException extends RuntimeException {
    * @since 1.3.0
    */
   protected ProblemMappingException(
-      @Nullable String message, @Nullable Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
+      @Nullable String message,
+      @Nullable Throwable cause,
+      boolean enableSuppression,
+      boolean writableStackTrace) {
     super(message, cause, enableSuppression, writableStackTrace);
   }
 }
