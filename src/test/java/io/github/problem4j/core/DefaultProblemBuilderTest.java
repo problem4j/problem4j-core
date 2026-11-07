@@ -30,8 +30,8 @@ import java.util.Optional;
 import org.junit.jupiter.api.Test;
 
 /**
- * Some of the tests in this class may appear trivial or unnecessary. They are intentionally
- * included to explore and validate the behavior of various code coverage analysis tools.
+ * Some of the tests in this class may appear trivial or unnecessary. They are intentionally included to explore and
+ * validate the behavior of various code coverage analysis tools.
  */
 class DefaultProblemBuilderTest {
 
@@ -89,14 +89,12 @@ class DefaultProblemBuilderTest {
 
   @Test
   void givenInvalidTypeString_shouldThrowIllegalArgumentException() {
-    assertThatThrownBy(() -> newInstance().type("ht tp://not a uri"))
-        .isInstanceOf(IllegalArgumentException.class);
+    assertThatThrownBy(() -> newInstance().type("ht tp://not a uri")).isInstanceOf(IllegalArgumentException.class);
   }
 
   @Test
   void givenInvalidInstanceString_shouldThrowIllegalArgumentException() {
-    assertThatThrownBy(() -> newInstance().instance("::://invalid"))
-        .isInstanceOf(IllegalArgumentException.class);
+    assertThatThrownBy(() -> newInstance().instance("::://invalid")).isInstanceOf(IllegalArgumentException.class);
   }
 
   @Test
@@ -125,8 +123,7 @@ class DefaultProblemBuilderTest {
 
   @Test
   void givenNullValueExtensionViaVarargs_shouldNotIncludeIt() {
-    Problem problem =
-        newInstance().extensions(extension("key1", null), extension("key2", null)).build();
+    Problem problem = newInstance().extensions(extension("key1", null), extension("key2", null)).build();
 
     assertThat(problem.getExtensions()).isEmpty();
     assertThat(problem.getExtensions()).isEqualTo(Map.of());
@@ -140,10 +137,7 @@ class DefaultProblemBuilderTest {
 
   @Test
   void givenNullValueExtensionViaObject_shouldNotIncludeIt() {
-    Problem problem =
-        newInstance()
-            .extensions(Arrays.asList(extension("key1", null), extension("key2", null)))
-            .build();
+    Problem problem = newInstance().extensions(Arrays.asList(extension("key1", null), extension("key2", null))).build();
 
     assertThat(problem.getExtensions()).isEmpty();
     assertThat(problem.getExtensions()).isEqualTo(Map.of());
@@ -237,8 +231,7 @@ class DefaultProblemBuilderTest {
 
   @Test
   void givenExtensionSetThenUnsetViaVarargs_shouldRemoveExtension() {
-    Problem problem =
-        newInstance().extension("name", "Mark").extensions(Problem.extension("name", null)).build();
+    Problem problem = newInstance().extension("name", "Mark").extensions(Problem.extension("name", null)).build();
 
     assertThat(problem.getExtensions()).isEmpty();
     assertThat(problem.getExtensions().containsKey("name")).isFalse();
@@ -247,10 +240,7 @@ class DefaultProblemBuilderTest {
   @Test
   void givenExtensionSetThenUnsetViaCollection_shouldRemoveExtension() {
     Problem problem =
-        newInstance()
-            .extension("name", "Mark")
-            .extensions(singletonList(Problem.extension("name", null)))
-            .build();
+        newInstance().extension("name", "Mark").extensions(singletonList(Problem.extension("name", null))).build();
 
     assertThat(problem.getExtensions()).isEmpty();
     assertThat(problem.getExtensions().containsKey("name")).isFalse();
@@ -269,8 +259,7 @@ class DefaultProblemBuilderTest {
     extensions.put("booleanExt", true);
     extensions.put("objectExt", new DummyObject("boo\nfoo"));
 
-    ProblemBuilder builder =
-        newInstance().type(type).title(title).status(status).detail(detail).instance(instance);
+    ProblemBuilder builder = newInstance().type(type).title(title).status(status).detail(detail).instance(instance);
     extensions.forEach(builder::extension);
 
     String result = builder.toString();
@@ -335,8 +324,7 @@ class DefaultProblemBuilderTest {
 
   @Test
   void givenCustomResolver_whenStatusIsKnown_thenUsesResolvedTitle() {
-    StatusTitleResolver resolver =
-        status -> status == 200 ? Optional.of("Custom OK") : Optional.empty();
+    StatusTitleResolver resolver = status -> status == 200 ? Optional.of("Custom OK") : Optional.empty();
 
     Problem problem = new DefaultProblemBuilder(resolver).status(200).build();
 
@@ -356,8 +344,7 @@ class DefaultProblemBuilderTest {
   void givenCustomResolverAndExplicitTitle_whenBuild_thenExplicitTitleTakesPrecedence() {
     StatusTitleResolver resolver = status -> Optional.of("Should Not Be Used");
 
-    Problem problem =
-        new DefaultProblemBuilder(resolver).status(200).title("Explicit Title").build();
+    Problem problem = new DefaultProblemBuilder(resolver).status(200).title("Explicit Title").build();
 
     assertThat(problem.getTitle()).isEqualTo("Explicit Title");
   }

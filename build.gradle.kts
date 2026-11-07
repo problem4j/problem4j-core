@@ -45,7 +45,7 @@ spotless {
         target("**/src/**/*.java")
         licenseHeaderFile(licenseHeader)
 
-        googleJavaFormat()
+        googleJavaFormat().maxLineLength(120)
         forbidWildcardImports()
         endWithNewline()
         lineEndings = LineEnding.UNIX
@@ -69,7 +69,7 @@ spotless {
     kotlin {
         target("**/src/**/*.kt")
 
-        ktfmt().metaStyle()
+        ktfmt().metaStyle().configure { it.setMaxWidth(120) }
         endWithNewline()
         lineEndings = LineEnding.UNIX
     }

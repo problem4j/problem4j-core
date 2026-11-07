@@ -122,14 +122,7 @@ class ProblemSupportTest {
 
   @Test
   void givenProblemWithAllOptionalFields_whenToStringWithLabel_thenAllIncluded() {
-    Problem p =
-        Problem.builder()
-            .type("urn:type")
-            .title("T")
-            .status(400)
-            .detail("D")
-            .instance("urn:inst")
-            .build();
+    Problem p = Problem.builder().type("urn:type").title("T").status(400).detail("D").instance("urn:inst").build();
 
     String result = ProblemSupport.toString("Problem", p);
     assertThat(result).contains("type=urn:type");
@@ -209,20 +202,17 @@ class ProblemSupportTest {
 
   @Test
   void givenExtension_whenToStringWithLabel_thenCorrectFormat() {
-    assertThat(ProblemSupport.toString("Extension", Problem.extension("key", 42)))
-        .isEqualTo("Extension[key=42]");
+    assertThat(ProblemSupport.toString("Extension", Problem.extension("key", 42))).isEqualTo("Extension[key=42]");
   }
 
   @Test
   void givenExtensionWithNullValue_whenToStringWithLabel_thenNullRendered() {
-    assertThat(ProblemSupport.toString("Extension", Problem.extension("key", null)))
-        .isEqualTo("Extension[key=null]");
+    assertThat(ProblemSupport.toString("Extension", Problem.extension("key", null))).isEqualTo("Extension[key=null]");
   }
 
   @Test
   void givenExtensionAndCustomLabel_whenToStringWithLabel_thenLabelUsedAsPrefix() {
-    assertThat(ProblemSupport.toString("MyExtension", Problem.extension("key", 42)))
-        .isEqualTo("MyExtension[key=42]");
+    assertThat(ProblemSupport.toString("MyExtension", Problem.extension("key", 42))).isEqualTo("MyExtension[key=42]");
   }
 
   @Test
@@ -266,8 +256,7 @@ class ProblemSupportTest {
 
   @Test
   void givenContextWithEntries_whenToStringWithLabel_thenSortedByKey() {
-    ProblemContext context =
-        ProblemContext.create().put("z", "last").put("a", "first").put("m", "middle");
+    ProblemContext context = ProblemContext.create().put("z", "last").put("a", "first").put("m", "middle");
 
     String result = ProblemSupport.toString("ProblemContext", context);
     assertThat(result).startsWith("ProblemContext[");
@@ -283,8 +272,7 @@ class ProblemSupportTest {
 
   @Test
   void givenEmptyContextAndCustomLabel_whenToStringWithLabel_thenLabelUsedAsPrefix() {
-    assertThat(ProblemSupport.toString("MyContext", ProblemContext.create()))
-        .isEqualTo("MyContext[EMPTY]");
+    assertThat(ProblemSupport.toString("MyContext", ProblemContext.create())).isEqualTo("MyContext[EMPTY]");
   }
 
   @Test
@@ -296,11 +284,9 @@ class ProblemSupportTest {
 
   @Test
   void givenProblemWithAllFields_whenToExceptionMessage_thenTitleDetailAndStatusFormatted() {
-    Problem problem =
-        Problem.builder().title("Validation Error").detail("Body is invalid").status(400).build();
+    Problem problem = Problem.builder().title("Validation Error").detail("Body is invalid").status(400).build();
 
-    assertThat(ProblemSupport.toExceptionMessage(problem))
-        .isEqualTo("Validation Error: Body is invalid (status: 400)");
+    assertThat(ProblemSupport.toExceptionMessage(problem)).isEqualTo("Validation Error: Body is invalid (status: 400)");
   }
 
   @Test
@@ -328,8 +314,7 @@ class ProblemSupportTest {
   void givenProblemWithStatusOnly_whenToExceptionMessage_thenStatusOnly() {
     Problem problem = Problem.builder().status(500).build();
 
-    assertThat(ProblemSupport.toExceptionMessage(problem))
-        .isEqualTo("Internal Server Error (status: 500)");
+    assertThat(ProblemSupport.toExceptionMessage(problem)).isEqualTo("Internal Server Error (status: 500)");
   }
 
   @Test

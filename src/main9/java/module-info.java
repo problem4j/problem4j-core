@@ -20,27 +20,27 @@ import org.jspecify.annotations.NullMarked;
  * Core classes and interfaces for the Problem4J set of libraries, implementing <a
  * href="https://tools.ietf.org/html/rfc7807">RFC 7807: Problem Details for HTTP APIs</a>.
  *
- * <p>RFC 7807 was later extended in <a href="https://tools.ietf.org/html/rfc9457">RFC 9457</a>,
- * however core concepts remain the same.
+ * <p>RFC 7807 was later extended in <a href="https://tools.ietf.org/html/rfc9457">RFC 9457</a>, however core concepts
+ * remain the same.
  *
- * <p>This package provides the foundational types for modeling "Problem Details" objects, which are
- * used to convey machine-readable error details in HTTP responses.
+ * <p>This package provides the foundational types for modeling "Problem Details" objects, which are used to convey
+ * machine-readable error details in HTTP responses.
  *
  * <p>Key components include:
  *
  * <ul>
  *   <li>{@code Problem}: The central immutable model representing a problem detail.
  *   <li>{@code ProblemBuilder}: A fluent builder for creating {@code Problem} instances.
- *   <li>{@code ProblemException}: A runtime exception that wraps a {@code Problem}, allowing it to
- *       be thrown and handled by structured error handlers.
- *   <li>{@code ProblemMapping}: An annotation for configuring how exceptions should be mapped to
- *       {@code Problem} instances, supporting message interpolation and automatic mapping.
- *   <li>{@code ProblemMapper}: A utility for mapping exceptions to {@code Problem} instances,
- *       supporting annotation-based configuration for automatic mapping.
+ *   <li>{@code ProblemException}: A runtime exception that wraps a {@code Problem}, allowing it to be thrown and
+ *       handled by structured error handlers.
+ *   <li>{@code ProblemMapping}: An annotation for configuring how exceptions should be mapped to {@code Problem}
+ *       instances, supporting message interpolation and automatic mapping.
+ *   <li>{@code ProblemMapper}: A utility for mapping exceptions to {@code Problem} instances, supporting
+ *       annotation-based configuration for automatic mapping.
  * </ul>
  *
- * <p>This library is framework-agnostic and intended to be used as a basis for higher-level
- * integrations (e.g., with Spring Boot, Micronaut, or other web frameworks).
+ * <p>This library is framework-agnostic and intended to be used as a basis for higher-level integrations (e.g., with
+ * Spring Boot, Micronaut, or other web frameworks).
  */
 @NullMarked
 module io.github.problem4j.core {

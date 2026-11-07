@@ -24,43 +24,39 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Annotation to map a {@link Throwable} to an <a href="https://tools.ietf.org/html/rfc7807">RFC
- * 7807</a> {@link Problem} (and <a href="https://tools.ietf.org/html/rfc9457">RFC 9457</a>)
- * specification.
+ * Annotation to map a {@link Throwable} to an <a href="https://tools.ietf.org/html/rfc7807">RFC 7807</a> {@link
+ * Problem} (and <a href="https://tools.ietf.org/html/rfc9457">RFC 9457</a>) specification.
  *
- * <p>This annotation allows you to declaratively specify how a specific exception should be
- * converted into a {@link Problem} response. All string values support dynamic interpolation of
- * placeholders based on the exception's fields and context.
+ * <p>This annotation allows you to declaratively specify how a specific exception should be converted into a {@link
+ * Problem} response. All string values support dynamic interpolation of placeholders based on the exception's fields
+ * and context.
  *
  * <h3>Interpolation</h3>
  *
  * <ul>
  *   <li>{@code {message}} -&gt; the exception's {@link Throwable#getMessage()}
- *   <li>{@code {context.*}} -&gt; value from {@link ProblemContext} included in evaluation via
- *       {@link ProblemMapper}
- *   <li>{@code {fieldName}} -&gt; value of any field (private or public) in the exception class
- *       hierarchy
+ *   <li>{@code {context.*}} -&gt; value from {@link ProblemContext} included in evaluation via {@link ProblemMapper}
+ *   <li>{@code {fieldName}} -&gt; value of any field (private or public) in the exception class hierarchy
  *   <li>Any placeholder that resolves to null or an empty string is ignored in the final output
  * </ul>
  *
  * <h3>Inheritance</h3>
  *
- * <p>This annotation is {@link Inherited}, so subclasses of an annotated exception automatically
- * inherit the mapping unless explicitly overridden with a new annotation.
+ * <p>This annotation is {@link Inherited}, so subclasses of an annotated exception automatically inherit the mapping
+ * unless explicitly overridden with a new annotation.
  *
  * <h3>Extensions</h3>
  *
- * <p>Use {@link #extensions()} to expose additional fields as {@link Problem} extensions. Each name
- * is resolved using the same rules as placeholders (fields in the class hierarchy). Null or empty
- * values are automatically omitted from the final {@link Problem}.
+ * <p>Use {@link #extensions()} to expose additional fields as {@link Problem} extensions. Each name is resolved using
+ * the same rules as placeholders (fields in the class hierarchy). Null or empty values are automatically omitted from
+ * the final {@link Problem}.
  *
  * <h3>Defaulting behavior</h3>
  *
  * <ul>
- *   <li>If {@link #type()} is empty, the processor may apply a default type (e.g., {@code
- *       about:blank}).
- *   <li>If {@link #title()} is empty, the processor may assign the standard HTTP reason phrase
- *       corresponding to the status code.
+ *   <li>If {@link #type()} is empty, the processor may apply a default type (e.g., {@code about:blank}).
+ *   <li>If {@link #title()} is empty, the processor may assign the standard HTTP reason phrase corresponding to the
+ *       status code.
  *   <li>Status code {@code 0} is interpreted as "unspecified".
  * </ul>
  *
@@ -84,8 +80,8 @@ import java.lang.annotation.Target;
  *     }
  * }}</pre>
  *
- * <p>This annotation provides a simple and consistent way to map exceptions to RFC 7807 Problems,
- * with support for dynamic data inclusion, null/empty-safe interpolation, and subclass inheritance.
+ * <p>This annotation provides a simple and consistent way to map exceptions to RFC 7807 Problems, with support for
+ * dynamic data inclusion, null/empty-safe interpolation, and subclass inheritance.
  *
  * @since 1.3.0
  */
@@ -102,13 +98,13 @@ public @interface ProblemMapping {
    *
    * <ul>
    *   <li>{@code {message}} -&gt; exception message
-   *   <li>{@code {context.*}} -&gt; value from {@link ProblemContext} included in problem
-   *       evaluation via {@link ProblemMapper}
+   *   <li>{@code {context.*}} -&gt; value from {@link ProblemContext} included in problem evaluation via {@link
+   *       ProblemMapper}
    *   <li>{@code {fieldName}} -&gt; value of any field in the exception class hierarchy
    * </ul>
    *
-   * <p>If empty, a default type (e.g., {@code about:blank}) can be applied by the processor. Null
-   * or empty placeholders are ignored.
+   * <p>If empty, a default type (e.g., {@code about:blank}) can be applied by the processor. Null or empty placeholders
+   * are ignored.
    *
    * @return interpolated type URI for the problem
    * @since 1.3.0
@@ -120,8 +116,8 @@ public @interface ProblemMapping {
    *
    * <p>Supports placeholders the same way as {@link #type()}.
    *
-   * <p>If empty, the processor may assign the standard HTTP reason phrase corresponding to the
-   * {@link #status()}. Null or empty placeholders are ignored.
+   * <p>If empty, the processor may assign the standard HTTP reason phrase corresponding to the {@link #status()}. Null
+   * or empty placeholders are ignored.
    *
    * @return interpolated title of the problem
    * @since 1.3.0
@@ -131,8 +127,8 @@ public @interface ProblemMapping {
   /**
    * Status for the problem.
    *
-   * <p>{@code 0} means "unspecified"; in that case, the processor may apply a default. Used to
-   * determine the response status and may influence default title assignment.
+   * <p>{@code 0} means "unspecified"; in that case, the processor may apply a default. Used to determine the response
+   * status and may influence default title assignment.
    *
    * @return status for the problem
    * @since 1.3.0
@@ -156,8 +152,8 @@ public @interface ProblemMapping {
    *
    * <p>Supports placeholders the same way as {@link #type()}.
    *
-   * <p>If invalid URI or placeholder resolves to null/empty, the processor ignores it. Useful for
-   * linking to logs or trace-specific URLs.
+   * <p>If invalid URI or placeholder resolves to null/empty, the processor ignores it. Useful for linking to logs or
+   * trace-specific URLs.
    *
    * @return interpolated instance URI identifying this occurrence of the problem
    * @since 1.3.0
@@ -167,11 +163,9 @@ public @interface ProblemMapping {
   /**
    * Names of fields in the exception class to expose as problem extensions.
    *
-   * <p>Each name is resolved using the same rules as placeholders. Null or empty values are
-   * omitted.
+   * <p>Each name is resolved using the same rules as placeholders. Null or empty values are omitted.
    *
-   * <p>This allows exposing additional context-specific data for clients, beyond the standard RFC
-   * 7807 fields.
+   * <p>This allows exposing additional context-specific data for clients, beyond the standard RFC 7807 fields.
    *
    * @return names of fields in the exception class to expose as problem extensions
    * @since 1.3.0

@@ -22,14 +22,12 @@ import java.util.regex.Pattern;
 import org.jspecify.annotations.Nullable;
 
 /**
- * This processor supports dynamic interpolation of placeholders in the annotation values. The
- * algorithm is as follows:
+ * This processor supports dynamic interpolation of placeholders in the annotation values. The algorithm is as follows:
  *
  * <ol>
  *   <li>Check if the exception class has {@link ProblemMapping}; if not, return null.
  *   <li>Create a {@link ProblemBuilder} to accumulate the problem details.
- *   <li>For each standard field ({@code type}, {@code title}, {@code status}, {@code detail},
- *       {@code instance}):
+ *   <li>For each standard field ({@code type}, {@code title}, {@code status}, {@code detail}, {@code instance}):
  *       <ol>
  *         <li>Read the raw annotation value.
  *         <li>Interpolate placeholders of the form {@code "{placeholderValue}"}:
@@ -39,8 +37,8 @@ import org.jspecify.annotations.Nullable;
  *               <li>{@code {fieldName}} -&gt; any field in the exception class hierarchy
  *             </ul>
  *         <li>Ignore placeholders that resolve to null or empty string.
- *         <li>Assign the interpolated value to the {@link ProblemBuilder}, ignoring invalid URIs
- *             for {@code type} and {@code instance}.
+ *         <li>Assign the interpolated value to the {@link ProblemBuilder}, ignoring invalid URIs for {@code type} and
+ *             {@code instance}.
  *       </ol>
  *   <li>For extensions:
  *       <ol>
@@ -53,17 +51,15 @@ import org.jspecify.annotations.Nullable;
  *   <li>Build and return the {@link ProblemBuilder}.
  * </ol>
  *
- * <p>This design allows dynamic, context-aware {@link Problem} generation, supports subclass
- * inheritance, and ensures that null or empty values do not appear in the output, making Problems
- * concise and meaningful.
+ * <p>This design allows dynamic, context-aware {@link Problem} generation, supports subclass inheritance, and ensures
+ * that null or empty values do not appear in the output, making Problems concise and meaningful.
  *
  * @since 2.0.0
  */
 public class DefaultProblemMapper implements ProblemMapper {
 
   /**
-   * Regular expression to match placeholders in the format {@code {key}}. Captures the key for
-   * interpolation.
+   * Regular expression to match placeholders in the format {@code {key}}. Captures the key for interpolation.
    *
    * @since 2.0.0
    */
@@ -98,13 +94,12 @@ public class DefaultProblemMapper implements ProblemMapper {
   public DefaultProblemMapper() {}
 
   /**
-   * Convert {@link Throwable} -&gt; {@link ProblemBuilder} according to its {@link ProblemMapping}
-   * annotation. Such builder can be further extended or executed to create {@link Problem}
-   * response.
+   * Convert {@link Throwable} -&gt; {@link ProblemBuilder} according to its {@link ProblemMapping} annotation. Such
+   * builder can be further extended or executed to create {@link Problem} response.
    *
-   * <p>This method is {@code final} and always delegates to {@link #toProblemBuilder(Throwable,
-   * ProblemContext)} with a {@code null} context. Subclasses should override {@link
-   * #toProblemBuilder(Throwable, ProblemContext)} to customize mapping behavior.
+   * <p>This method is {@code final} and always delegates to {@link #toProblemBuilder(Throwable, ProblemContext)} with a
+   * {@code null} context. Subclasses should override {@link #toProblemBuilder(Throwable, ProblemContext)} to customize
+   * mapping behavior.
    *
    * @param t {@link Throwable} to convert (may be {@code null})
    * @return a {@link ProblemBuilder} instance
@@ -117,8 +112,7 @@ public class DefaultProblemMapper implements ProblemMapper {
   }
 
   /**
-   * Convert {@link Throwable} -&gt; {@link ProblemBuilder} according to its {@link ProblemMapping}
-   * annotation.
+   * Convert {@link Throwable} -&gt; {@link ProblemBuilder} according to its {@link ProblemMapping} annotation.
    *
    * @param t {@link Throwable} to convert (may be {@code null})
    * @param context optional {@link ProblemContext} (may be {@code null})
@@ -167,8 +161,7 @@ public class DefaultProblemMapper implements ProblemMapper {
   }
 
   /**
-   * Applies the "type" value from {@link ProblemMapping#type()} after placeholder interpolation;
-   * ignores invalid URIs.
+   * Applies the "type" value from {@link ProblemMapping#type()} after placeholder interpolation; ignores invalid URIs.
    *
    * @param builder the {@link ProblemBuilder} to add the type to
    * @param mapping the {@link ProblemMapping} annotation containing the type value
@@ -177,10 +170,7 @@ public class DefaultProblemMapper implements ProblemMapper {
    * @since 2.0.0
    */
   protected void applyTypeOnBuilder(
-      ProblemBuilder builder,
-      ProblemMapping mapping,
-      Throwable t,
-      @Nullable ProblemContext context) {
+      ProblemBuilder builder, ProblemMapping mapping, Throwable t, @Nullable ProblemContext context) {
     String rawType = getRawType(mapping);
     if (!rawType.isEmpty()) {
       String typeInterpolated = interpolate(rawType, t, context);
@@ -215,10 +205,7 @@ public class DefaultProblemMapper implements ProblemMapper {
    * @since 2.0.0
    */
   protected void applyTitleOnBuilder(
-      ProblemBuilder builder,
-      ProblemMapping mapping,
-      Throwable t,
-      @Nullable ProblemContext context) {
+      ProblemBuilder builder, ProblemMapping mapping, Throwable t, @Nullable ProblemContext context) {
     String rawTitle = getRawTitle(mapping);
     if (!rawTitle.isEmpty()) {
       String titleInterpolated = interpolate(rawTitle, t, context);
@@ -262,10 +249,7 @@ public class DefaultProblemMapper implements ProblemMapper {
    * @since 2.0.0
    */
   protected void applyDetailOnBuilder(
-      ProblemBuilder builder,
-      ProblemMapping mapping,
-      Throwable t,
-      @Nullable ProblemContext context) {
+      ProblemBuilder builder, ProblemMapping mapping, Throwable t, @Nullable ProblemContext context) {
     String rawDetail = getRawDetail(mapping);
     if (!rawDetail.isEmpty()) {
       String detailInterpolated = interpolate(rawDetail, t, context);
@@ -296,10 +280,7 @@ public class DefaultProblemMapper implements ProblemMapper {
    * @since 2.0.0
    */
   protected void applyInstanceOnBuilder(
-      ProblemBuilder builder,
-      ProblemMapping mapping,
-      Throwable t,
-      @Nullable ProblemContext context) {
+      ProblemBuilder builder, ProblemMapping mapping, Throwable t, @Nullable ProblemContext context) {
     String rawInstance = getRawInstance(mapping);
     if (!rawInstance.isEmpty()) {
       String instanceInterpolated = interpolate(rawInstance, t, context);
@@ -332,8 +313,7 @@ public class DefaultProblemMapper implements ProblemMapper {
    * @param t the {@link Throwable} to extract extension values from
    * @since 2.0.0
    */
-  protected void applyExtensionsOnBuilder(
-      ProblemBuilder builder, ProblemMapping mapping, Throwable t) {
+  protected void applyExtensionsOnBuilder(ProblemBuilder builder, ProblemMapping mapping, Throwable t) {
     String[] extensions = mapping.extensions();
     for (String extension : extensions) {
       String name = extension.trim();
@@ -352,8 +332,7 @@ public class DefaultProblemMapper implements ProblemMapper {
    *
    * <ul>
    *   <li>{@code message} -&gt; throwable message
-   *   <li>{@code context.*} -&gt; value from {@link ProblemContext} included in evaluation via
-   *       {@link ProblemMapper}
+   *   <li>{@code context.*} -&gt; value from {@link ProblemContext} included in evaluation via {@link ProblemMapper}
    *   <li>Any other token -&gt; value of a matching field in the throwable class hierarchy
    * </ul>
    *

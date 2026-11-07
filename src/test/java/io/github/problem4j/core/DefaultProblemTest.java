@@ -24,8 +24,8 @@ import java.util.Map;
 import org.junit.jupiter.api.Test;
 
 /**
- * Some of the tests in this class may appear trivial or unnecessary. They are intentionally
- * included to explore and validate the behavior of various code coverage analysis tools.
+ * Some of the tests in this class may appear trivial or unnecessary. They are intentionally included to explore and
+ * validate the behavior of various code coverage analysis tools.
  */
 class DefaultProblemTest {
 
@@ -164,10 +164,8 @@ class DefaultProblemTest {
 
   @Test
   void givenTwoProblemsWithDifferentTypes_whenEquals_thenNotEqual() {
-    Problem p1 =
-        new DefaultProblem(URI.create("http://example.org/type1"), "Title", 400, null, null, null);
-    Problem p2 =
-        new DefaultProblem(URI.create("http://example.org/type2"), "Title", 400, null, null, null);
+    Problem p1 = new DefaultProblem(URI.create("http://example.org/type1"), "Title", 400, null, null, null);
+    Problem p2 = new DefaultProblem(URI.create("http://example.org/type2"), "Title", 400, null, null, null);
 
     assertThat(p1).isNotEqualTo(p2);
   }

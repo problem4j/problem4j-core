@@ -24,8 +24,8 @@ import java.io.ObjectOutputStream;
 final class Serialization {
 
   /**
-   * Serializes and deserializes an object, returning the result. This is useful for testing that an
-   * object is serializable and that it works correctly after serialization.
+   * Serializes and deserializes an object, returning the result. This is useful for testing that an object is
+   * serializable and that it works correctly after serialization.
    *
    * @param obj the object to serialize and deserialize
    * @return the deserialized object
@@ -37,8 +37,7 @@ final class Serialization {
     try (ObjectOutputStream oos = new ObjectOutputStream(baos)) {
       oos.writeObject(obj);
     }
-    try (ObjectInputStream ois =
-        new ObjectInputStream(new ByteArrayInputStream(baos.toByteArray()))) {
+    try (ObjectInputStream ois = new ObjectInputStream(new ByteArrayInputStream(baos.toByteArray()))) {
       return (T) ois.readObject();
     }
   }

@@ -23,8 +23,7 @@ import org.jspecify.annotations.Nullable;
 /**
  * Builder interface for constructing {@link Problem} instances.
  *
- * <p>Provides a fluent API to set standard fields and custom extensions before creating an
- * immutable {@link Problem}.
+ * <p>Provides a fluent API to set standard fields and custom extensions before creating an immutable {@link Problem}.
  *
  * @since 1.3.0
  */
@@ -100,8 +99,8 @@ public interface ProblemBuilder {
   }
 
   /**
-   * Adds or removes a single custom extension. If {@code value} is {@code null} and an extension
-   * with the given {@code name} already exists, it will be removed.
+   * Adds or removes a single custom extension. If {@code value} is {@code null} and an extension with the given {@code
+   * name} already exists, it will be removed.
    *
    * @param name the extension key
    * @param value the extension value, or {@code null} to remove
@@ -111,8 +110,8 @@ public interface ProblemBuilder {
   ProblemBuilder extension(String name, @Nullable Object value);
 
   /**
-   * Adds multiple custom extensions from a map. If the value of any provided extension is {@code
-   * null} and an extension with the same key already exists, it will be removed.
+   * Adds multiple custom extensions from a map. If the value of any provided extension is {@code null} and an extension
+   * with the same key already exists, it will be removed.
    *
    * @param extensions map of extension keys and values
    * @return this builder instance for chaining
@@ -127,9 +126,8 @@ public interface ProblemBuilder {
   }
 
   /**
-   * Adds a single custom extension from {@link Problem.Extension}. If the value of the provided
-   * extension is {@code null} and an extension with the same key already exists, it will be
-   * removed.
+   * Adds a single custom extension from {@link Problem.Extension}. If the value of the provided extension is {@code
+   * null} and an extension with the same key already exists, it will be removed.
    *
    * @param extension extension to add
    * @return this builder instance for chaining
@@ -140,9 +138,8 @@ public interface ProblemBuilder {
   }
 
   /**
-   * Adds multiple custom extensions from varargs of {@link Problem.Extension}. If the value of any
-   * provided extension is {@code null} and an extension with the same key already exists, it will
-   * be removed.
+   * Adds multiple custom extensions from varargs of {@link Problem.Extension}. If the value of any provided extension
+   * is {@code null} and an extension with the same key already exists, it will be removed.
    *
    * @param extensions vararg of extensions to add
    * @return this builder instance for chaining
@@ -157,9 +154,8 @@ public interface ProblemBuilder {
   }
 
   /**
-   * Adds multiple custom extensions from a collection of {@link Problem.Extension}. If the value of
-   * any provided extension is {@code null} and an extension with the same key already exists, it
-   * will be removed.
+   * Adds multiple custom extensions from a collection of {@link Problem.Extension}. If the value of any provided
+   * extension is {@code null} and an extension with the same key already exists, it will be removed.
    *
    * @param extensions collection of extensions to add
    * @return this builder instance for chaining
@@ -179,11 +175,9 @@ public interface ProblemBuilder {
    * <p>Default value evaluation (all defaults are applied at build time):
    *
    * <ul>
-   *   <li>If no type was provided, the resulting {@link Problem} will use {@link
-   *       Problem#BLANK_TYPE}.
-   *   <li>If no title was provided, but the numeric status corresponds to a known HTTP status, the
-   *       builder will resolve it using {@link StatusTitleResolver}. It can be customized via SPI
-   *       implementation.
+   *   <li>If no type was provided, the resulting {@link Problem} will use {@link Problem#BLANK_TYPE}.
+   *   <li>If no title was provided, but the numeric status corresponds to a known HTTP status, the builder will resolve
+   *       it using {@link StatusTitleResolver}. It can be customized via SPI implementation.
    *   <li>The numeric status defaults to <code>0</code> when not set;
    *   <li>Any extensions configured on the builder will be present on the created {@link Problem}.
    * </ul>

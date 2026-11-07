@@ -23,19 +23,19 @@ import java.util.Objects;
 import org.jspecify.annotations.Nullable;
 
 /**
- * Utility class providing canonical implementations of various operations for {@link Problem},
- * {@link Problem.Extension}, and {@link ProblemContext}.
+ * Utility class providing canonical implementations of various operations for {@link Problem}, {@link
+ * Problem.Extension}, and {@link ProblemContext}.
  *
- * <p>Custom implementations of these interfaces should delegate to the corresponding methods in
- * this class to satisfy their well-known contracts.
+ * <p>Custom implementations of these interfaces should delegate to the corresponding methods in this class to satisfy
+ * their well-known contracts.
  *
  * @since 2.0.0
  */
 public final class ProblemSupport {
 
   /**
-   * Returns {@code true} if {@code problem} equals {@code other} by comparing all standard fields:
-   * type, title, status, detail, instance, and extensions.
+   * Returns {@code true} if {@code problem} equals {@code other} by comparing all standard fields: type, title, status,
+   * detail, instance, and extensions.
    *
    * @param problem the problem to compare
    * @param other the other problem to compare against
@@ -69,8 +69,8 @@ public final class ProblemSupport {
   }
 
   /**
-   * Returns a string representation of {@code problem}, including all non-null fields. Extensions
-   * are appended in sorted key order.
+   * Returns a string representation of {@code problem}, including all non-null fields. Extensions are appended in
+   * sorted key order.
    *
    * @param problem the problem to represent
    * @return a string in the form {@code Problem[field=value, ...]}
@@ -81,8 +81,8 @@ public final class ProblemSupport {
   }
 
   /**
-   * Returns a string representation of {@code problem} using the given class name label, including
-   * all non-null fields. Extensions are appended in sorted key order.
+   * Returns a string representation of {@code problem} using the given class name label, including all non-null fields.
+   * Extensions are appended in sorted key order.
    *
    * @param label the class name label to use as prefix
    * @param problem the problem to represent
@@ -160,8 +160,8 @@ public final class ProblemSupport {
   }
 
   /**
-   * Returns {@code true} if {@code context} equals {@code other} by comparing their {@link
-   * ProblemContext#toMap() toMap()} snapshots.
+   * Returns {@code true} if {@code context} equals {@code other} by comparing their {@link ProblemContext#toMap()
+   * toMap()} snapshots.
    *
    * @param context the context to compare
    * @param other the other context to compare against
@@ -173,8 +173,7 @@ public final class ProblemSupport {
   }
 
   /**
-   * Computes a hash code for {@code context} from its {@link ProblemContext#toMap() toMap()}
-   * snapshot.
+   * Computes a hash code for {@code context} from its {@link ProblemContext#toMap() toMap()} snapshot.
    *
    * @param context the context to hash
    * @return the hash code
@@ -188,8 +187,7 @@ public final class ProblemSupport {
    * Returns a string representation of {@code context}. Entries are sorted by key.
    *
    * @param context the context to represent
-   * @return {@code "ProblemContext[EMPTY]"} if empty, otherwise {@code "ProblemContext[key=value,
-   *     ...]"}
+   * @return {@code "ProblemContext[EMPTY]"} if empty, otherwise {@code "ProblemContext[key=value, ...]"}
    * @since 2.0.0
    */
   public static String toString(ProblemContext context) {
@@ -197,8 +195,7 @@ public final class ProblemSupport {
   }
 
   /**
-   * Returns a string representation of {@code context} using the given class name label. Entries
-   * are sorted by key.
+   * Returns a string representation of {@code context} using the given class name label. Entries are sorted by key.
    *
    * @param label the class name label to use as prefix
    * @param context the context to represent
@@ -216,8 +213,8 @@ public final class ProblemSupport {
   }
 
   /**
-   * Returns {@code true} if {@code type} is considered blank, meaning it equals {@link
-   * Problem#BLANK_TYPE} or its string representation is empty.
+   * Returns {@code true} if {@code type} is considered blank, meaning it equals {@link Problem#BLANK_TYPE} or its
+   * string representation is empty.
    *
    * @param type the URI to check
    * @return {@code true} if the type is blank, {@code false} otherwise
@@ -228,8 +225,8 @@ public final class ProblemSupport {
   }
 
   /**
-   * Returns {@code true} if {@code type} is considered non-blank, meaning it does not equal {@link
-   * Problem#BLANK_TYPE} and its string representation is not empty.
+   * Returns {@code true} if {@code type} is considered non-blank, meaning it does not equal {@link Problem#BLANK_TYPE}
+   * and its string representation is not empty.
    *
    * @param type the URI to check
    * @return {@code true} if the type is non-blank, {@code false} otherwise

@@ -20,8 +20,8 @@ import java.util.Map;
 import org.jspecify.annotations.Nullable;
 
 /**
- * Context passed for problem processing. Used by {@link ProblemMapper}. Provides access to values
- * used for message interpolation or metadata enrichment.
+ * Context passed for problem processing. Used by {@link ProblemMapper}. Provides access to values used for message
+ * interpolation or metadata enrichment.
  *
  * @since 1.3.0
  */
@@ -58,8 +58,8 @@ public interface ProblemContext {
   @Nullable String get(String key);
 
   /**
-   * Associates the specified value with the specified key in the context and returns the context
-   * itself. Passing {@code null} will unset context value. This allows for method chaining.
+   * Associates the specified value with the specified key in the context and returns the context itself. Passing {@code
+   * null} will unset context value. This allows for method chaining.
    *
    * <p>Example usage:
    *
@@ -76,9 +76,8 @@ public interface ProblemContext {
   ProblemContext put(String key, @Nullable String value);
 
   /**
-   * Associates all key-value pairs from the provided map with the context and returns the context
-   * itself. Passing {@code null} entries in map will unset context values. This allows for method
-   * chaining.
+   * Associates all key-value pairs from the provided map with the context and returns the context itself. Passing
+   * {@code null} entries in map will unset context values. This allows for method chaining.
    *
    * <p>Example usage:
    *
@@ -100,8 +99,8 @@ public interface ProblemContext {
   }
 
   /**
-   * Merges all key-value pairs from the provided context into this context and returns this context
-   * instance. This allows for method chaining.
+   * Merges all key-value pairs from the provided context into this context and returns this context instance. This
+   * allows for method chaining.
    *
    * <p>Example usage:
    *

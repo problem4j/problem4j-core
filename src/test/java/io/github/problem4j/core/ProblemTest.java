@@ -101,9 +101,7 @@ class ProblemTest {
             .extension("extCode1", "extValue1")
             .extension(Problem.extension("extCode2", "extValue2"))
             .extensions(
-                Arrays.asList(
-                    Problem.extension("extCode3", "extValue3"),
-                    Problem.extension("extCode4", "extValue4")))
+                Arrays.asList(Problem.extension("extCode3", "extValue3"), Problem.extension("extCode4", "extValue4")))
             .extensions(
                 Stream.of(
                         Problem.extension("extCode5", "extValue5"),

@@ -19,11 +19,11 @@ package io.github.problem4j.core;
 import org.jspecify.annotations.Nullable;
 
 /**
- * Converts exceptions annotated with {@link ProblemMapping} into {@link ProblemBuilder} instances,
- * which can be further extended or executed to create {@link Problem} response.
+ * Converts exceptions annotated with {@link ProblemMapping} into {@link ProblemBuilder} instances, which can be further
+ * extended or executed to create {@link Problem} response.
  *
- * <p>Implementations may optionally make use of a {@link ProblemContext} to provide request- or
- * application-specific data such as trace IDs.
+ * <p>Implementations may optionally make use of a {@link ProblemContext} to provide request- or application-specific
+ * data such as trace IDs.
  *
  * <p>Example usage:
  *
@@ -38,22 +38,21 @@ import org.jspecify.annotations.Nullable;
  * }
  * }</pre>
  *
- * <p>Implementations return an empty {@link ProblemBuilder} if {@code t} is {@code null} or the
- * exception class is not annotated with {@link ProblemMapping}, and may throw {@link
- * ProblemMappingException} if an error occurs during problem creation.
+ * <p>Implementations return an empty {@link ProblemBuilder} if {@code t} is {@code null} or the exception class is not
+ * annotated with {@link ProblemMapping}, and may throw {@link ProblemMappingException} if an error occurs during
+ * problem creation.
  *
- * <p>An empty builder is indistinguishable from a builder produced by an annotation with all blank
- * fields; callers should use {@link #isMappingCandidate(Throwable)} to determine whether an
- * exception is eligible for mapping before calling {@code toProblemBuilder}.
+ * <p>An empty builder is indistinguishable from a builder produced by an annotation with all blank fields; callers
+ * should use {@link #isMappingCandidate(Throwable)} to determine whether an exception is eligible for mapping before
+ * calling {@code toProblemBuilder}.
  *
  * @since 1.3.0
  */
 public interface ProblemMapper {
 
   /**
-   * Convert {@link Throwable} -&gt; {@link ProblemBuilder} according to its {@link ProblemMapping}
-   * annotation. Such builder can be further extended or executed to create {@link Problem}
-   * response.
+   * Convert {@link Throwable} -&gt; {@link ProblemBuilder} according to its {@link ProblemMapping} annotation. Such
+   * builder can be further extended or executed to create {@link Problem} response.
    *
    * @param t {@link Throwable} to convert (may be {@code null})
    * @return a {@link ProblemBuilder} instance
@@ -65,9 +64,8 @@ public interface ProblemMapper {
   }
 
   /**
-   * Convert {@link Throwable} -&gt; {@link ProblemBuilder} according to its {@link ProblemMapping}
-   * annotation. Such builder can be further extended or executed to create {@link Problem}
-   * response.
+   * Convert {@link Throwable} -&gt; {@link ProblemBuilder} according to its {@link ProblemMapping} annotation. Such
+   * builder can be further extended or executed to create {@link Problem} response.
    *
    * @param t {@link Throwable} to convert (may be {@code null})
    * @param context optional {@link ProblemContext} (may be {@code null})
@@ -81,8 +79,7 @@ public interface ProblemMapper {
    * Checks whether the given exception class is annotated with {@link ProblemMapping}.
    *
    * @param t {@link Throwable} to check (may be {@code null})
-   * @return {@code true} if the exception is annotated with {@link ProblemMapping}, {@code false}
-   *     otherwise
+   * @return {@code true} if the exception is annotated with {@link ProblemMapping}, {@code false} otherwise
    * @since 1.3.0
    */
   default boolean isMappingCandidate(@Nullable Throwable t) {

@@ -16,9 +16,7 @@
 
 package io.github.problem4j.core;
 
-/**
- * Simple object used for testing situations where extension is not a primitive nor simple object.
- */
+/** Simple object used for testing situations where extension is not a primitive nor simple object. */
 class DummyObject {
 
   private final String value;

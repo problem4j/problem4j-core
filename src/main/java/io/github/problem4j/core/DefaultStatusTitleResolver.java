@@ -22,21 +22,18 @@ import java.util.Map;
 import java.util.Optional;
 
 /**
- * Built-in {@link StatusTitleResolver} backed by a static map of well-known HTTP status codes and
- * their titles.
+ * Built-in {@link StatusTitleResolver} backed by a static map of well-known HTTP status codes and their titles.
  *
  * <p><b>Referenced RFC sources (chronological)</b>:
  *
  * <ul>
  *   <li><b>1998-03</b> - RFC 2295: Transparent Content Negotiation in HTTP (<a
- *       href="https://datatracker.ietf.org/doc/html/rfc2295">link</a>) - introduces 506 Variant
- *       Also Negotiates.
+ *       href="https://datatracker.ietf.org/doc/html/rfc2295">link</a>) - introduces 506 Variant Also Negotiates.
  *   <li><b>1998-04</b> - RFC 2324: Hyper Text Coffee Pot Control Protocol (HTCPCP/1.0) (<a
- *       href="https://datatracker.ietf.org/doc/html/rfc2324">link</a>) - adds novelty code 418 I'm
- *       a teapot.
+ *       href="https://datatracker.ietf.org/doc/html/rfc2324">link</a>) - adds novelty code 418 I'm a teapot.
  *   <li><b>1999-02</b> - RFC 2518: HTTP Extensions for Distributed Authoring (WebDAV) (<a
- *       href="https://datatracker.ietf.org/doc/html/rfc2518">link</a>) - defines 102 Processing,
- *       207 Multi-Status, 422 Unprocessable Entity, 423 Locked, 424 Failed Dependency.
+ *       href="https://datatracker.ietf.org/doc/html/rfc2518">link</a>) - defines 102 Processing, 207 Multi-Status, 422
+ *       Unprocessable Entity, 423 Locked, 424 Failed Dependency.
  *   <li><b>1999-06</b> - RFC 2616: Hypertext Transfer Protocol -- HTTP/1.1 (Obsoleted) (<a
  *       href="https://datatracker.ietf.org/doc/html/rfc2616">link</a>) - core set:
  *       100,101,200-206,300-305,400-417,500-505.
@@ -45,42 +42,34 @@ import java.util.Optional;
  *   <li><b>2002-01</b> - RFC 3229: Delta encoding in HTTP (<a
  *       href="https://datatracker.ietf.org/doc/html/rfc3229">link</a>) - adds 226 IM Used.
  *   <li><b>2007-06</b> - RFC 4918: WebDAV (replacing RFC 2518) (<a
- *       href="https://datatracker.ietf.org/doc/html/rfc4918">link</a>) - re-specifies
- *       102,207,422,423,424; adds 507 Insufficient Storage.
+ *       href="https://datatracker.ietf.org/doc/html/rfc4918">link</a>) - re-specifies 102,207,422,423,424; adds 507
+ *       Insufficient Storage.
  *   <li><b>2010-05</b> - RFC 5842: Binding Extensions to WebDAV (<a
- *       href="https://datatracker.ietf.org/doc/html/rfc5842">link</a>) - adds 208 Already Reported,
- *       508 Loop Detected.
+ *       href="https://datatracker.ietf.org/doc/html/rfc5842">link</a>) - adds 208 Already Reported, 508 Loop Detected.
  *   <li><b>2012-04</b> - RFC 6585: Additional HTTP Status Codes (<a
- *       href="https://datatracker.ietf.org/doc/html/rfc6585">link</a>) - adds 428 Precondition
- *       Required, 429 Too Many Requests, 431 Request Header Fields Too Large, 511 Network
- *       Authentication Required.
+ *       href="https://datatracker.ietf.org/doc/html/rfc6585">link</a>) - adds 428 Precondition Required, 429 Too Many
+ *       Requests, 431 Request Header Fields Too Large, 511 Network Authentication Required.
  *   <li><b>2014-06</b> - RFC 7231: HTTP/1.1 Semantics and Content (<a
- *       href="https://datatracker.ietf.org/doc/html/rfc7231">link</a>) - deprecates 305 Use Proxy;
- *       renames 413 Request Entity Too Large to Payload Too Large; 414 Request-URI Too Long to URI
- *       Too Long.
+ *       href="https://datatracker.ietf.org/doc/html/rfc7231">link</a>) - deprecates 305 Use Proxy; renames 413 Request
+ *       Entity Too Large to Payload Too Large; 414 Request-URI Too Long to URI Too Long.
  *   <li><b>2015-04</b> - RFC 7538: Status Code 308 (Permanent Redirect) (<a
- *       href="https://datatracker.ietf.org/doc/html/rfc7538">link</a>) - adds 308 Permanent
- *       Redirect.
- *   <li><b>2015-05</b> - RFC 7540: HTTP/2 (<a
- *       href="https://datatracker.ietf.org/doc/html/rfc7540">link</a>) - adds 421 Misdirected
- *       Request.
+ *       href="https://datatracker.ietf.org/doc/html/rfc7538">link</a>) - adds 308 Permanent Redirect.
+ *   <li><b>2015-05</b> - RFC 7540: HTTP/2 (<a href="https://datatracker.ietf.org/doc/html/rfc7540">link</a>) - adds 421
+ *       Misdirected Request.
  *   <li><b>2016-02</b> - RFC 7725: An HTTP Status Code to Report Legal Obstacles (<a
- *       href="https://datatracker.ietf.org/doc/html/rfc7725">link</a>) - adds 451 Unavailable For
- *       Legal Reasons.
- *   <li><b>2018-01</b> - RFC 8297: Indicating Hints (<a
- *       href="https://datatracker.ietf.org/doc/html/rfc8297">link</a>) - adds 103 Early Hints;
- *       obsoletes informal 103 Checkpoint name.
+ *       href="https://datatracker.ietf.org/doc/html/rfc7725">link</a>) - adds 451 Unavailable For Legal Reasons.
+ *   <li><b>2018-01</b> - RFC 8297: Indicating Hints (<a href="https://datatracker.ietf.org/doc/html/rfc8297">link</a>)
+ *       - adds 103 Early Hints; obsoletes informal 103 Checkpoint name.
  *   <li><b>2018-09</b> - RFC 8470: Using Early Data in HTTP (<a
  *       href="https://datatracker.ietf.org/doc/html/rfc8470">link</a>) - adds 425 Too Early.
- *   <li><b>2022-06</b> - RFC 9110: HTTP Semantics (<a
- *       href="https://datatracker.ietf.org/doc/html/rfc9110">link</a>) - renames 413 Payload Too
- *       Large to Content Too Large; 416 Requested Range Not Satisfiable to Range Not Satisfiable;
- *       422 Unprocessable Entity to Unprocessable Content; consolidates prior semantics.
+ *   <li><b>2022-06</b> - RFC 9110: HTTP Semantics (<a href="https://datatracker.ietf.org/doc/html/rfc9110">link</a>) -
+ *       renames 413 Payload Too Large to Content Too Large; 416 Requested Range Not Satisfiable to Range Not
+ *       Satisfiable; 422 Unprocessable Entity to Unprocessable Content; consolidates prior semantics.
  * </ul>
  *
  * @see <a href="https://http.cat/">HTTP Cats</a>
- * @see <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Status">HTTP response
- *     status codes - HTTP | MDN</a>
+ * @see <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Status">HTTP response status codes - HTTP |
+ *     MDN</a>
  */
 final class DefaultStatusTitleResolver implements StatusTitleResolver, Serializable {
 

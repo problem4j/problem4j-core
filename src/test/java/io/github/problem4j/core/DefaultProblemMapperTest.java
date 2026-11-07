@@ -100,11 +100,7 @@ class DefaultProblemMapperTest {
       },
       nullValues = "null")
   void givenTraceIdInterpolation_shouldCreateProblemObject(
-      String traceId,
-      String expectedType,
-      String expectedTitle,
-      String expectedDetail,
-      String expectedInstance) {
+      String traceId, String expectedType, String expectedTitle, String expectedDetail, String expectedInstance) {
     @ProblemMapping(
         type = "https://example.org/probs/ctx/{context.traceId}",
         title = "Ctx {context.traceId}",
@@ -122,8 +118,7 @@ class DefaultProblemMapperTest {
     }
     ContextException ex = new ContextException("v");
 
-    Problem problem =
-        mapper.toProblemBuilder(ex, ProblemContext.create().put("traceId", traceId)).build();
+    Problem problem = mapper.toProblemBuilder(ex, ProblemContext.create().put("traceId", traceId)).build();
 
     assertThat(problem).isNotNull();
     assertThat(problem)
@@ -226,12 +221,7 @@ class DefaultProblemMapperTest {
 
     assertThat(problem).isNotNull();
     assertThat(problem)
-        .isEqualTo(
-            Problem.builder()
-                .type("https://example.org/probs/base")
-                .title("Base hello")
-                .status(400)
-                .build());
+        .isEqualTo(Problem.builder().type("https://example.org/probs/base").title("Base hello").status(400).build());
   }
 
   @Test
@@ -252,11 +242,7 @@ class DefaultProblemMapperTest {
 
   @Test
   void malformedPlaceholder_shouldNotCrash() {
-    @ProblemMapping(
-        type = "https://example.org",
-        title = "Bad {notClosed",
-        status = 400,
-        detail = "d")
+    @ProblemMapping(type = "https://example.org", title = "Bad {notClosed", status = 400, detail = "d")
     class MalformedPlaceholderException extends RuntimeException {
       MalformedPlaceholderException() {
         super("i have malformed title");
@@ -269,12 +255,7 @@ class DefaultProblemMapperTest {
     assertThat(problem).isNotNull();
     assertThat(problem)
         .isEqualTo(
-            Problem.builder()
-                .type("https://example.org")
-                .title("Bad {notClosed")
-                .status(400)
-                .detail("d")
-                .build());
+            Problem.builder().type("https://example.org").title("Bad {notClosed").status(400).detail("d").build());
   }
 
   @Test
@@ -355,11 +336,7 @@ class DefaultProblemMapperTest {
   @Test
   void givenInvalidInstanceUri_whenMapping_thenInstanceIsIgnored() {
 
-    @ProblemMapping(
-        type = "https://example.org/err",
-        title = "Title",
-        status = 400,
-        instance = "ht tp://invalid uri")
+    @ProblemMapping(type = "https://example.org/err", title = "Title", status = 400, instance = "ht tp://invalid uri")
     class InvalidInstanceException extends RuntimeException {
       InvalidInstanceException() {
         super("err");
@@ -404,11 +381,7 @@ class DefaultProblemMapperTest {
   @Test
   void givenDetailResolvingToEmpty_whenMapping_thenDetailIsNotSet() {
 
-    @ProblemMapping(
-        type = "https://example.org/err",
-        title = "Title",
-        status = 400,
-        detail = "{missing}")
+    @ProblemMapping(type = "https://example.org/err", title = "Title", status = 400, detail = "{missing}")
     class EmptyDetailException extends RuntimeException {
       EmptyDetailException() {
         super("err");
@@ -423,11 +396,7 @@ class DefaultProblemMapperTest {
   @Test
   void givenInstanceResolvingToEmpty_whenMapping_thenInstanceIsNotSet() {
 
-    @ProblemMapping(
-        type = "https://example.org/err",
-        title = "Title",
-        status = 400,
-        instance = "{missing}")
+    @ProblemMapping(type = "https://example.org/err", title = "Title", status = 400, instance = "{missing}")
     class EmptyInstanceException extends RuntimeException {
       EmptyInstanceException() {
         super("err");
@@ -503,11 +472,7 @@ class DefaultProblemMapperTest {
   @Test
   void givenContextKeyWithNullContext_whenInterpolating_thenResolvesToEmptyString() {
 
-    @ProblemMapping(
-        type = "https://example.org/err",
-        title = "Title",
-        status = 400,
-        detail = "trace:{context.traceId}")
+    @ProblemMapping(type = "https://example.org/err", title = "Title", status = 400, detail = "trace:{context.traceId}")
     class CtxException extends RuntimeException {
       CtxException() {
         super("err");
@@ -522,11 +487,7 @@ class DefaultProblemMapperTest {
   @Test
   void givenNullMessage_whenInterpolating_thenMessageResolvesToEmpty() {
 
-    @ProblemMapping(
-        type = "https://example.org/err",
-        title = "Title",
-        status = 400,
-        detail = "msg:{message}")
+    @ProblemMapping(type = "https://example.org/err", title = "Title", status = 400, detail = "msg:{message}")
     class NullMsgException extends RuntimeException {
       NullMsgException() {
         super((String) null);
@@ -604,11 +565,7 @@ class DefaultProblemMapperTest {
   @Test
   void givenEmptyPlaceholder_whenInterpolating_thenResolvesToEmpty() {
 
-    @ProblemMapping(
-        type = "https://example.org/err",
-        title = "Title",
-        status = 400,
-        detail = "before{}after")
+    @ProblemMapping(type = "https://example.org/err", title = "Title", status = 400, detail = "before{}after")
     class EmptyPlaceholderException extends RuntimeException {
       EmptyPlaceholderException() {
         super("err");
@@ -633,10 +590,7 @@ class DefaultProblemMapperTest {
         new DefaultProblemMapper() {
           @Override
           protected void applyTypeOnBuilder(
-              ProblemBuilder builder,
-              ProblemMapping mapping,
-              Throwable t,
-              @Nullable ProblemContext context) {
+              ProblemBuilder builder, ProblemMapping mapping, Throwable t, @Nullable ProblemContext context) {
             throw new ProblemMappingException("Intentional error");
           }
         };
@@ -647,8 +601,7 @@ class DefaultProblemMapperTest {
   }
 
   @Test
-  void
-      givenMapperThrowingUnexpectedException_whenToProblemBuilder_thenWrapsInProblemMappingException() {
+  void givenMapperThrowingUnexpectedException_whenToProblemBuilder_thenWrapsInProblemMappingException() {
     @ProblemMapping(type = "https://example.org/err", title = "Title", status = 400)
     class BadException extends RuntimeException {
       BadException() {
@@ -660,10 +613,7 @@ class DefaultProblemMapperTest {
         new DefaultProblemMapper() {
           @Override
           protected void applyTypeOnBuilder(
-              ProblemBuilder builder,
-              ProblemMapping mapping,
-              Throwable t,
-              @Nullable ProblemContext context) {
+              ProblemBuilder builder, ProblemMapping mapping, Throwable t, @Nullable ProblemContext context) {
             throw new RuntimeException("Unexpected error");
           }
         };
