@@ -1,3 +1,4 @@
+import internal.getIntProperty
 import internal.isTestTask
 import net.ltgt.gradle.errorprone.errorprone
 import org.gradle.api.tasks.testing.logging.TestExceptionFormat
@@ -21,17 +22,18 @@ plugins {
 //
 // Tests are NOT compiled with --release 8, so they may use newer Java APIs (e.g. JUnit 6).
 
-val javaToolchainVersion = 25
-val javaTargetVersion = 8
+val javaToolchain = getIntProperty("internal.java.toolchain")
+val javaTarget = getIntProperty("internal.java.target")
+
+val javaTestRuntime = JavaVersion.current().majorVersion.toInt()
 
 java {
     toolchain {
-        languageVersion = JavaLanguageVersion.of(javaToolchainVersion)
+        languageVersion = JavaLanguageVersion.of(javaToolchain)
     }
     withSourcesJar()
     withJavadocJar()
 }
-
 tasks.withType<JavaCompile>().configureEach {
     options.compilerArgs.add("-parameters")
     options.encoding = "UTF-8"
@@ -46,9 +48,11 @@ tasks.withType<JavaCompile>().configureEach {
         option("NullAway:JSpecifyMode", "true")
     }
 }
-
 tasks.named<JavaCompile>("compileJava") {
-    options.release = javaTargetVersion
+    options.release = javaTarget
+}
+tasks.named<JavaCompile>("compileTestJava") {
+    options.release = javaTestRuntime
 }
 
 tasks.withType<Test>().configureEach {
@@ -82,7 +86,8 @@ tasks.named<Task>("check") {
 }
 
 tasks.withType<Javadoc>().configureEach {
-    javadocTool = javaToolchains.javadocToolFor { languageVersion = JavaLanguageVersion.of(8) }
+    javadocTool =
+        javaToolchains.javadocToolFor { languageVersion = JavaLanguageVersion.of(javaTarget) }
 }
 
 tasks.withType<Jar>().configureEach {
